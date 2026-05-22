@@ -1,0 +1,12 @@
+// 声明语法版本
+syntax = "proto3";
+
+// 声明代码的命名空间
+package contacts;
+
+// 定义消息
+message contact{
+    uint64 sno = 1;
+    string name = 2;
+    float score = 3;
+};
