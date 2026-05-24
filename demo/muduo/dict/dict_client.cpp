@@ -23,12 +23,14 @@ public:
         _latch.wait(); // 阻塞等待，直到连接建立成功
     }
 
-    void send(const std::string &msg)
+    bool send(const std::string &msg)
     {
-        if (_conn->connected())
+        if (_conn->connected()) // 连接状态正常再发送，否则返回false
         {
             _conn->send(msg);
+            return true;
         }
+        return false;
     }
 
 private:

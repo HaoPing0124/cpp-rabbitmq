@@ -1,9 +1,9 @@
-all:dict_client dict_server
-dict_client:dict_client.cpp
-	g++ -o $@ $^ -std=c++11 -I ./include -L./lib -lmuduo_net -lmuduo_base -pthread
-dict_server:dict_server.cpp
-	g++ -o $@ $^ -std=c++11 -I./include -L./lib -lmuduo_net -lmuduo_base -pthread
+all:client server
+client:protobuf_client.cpp request.pb.cc ../include/muduo/proto/codec.cc
+	g++ -o $@ $^ -std=c++11 -I../include -L../lib -lmuduo_net -lmuduo_base -pthread -lprotobuf -lz
+server:protobuf_server.cpp request.pb.cc ../include/muduo/proto/codec.cc
+	g++ -o $@ $^ -std=c++11 -I../include -L../lib -lmuduo_net -lmuduo_base -pthread -lprotobuf -lz
 
 .PHONY:clean
 clean:
-	rm -rf dict_server
+	rm -rf client server

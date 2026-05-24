@@ -10,11 +10,9 @@
 
 class Server
 {
+    typedef std::shared_ptr<google::protobuf::Message> MessagePtr;
     typedef std::shared_ptr<haoping::TranslateRequest> TranslateRequestPtr;
-    typedef std::shared_ptr<haoping::TranslateResponse> TranslateResponsePtr;
     typedef std::shared_ptr<haoping::AddRequest> AddRequestPtr;
-    typedef std::shared_ptr<haoping::AddResponse> AddResponsePtr;
-
 public:
     Server(int port) : _server(&_baseloop, muduo::net::InetAddress("0.0.0.0", port),
                                "Server", muduo::net::TcpServer::kReusePort),
@@ -24,13 +22,13 @@ public:
                                         std::placeholders::_1, std::placeholders::_2, std::placeholders::_3))
     {
         // 注册用户请求处理函数
+        // 分发器——选择调用哪一个回调函数
         _dispatcher.registerMessageCallback<haoping::TranslateRequest>
             (std::bind(&Server::onTranslate, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
         _dispatcher.registerMessageCallback<haoping::AddRequest>
             (std::bind(&Server::onAdd, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
         _server.setConnectionCallback(std::bind(&Server::onConnection, this, std::placeholders::_1));
-
         _server.setMessageCallback(std::bind(&ProtobufCodec::onMessage, &_codec,
             std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     }
@@ -113,6 +111,6 @@ private:
 int main()
 {
     Server server(8085);
-    server
+    server.start();
     return 0;
 }
