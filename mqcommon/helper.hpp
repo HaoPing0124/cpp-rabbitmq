@@ -71,5 +71,34 @@ namespace haoping
         std::string _dbfile;
         sqlite3 *_handler;
     };
+
+    class StrHelper
+    {
+    public:
+        size_t split(const std::string &str, const std::string &sep, std::vector<std::string> &result)
+        {
+            size_t idx = 0, pos = 0;
+            while (idx < str.size())
+            {
+                pos = str.find(sep, idx);
+                if (pos == std::string::npos)
+                {
+                    result.push_back(str.substr(idx));
+                    return result.size();
+                }
+
+                if (pos == idx)
+                {
+                    idx = pos + sep.size();
+                    continue;
+                }
+
+                std::string tmp = str.substr(idx, pos - idx);
+                result.push_back(tmp);
+                idx = pos + sep.size();
+            }
+            return result.size();
+        }
+    };
 }
 #endif
