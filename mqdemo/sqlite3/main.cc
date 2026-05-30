@@ -9,7 +9,7 @@ int select_stu_callback(void *arg, int col_count, char **result, char **fields_n
 {
     std::vector<std::string> *arry = (std::vector<std::string> *)arg;
     arry->push_back(result[0]);   
-    return 0;  
+    return 0;  // 必须返回
 }
 
 int main()
