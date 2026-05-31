@@ -1,23 +1,16 @@
-/*
-    封装实现 SqliteHandler类 提供简单的sqlite数据库操作接口 完成数据的基础增删改查操作
-        1.创建/打开数据库文件
-        2.针对打开的数据库执行操作
-            1.表的操作
-            2.数据的操作
-        3.关闭数据库
-*/
-
 #ifndef __M_HELPER_H__
 #define __M_HELPER_H__
 
 #include <sqlite3.h>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <random>
 #include <sstream>
 #include <atomic>
 #include <iomanip>
+#include <sys/stat.h>
 #include "logger.hpp"
 
 namespace haoping
@@ -141,6 +134,139 @@ namespace haoping
             }
             return ss.str();
         }
+    };
+
+    class FileHelper
+    {
+    public:
+        FileHelper(const std::string &filename) : _filename(filename)
+        {
+        }
+
+        // 判断文件是否存在
+        bool exists()
+        {
+            struct stat st;
+            return (stat(_filename.c_str(), &st) == 0);
+        }
+
+        // 文件大小获取
+        size_t size()
+        {
+            struct stat st;
+            int ret = stat(_filename.c_str(), &st);
+            if (ret < 0)
+            {
+                return 0;
+            }
+            return st.st_size;
+        }
+
+        // 文件读/写
+        // 读写重载，参数：2.偏移量  3.长度
+        bool read(std::string &body)
+        {
+            // 获取文件大小，根据文件大小调整body的空间
+            size_t fsize = this->size();
+            body.resize(fsize);
+            return read(&body[0], 0, fsize);
+        }
+
+        bool read(char *body, size_t offset, size_t len)
+        {
+            // 1. 打开文件
+            // 参数：1.文件名 2.打开规则( std::ios::binary 二进制方式打开)
+            // ifstream(const char *__s, std::ios_base::openmode __mode)
+            std::ifstream ifs(_filename, std::ios::binary | std::ios::in);
+            if (!ifs.is_open())
+            {
+                ELOG("%s 文件打开失败！", _filename.c_str());
+                ifs.close();
+                return false;
+            }
+
+            // 2. 跳转文件读写位置
+            // 参数：1.偏移量 2.起始位置
+            // seekg(std::streamoff, std::ios_base::seekdir)
+            ifs.seekg(offset, std::ios::beg);
+
+            // 3. 读取文件数据
+            // 参数：1.读取文件 2.读取长度
+            // read(char *__s, std::streamsize __n)
+            ifs.read(body, len);
+            if (!ifs.good())
+            {
+                ELOG("%s 文件读取数据失败！", _filename.c_str());
+                ifs.close();
+                return false;
+            }
+
+            // 4. 关闭文件
+            ifs.close();
+            return true;
+        }
+
+        bool write(const std::string &body)
+        {
+            return write(body.c_str(), 0, body.size());
+        }
+
+        bool write(const char *body, size_t offset, size_t len)
+        {
+            // 1. 打开文件
+            std::fstream fs(_filename, std::ios::binary | std::ios::in | std::ios::out);
+            if (!fs.is_open())
+            {
+                ELOG("%s 文件打开失败！", _filename.c_str());
+                fs.close();
+                return false;
+            }
+
+            // 2. 跳转到文件指定位置
+            fs.seekp(offset, std::ios::beg);
+
+            // 3. 写入数据
+            fs.write(body, len);
+            if(!fs.good())
+            {
+                ELOG("%s 文件写入数据失败！", _filename.c_str());
+                fs.close();
+                return false;
+            }
+
+            // 4. 关闭文件
+            fs.close();
+            return true;
+
+        }
+
+        // 文件创建/删除
+        bool createFile()
+        {
+        }
+
+        bool removeFile()
+        {
+        }
+
+        // 目录创建/删除
+        bool createDirectory()
+        {
+        }
+
+        bool removeDirectory()
+        {
+        }
+
+        // 获取文件的父级目录
+        static std::string parentDorectory(const std::string &filename)
+        {
+        }
+
+        ~FileHelper() {}
+
+    private:
+        std::string _filename;
     };
 }
 #endif

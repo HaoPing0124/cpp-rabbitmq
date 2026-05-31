@@ -30,4 +30,5 @@ namespace haoping
 #define ILOG(format, ...) LOG("INFO", INFO_LEVEL, format, ##__VA_ARGS__)
 #define ELOG(format, ...) LOG("ERROR", ERROR_LEVEL, format, ##__VA_ARGS__)
 }
+
 #endif
