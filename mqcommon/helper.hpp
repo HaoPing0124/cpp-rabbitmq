@@ -4,12 +4,13 @@
 #include <sqlite3.h>
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <cstring>
 #include <vector>
 #include <random>
 #include <sstream>
 #include <atomic>
 #include <iomanip>
+#include <cerrno>
 #include <sys/stat.h>
 #include "logger.hpp"
 
@@ -227,7 +228,7 @@ namespace haoping
 
             // 3. 写入数据
             fs.write(body, len);
-            if(!fs.good())
+            if (!fs.good())
             {
                 ELOG("%s 文件写入数据失败！", _filename.c_str());
                 fs.close();
@@ -237,30 +238,77 @@ namespace haoping
             // 4. 关闭文件
             fs.close();
             return true;
+        }
 
+        // 修改文件名称
+        bool rename(const std::string &nname)
+        {
+            return (::rename(_filename.c_str(), nname.c_str()) == 0);
         }
 
         // 文件创建/删除
-        bool createFile()
+        static bool createFile(const std::string &filename)
         {
+            std::fstream ofs(filename, std::ios::binary | std::ios::out);
+            if (ofs.is_open() == false)
+            {
+                ELOG("%s 文件打开失败！", filename.c_str());
+                return false;
+            }
+            ofs.close();
+            return true;
         }
 
-        bool removeFile()
+        static bool removeFile(const std::string &filename)
         {
+            return (::remove(filename.c_str()) == 0);
         }
 
         // 目录创建/删除
-        bool createDirectory()
+        static bool createDirectory(const std::string &path)
         {
+            //  aaa/bbb/ccc    cccc
+            // 在多级路径创建中，我们需要从第一个父级目录开始创建
+            size_t pos, idx = 0;
+            while (idx < path.size())
+            {
+                pos = path.find("/", idx);
+                if (pos == std::string::npos)
+                {
+                    return (mkdir(path.c_str(), 0775) == 0);
+                }
+                std::string subpath = path.substr(0, pos);
+                int ret = mkdir(subpath.c_str(), 0775);
+                if (ret != 0 && errno != EEXIST)
+                {
+                    ELOG("创建目录 %s 失败: %s", subpath.c_str(), strerror(errno));
+                    return false;
+                }
+                idx = pos + 1;
+            }
+            return true;
         }
 
-        bool removeDirectory()
+        static bool removeDirectory(const std::string &path)
         {
+            // rm -rf path
+            // system()
+            std::string cmd = "rm -rf " + path;
+            return (system(cmd.c_str()) != -1);
         }
 
         // 获取文件的父级目录
-        static std::string parentDorectory(const std::string &filename)
+        static std::string parentDirectory(const std::string &filename)
         {
+            // /aaa/bb/ccc/ddd/test.txt
+            size_t pos = filename.find_last_of("/");
+            if (pos == std::string::npos)
+            {
+                // test.txt
+                return "./";
+            }
+            std::string path = filename.substr(0, pos);
+            return path;
         }
 
         ~FileHelper() {}
