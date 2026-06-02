@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <cerrno>
 #include <sys/stat.h>
-#include "logger.hpp"
+#include "mq_logger.hpp"
 
 namespace haoping
 {
@@ -34,7 +34,7 @@ namespace haoping
             int ret = sqlite3_open_v2(_dbfile.c_str(), &_handler, safe_leve | SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, nullptr);
             if (ret != SQLITE_OK)
             {
-                ELOG("创建/打开sqlite数据库失败: %s", sqlite3_errmsg(_handler))
+                ELOG("创建/打开sqlite数据库失败: %s", sqlite3_errmsg(_handler));
                 return false;
             }
             return true;
