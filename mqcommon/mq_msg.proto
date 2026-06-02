@@ -1,0 +1,45 @@
+syntax = "proto3";
+package haoping;
+
+// 交换机类型(路由策略)
+// 决定了消息如何分发到队列中
+enum ExchangeType
+{
+    UNKNOWNTYPE = 0;
+    DIRECT = 1;     // 直接交换
+    FANOUT = 2;     // 广播交换
+    TOPIC = 3;      // 主题交换
+};
+
+// 交付模式(持久化策略)
+// 决定了消息服务器重启后，消息是否会丢失
+enum DeliveryMode
+{
+    UNKNOWNMODE = 0;
+    UNDURABLE = 1;  // 非持久化模式 (仅内存)
+    DURABLE = 2;    // 持久化模式 (写入磁盘)
+};
+
+// 消息基本属性(元数据)
+message BasicProperties
+{
+    string id = 1;                  // 消息唯一UUID
+    DeliveryMode delivery_mode = 2; // 消息的投递模式
+    string routing_key = 3;         // 路由键，用于交换机匹配队列
+};
+
+// 完整的物理消息结构
+message Message
+{
+    // 消息有效载荷 (网络传输的实际内容)
+    message Payload
+    {
+        BasicProperties properties = 1; // 消息的基本属性
+        string body = 2;    // 消息内容
+        // 因为 bool 类型在持久化的时候 bool 所占长度不同，会导致，修改文件中消息有效位后消息长度发生变化，因此不用 bool 类型
+        string valid = 3;   // 逻辑删除标记：该消息是否有效
+    };
+    Payload payload = 1;    // 消息有效载荷
+    uint32 offset = 2;      // 消息在物理文件中的偏移量 (用于快速 fseek 定位)
+    uint32 length = 3;      // 消息在文件中的总长度 (用于读取指定字节数)
+};
