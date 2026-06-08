@@ -73,6 +73,7 @@ namespace haoping
     class StrHelper
     {
     public:
+        // 参数：1.待分割字符串 2.分割的字符 3.分割后的结果
         static size_t split(const std::string &str, const std::string &sep, std::vector<std::string> &result)
         {
             size_t idx = 0, pos = 0;
