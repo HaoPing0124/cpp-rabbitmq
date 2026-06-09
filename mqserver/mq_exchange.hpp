@@ -1,6 +1,7 @@
 #ifndef __M_EXCHANGE_H__
 #define __M_EXCHANGE_H__
 
+// 交换机数据管理模块
 #include "../mqcommon/mq_logger.hpp"
 #include "../mqcommon/mq_helper.hpp"
 #include "../mqcommon/mq_msg.pb.h"
@@ -75,7 +76,7 @@ namespace haoping
             std::string path = FileHelper::parentDirectory(dbfile);
             FileHelper::createDirectory(path);
             assert(_sql_helper.open());
-            createTable();  // 初始化创建表
+            createTable(); // 初始化创建表
         }
 
         // 创建数据库表
