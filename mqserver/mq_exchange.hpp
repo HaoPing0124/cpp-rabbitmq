@@ -139,7 +139,7 @@ namespace haoping
         //// 查询单个表(根据名称)
         // Exchange::ptr getOne(const std::string &name);
 
-        // 恢复历史数据
+        // 查询所有队列数据(恢复历史数据)
         using ExchangeMap = std::unordered_map<std::string, Exchange::ptr>;
         ExchangeMap revovery()
         {

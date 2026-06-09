@@ -13,14 +13,15 @@
 
 namespace haoping
 {
+    // 定义队列描述数据类
     struct MsgQueue
     {
         using ptr = std::shared_ptr<MsgQueue>;
-        std::string name;
-        bool durable;
-        bool exclusive;
-        bool auto_delete;
-        google::protobuf::Map<std::string, std::string> args;
+        std::string name;   // 队列名称
+        bool durable;       // 是否持久化标志
+        bool exclusive;     // 是否独占标志
+        bool auto_delete;   // 是否自动删除标志
+        google::protobuf::Map<std::string, std::string> args;   // 其他参数
 
         MsgQueue() {}
         MsgQueue(const std::string &qname,
@@ -45,7 +46,7 @@ namespace haoping
                 args[key] = val;
             }
         }
-        
+
         std::string getArgs()
         {
             std::string result;
@@ -55,6 +56,94 @@ namespace haoping
             }
             return result;
         }
+    };
+
+    // 定义队列数据持久化类(数据持久化的 sqlite3 数据库中)
+    class MsgQueueMapper
+    {
+    public:
+        MsgQueueMapper(const std::string &dbfile) : _sql_helper(dbfile)
+        {
+            std::string path = FileHelper::parentDirectory(dbfile);
+            FileHelper::createDirectory(path);
+            _sql_helper.open();
+            createTable();
+        }
+
+        // 创建队列数据表
+        void createTable()
+        {
+            // create table if not exists queue_table(name varchar(32) primary key, durable int, exclusive int, auto_delete int, args varchar(128));
+            std::stringstream sql;
+            sql << "create table if not exists queue_table(";
+            sql << "name varchar(32) primary key, ";
+            sql << "durable int, ";
+            sql << "exclusive int, ";
+            sql << "auto_delete int, ";
+            sql << "args varchar(128));";
+            assert(_sql_helper.exec(sql.str(), nullptr, nullptr));
+        }
+
+        // 删除队列数据表
+        void removeTable()
+        {
+            std::string sql = "drop table if exists queue_table;";
+            _sql_helper.exec(sql, nullptr, nullptr);
+        }
+
+        // 新增队列数据
+        bool insert(MsgQueue::ptr &queue)
+        {
+            // insert into queue_table values('queue1', true, false, false, "k1=v1&k2=v2&");
+            std::stringstream sql;
+            sql << "insert into queue_table values(";
+            sql << "'" << queue->name << "', ";
+            sql << queue->durable << ", ";
+            sql << queue->exclusive << ", ";
+            sql << queue->auto_delete << ", ";
+            sql << "'" << queue->getArgs() << "');";
+            return _sql_helper.exec(sql.str(), nullptr, nullptr);
+        }
+
+        // 移除队列数据
+        void remove(const std::string &name)
+        {
+            // delete from queue_table where name='queue1';
+            std::stringstream sql;
+            sql << "delete from queue_table where name=";
+            sql << "'" << name << "';";
+            _sql_helper.exec(sql.str(), nullptr, nullptr);
+        }
+
+        // 查询所有队列数据(恢复历史数据)
+        using QueueMap = std::unordered_map<std::string, MsgQueue::ptr>;
+        QueueMap recovery()
+        {
+            QueueMap result;
+            std::string sql = "select name, durable, exclusive, auto_delete, args from queue_table;";
+            _sql_helper.exec(sql, selectCallback, &result);
+            return result;
+        }
+
+    private:
+        // int (*callback)(void *, int, char **, char **)
+        // 查询回调函数
+        static int selectCallback(void *arg, int numcol, char **row, char **fields)
+        {
+            QueueMap *result = (QueueMap *)arg;
+            MsgQueue::ptr mqp = std::make_shared<MsgQueue>();
+            mqp->name = row[0];
+            mqp->durable = (bool)std::stoi(row[1]);
+            mqp->exclusive = (bool)std::stoi(row[2]);
+            mqp->auto_delete = (bool)std::stoi(row[3]);
+            if (row[4])
+                mqp->setArgs(row[4]);
+            result->insert(std::make_pair(mqp->name, mqp));
+            return 0;
+        }
+
+    private:
+        SqliteHelper _sql_helper;
     };
 }
 
