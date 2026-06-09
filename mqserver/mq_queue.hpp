@@ -13,15 +13,17 @@
 
 namespace haoping
 {
+    using QueueMap = std::unordered_map<std::string, MsgQueue::ptr>;
+
     // 定义队列描述数据类
     struct MsgQueue
     {
         using ptr = std::shared_ptr<MsgQueue>;
-        std::string name;   // 队列名称
-        bool durable;       // 是否持久化标志
-        bool exclusive;     // 是否独占标志
-        bool auto_delete;   // 是否自动删除标志
-        google::protobuf::Map<std::string, std::string> args;   // 其他参数
+        std::string name;                                     // 队列名称
+        bool durable;                                         // 是否持久化标志
+        bool exclusive;                                       // 是否独占标志
+        bool auto_delete;                                     // 是否自动删除标志
+        google::protobuf::Map<std::string, std::string> args; // 其他参数
 
         MsgQueue() {}
         MsgQueue(const std::string &qname,
@@ -116,7 +118,6 @@ namespace haoping
         }
 
         // 查询所有队列数据(恢复历史数据)
-        using QueueMap = std::unordered_map<std::string, MsgQueue::ptr>;
         QueueMap recovery()
         {
             QueueMap result;
