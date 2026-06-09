@@ -75,7 +75,7 @@ namespace haoping
             std::string path = FileHelper::parentDirectory(dbfile);
             FileHelper::createDirectory(path);
             assert(_sql_helper.open());
-            createTable();
+            createTable();  // 初始化创建表
         }
 
         // 创建数据库表
