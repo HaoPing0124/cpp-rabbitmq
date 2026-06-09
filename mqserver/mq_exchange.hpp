@@ -1,3 +1,6 @@
+#ifndef __M_EXCHANGE_H__
+#define __M_EXCHANGE_H__
+
 #include "../mqcommon/mq_logger.hpp"
 #include "../mqcommon/mq_helper.hpp"
 #include "../mqcommon/mq_msg.pb.h"
@@ -155,7 +158,7 @@ namespace haoping
             if (row[4])
                 exp->setArgs(row[4]);
             result->insert(std::make_pair(exp->name, exp));
-            return 0;   // 必须返回0
+            return 0; // 必须返回0
         }
 
     private:
@@ -166,24 +169,94 @@ namespace haoping
     class ExchangeManager
     {
     public:
-        ExchangeManager(const std::string &dbfile);
+        ExchangeManager(const std::string &dbfile) : _mapper(dbfile)
+        {
+            _exchanges = _mapper.revovery();
+        }
 
         // 声明交换机
-        void declareExchange(const std::string &name,
+        bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
-                             std::unordered_map<std::string, std::string> &args);
+                             std::unordered_map<std::string, std::string> &args)
+        {
+            // 1.非线程安全 需加锁
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // 2.判断该交换机是否已经存在（在数据库中查询）
+            auto it = _exchanges.find(name);
+            if (it != _exchanges.end())
+            {
+                // 交换机已存在
+                return true;
+            }
+
+            // 3.交换机不存在 开始创建
+            auto exp = std::make_shared<Exchange>(name, type, durable, auto_delete, args);
+            if (durable == true) // 需要持久化
+            {
+                bool ret = _mapper.insert(exp);
+                if (ret == false)
+                {
+                    return false;
+                }
+            }
+            _exchanges.insert(std::make_pair(name, exp));
+        }
 
         // 删除交换机
-        void deleteExchange(const std::string &name);
+        void deleteExchange(const std::string &name)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _exchanges.find(name);
+            if (it == _exchanges.end())
+            {
+                // 如果没找到 直接返回
+                return;
+            }
+            if (it->second->durable == true)
+                _mapper.remove(name);
+            _exchanges.erase(name);
+        }
 
-        //// 交换机查询
-        // Exchange::ptr selectExchange(const std::string &name);
+        // 获取指定交换机对象
+        Exchange::ptr selectExchange(const std::string &name)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _exchanges.find(name);
+            if (it == _exchanges.end())
+            {
+                // 如果没找到 直接返回
+                return;
+            }
+            return it->second;
+        }
 
         // 判断交换机是否存在
-        bool exists(const std::string &name);
+        bool exists(const std::string &name)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _exchanges.find(name);
+            if (it == _exchanges.end())
+            {
+                // 如果没找到 直接返回
+                return false;
+            }
+            return true;
+        }
 
         // 清理所有交换机数据
-        void clear();
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _mapper.removeTable();
+            _exchanges.clear();
+        }
+
+        size_t size()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _exchanges.size();
+        }
 
     private:
         std::mutex _mutex;
@@ -191,3 +264,5 @@ namespace haoping
         std::unordered_map<std::string, Exchange::ptr> _exchanges; // 交换机数据对象管理
     };
 }
+
+#endif
