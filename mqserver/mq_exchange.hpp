@@ -28,6 +28,8 @@ namespace haoping
         // 5.其他参数
         std::unordered_map<std::string, std::string> args;
 
+        Exchange() {}
+
         Exchange(const std::string &ename, ExchangeType etype,
                  bool edurable, bool eauto_delete, std::unordered_map<std::string, std::string> &eargs)
             : name(ename), type(etype), durable(edurable),
@@ -73,6 +75,7 @@ namespace haoping
             std::string path = FileHelper::parentDirectory(dbfile);
             FileHelper::createDirectory(path);
             assert(_sql_helper.open());
+            createTable();
         }
 
         // 创建数据库表
@@ -169,6 +172,8 @@ namespace haoping
     class ExchangeManager
     {
     public:
+        using ptr = std::shared_ptr<ExchangeManager>;
+
         ExchangeManager(const std::string &dbfile) : _mapper(dbfile)
         {
             _exchanges = _mapper.revovery();
@@ -201,6 +206,7 @@ namespace haoping
                 }
             }
             _exchanges.insert(std::make_pair(name, exp));
+            return true;
         }
 
         // 删除交换机
@@ -226,7 +232,7 @@ namespace haoping
             if (it == _exchanges.end())
             {
                 // 如果没找到 直接返回
-                return;
+                return Exchange::ptr();
             }
             return it->second;
         }
