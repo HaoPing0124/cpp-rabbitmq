@@ -146,6 +146,95 @@ namespace haoping
     private:
         SqliteHelper _sql_helper;
     };
+
+    class MsgQueueManager
+    {
+    public:
+        using ptr = std::shared_ptr<MsgQueueManager>;
+        MsgQueueManager(const std::string &dbfile) : _mapper(dbfile)
+        {
+            _msg_queues = _mapper.recovery();
+        }
+        bool declareQueue(const std::string &qname,
+                          bool qdurable,
+                          bool qexclusive,
+                          bool qauto_delete,
+                          const google::protobuf::Map<std::string, std::string> &qargs)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _msg_queues.find(qname);
+            if (it != _msg_queues.end())
+            {
+                return true;
+            }
+            MsgQueue::ptr mqp = std::make_shared<MsgQueue>();
+            mqp->name = qname;
+            mqp->durable = qdurable;
+            mqp->exclusive = qexclusive;
+            mqp->auto_delete = qauto_delete;
+            mqp->args = qargs;
+            if (qdurable == true)
+            {
+                bool ret = _mapper.insert(mqp);
+                if (ret == false)
+                    return false;
+            }
+            _msg_queues.insert(std::make_pair(qname, mqp));
+            return true;
+        }
+        void deleteQueue(const std::string &name)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _msg_queues.find(name);
+            if (it == _msg_queues.end())
+            {
+                return;
+            }
+            if (it->second->durable == true)
+                _mapper.remove(name);
+            _msg_queues.erase(name);
+        }
+        MsgQueue::ptr selectQueue(const std::string &name)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _msg_queues.find(name);
+            if (it == _msg_queues.end())
+            {
+                return MsgQueue::ptr();
+            }
+            return it->second;
+        }
+        QueueMap allQueues()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _msg_queues;
+        }
+        bool exists(const std::string &name)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _msg_queues.find(name);
+            if (it == _msg_queues.end())
+            {
+                return false;
+            }
+            return true;
+        }
+        size_t size()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _msg_queues.size();
+        }
+        void clear()
+        {
+            _mapper.removeTable();
+            _msg_queues.clear();
+        }
+
+    private:
+        std::mutex _mutex;
+        MsgQueueMapper _mapper;
+        QueueMap _msg_queues;
+    };
 }
 
 #endif
