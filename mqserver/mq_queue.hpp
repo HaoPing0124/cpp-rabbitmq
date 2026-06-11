@@ -13,8 +13,6 @@
 
 namespace haoping
 {
-    using QueueMap = std::unordered_map<std::string, MsgQueue::ptr>;
-
     // 定义队列描述数据类
     struct MsgQueue
     {
@@ -23,14 +21,14 @@ namespace haoping
         bool durable;                                         // 是否持久化标志
         bool exclusive;                                       // 是否独占标志
         bool auto_delete;                                     // 是否自动删除标志
-        google::protobuf::Map<std::string, std::string> args; // 其他参数
+        std::unordered_map<std::string, std::string> args; // 其他参数
 
         MsgQueue() {}
         MsgQueue(const std::string &qname,
                  bool qdurable,
                  bool qexclusive,
                  bool qauto_delete,
-                 const google::protobuf::Map<std::string, std::string> &qargs)
+                 const std::unordered_map<std::string, std::string> &qargs)
             : name(qname), durable(qdurable), exclusive(qexclusive),
               auto_delete(qauto_delete), args(qargs)
         {
@@ -61,6 +59,7 @@ namespace haoping
     };
 
     // 定义队列数据持久化类(数据持久化的 sqlite3 数据库中)
+    using QueueMap = std::unordered_map<std::string, haoping::MsgQueue::ptr>;
     class MsgQueueMapper
     {
     public:
@@ -147,6 +146,7 @@ namespace haoping
         SqliteHelper _sql_helper;
     };
 
+    // 定义队列数据管理类
     class MsgQueueManager
     {
     public:
@@ -159,7 +159,7 @@ namespace haoping
                           bool qdurable,
                           bool qexclusive,
                           bool qauto_delete,
-                          const google::protobuf::Map<std::string, std::string> &qargs)
+                          const std::unordered_map<std::string, std::string> &qargs)
         {
             std::unique_lock<std::mutex> lock(_mutex);
             auto it = _msg_queues.find(qname);
@@ -226,6 +226,7 @@ namespace haoping
         }
         void clear()
         {
+            std::unique_lock<std::mutex> lock(_mutex);
             _mapper.removeTable();
             _msg_queues.clear();
         }
