@@ -135,6 +135,39 @@ namespace haoping
     private:
         SqliteHelper _sql_helper;
     };
+
+    class BindingManager
+    {
+    public:
+        BindingManager(const std::string &dbfile)
+            : _mapper(dbfile)
+        {
+            _bindings = _mapper.recovery();
+        }
+
+        bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool burable);
+
+        bool unBind(const std::string &ename, const std::string &qname);
+
+        void removeExchangeBindings(const std::string &ename);
+
+        void removeQueueBindings(const std::string &qname);
+
+        MsgQueueBindingMap getExchangeBindings(const std::string &ename);
+
+        Binding::ptr getBinding(const std::string &ename, const std::string &qname);
+
+        bool exists(const std::string &ename, const std::string &qname);
+
+        size_t size();
+
+        void clear();
+
+    private: 
+        std::mutex _mutex;
+        BindingMapper _mapper; // 持久化管理
+        BindingMap _bindings;  // 绑定关系
+    };
 }
 
 #endif
