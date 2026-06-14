@@ -188,9 +188,25 @@ namespace haoping
             _bindings[ename].erase(qname);
         }
 
-        void removeExchangeBindings(const std::string &ename);
+        // 移除交换机绑定信息
+        void removeExchangeBindings(const std::string &ename)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _mapper.removeExchangeBindings(ename);
+            _bindings.erase(ename);
+        }
 
-        void removeQueueBindings(const std::string &qname);
+        // 移除队列绑定信息
+        void removeQueueBindings(const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _mapper.removeMsgQueueBindings(qname);
+            for (auto start = _bindings.begin(); start != _bindings.end(); ++start)
+            {
+                // 遍历每个交换机的绑定信息，从中移除指定队列的相关信息
+                start->second.erase(qname);
+            }
+        }
 
         MsgQueueBindingMap getExchangeBindings(const std::string &ename);
 
