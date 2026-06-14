@@ -145,7 +145,28 @@ namespace haoping
             _bindings = _mapper.recovery();
         }
 
-        bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool burable);
+        // 增加绑定信息
+        bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool durable)
+        {
+            // 加锁 构造一个队列的绑定信息对象 添加映射关系
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _bindings.find(ename);
+            if (it != _bindings.end() && it->second.find(qname) != it->second.end())
+            {
+                return true;
+            }
+            // 绑定信息是否需要持久化 取决于 交换机数据是持久化的 以及队列数据也是持久化的
+            Binding::ptr bp = std::make_shared<Binding>(ename, qname, key);
+            if (durable)
+            {
+                bool ret = _mapper.insert(bp);
+                if (ret == false)
+                    return false;
+            }
+            auto &qbmap = _bindings[ename];
+            qbmap.insert(std::make_pair(qname, bp));
+            return true;
+        }
 
         bool unBind(const std::string &ename, const std::string &qname);
 
@@ -163,7 +184,7 @@ namespace haoping
 
         void clear();
 
-    private: 
+    private:
         std::mutex _mutex;
         BindingMapper _mapper; // 持久化管理
         BindingMap _bindings;  // 绑定关系
