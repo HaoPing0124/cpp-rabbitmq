@@ -168,7 +168,25 @@ namespace haoping
             return true;
         }
 
-        bool unBind(const std::string &ename, const std::string &qname);
+        // 解除绑定信息
+        bool unBind(const std::string &ename, const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto eit = _bindings.find(ename);
+            if (eit == _bindings.end())
+            {
+                // 没有交换机相关的绑定信息
+                return;
+            }
+            auto qit = eit->second.find(qname);
+            if (qit == eit->second.end())
+            {
+                // 交换机没有队列相关的绑定信息
+                return;
+            }
+            _mapper.remove(ename, qname);
+            _bindings[ename].erase(qname);
+        }
 
         void removeExchangeBindings(const std::string &ename);
 
