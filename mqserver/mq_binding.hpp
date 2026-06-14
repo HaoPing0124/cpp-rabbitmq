@@ -208,9 +208,40 @@ namespace haoping
             }
         }
 
-        MsgQueueBindingMap getExchangeBindings(const std::string &ename);
+        // 获取队列绑定信息
+        MsgQueueBindingMap getExchangeBindings(const std::string &ename)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            // 在整体 绑定关系信息中 查找交换机
+            auto eit = _bindings.find(ename);
+            if (eit == _bindings.end())
+            {
+                // 若没有该交换机则返回空值
+                return MsgQueueBindingMap();
+            }
+            // 否则返回交换机对应的绑定信息(队列)
+            return eit->second;
+        }
 
-        Binding::ptr getBinding(const std::string &ename, const std::string &qname);
+        // 获取整体绑定信息(交换机对应绑定关系)
+        Binding::ptr getBinding(const std::string &ename, const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            // 在整体 绑定关系信息中 查找交换机
+            auto eit = _bindings.find(ename);
+            if (eit == _bindings.end())
+            {
+                return Binding::ptr();
+            }
+
+            // 在交换机对应队列 关系信息中 查找队列
+            auto qit = eit->second.find(qname);
+            if (qit == eit->second.end())
+            {
+                return Binding::ptr();
+            }
+            return qit->second;
+        }
 
         bool exists(const std::string &ename, const std::string &qname);
 
