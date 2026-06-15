@@ -243,11 +243,40 @@ namespace haoping
             return qit->second;
         }
 
-        bool exists(const std::string &ename, const std::string &qname);
+        bool exists(const std::string &ename, const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto eit = _bindings.find(ename);
+            if (eit == _bindings.end())
+            {
+                return false;
+            }
+            auto qit = eit->second.find(qname);
+            if (qit == eit->second.end())
+            {
+                return false;
+            }
+            return true;
+        }
 
-        size_t size();
+        size_t size()
+        {
+            size_t total_size = 0;
+            std::unique_lock<std::mutex> lock(_mutex);
+            for (auto start = _bindings.begin(); start != _bindings.end(); ++start)
+            {
+                // 遍历每个交换机的绑定信息，从中移除指定队列的相关信息
+                total_size += start->second.size();
+            }
+            return total_size;
+        }
 
-        void clear();
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _mapper.removeTable();
+            _bindings.clear();
+        }
 
     private:
         std::mutex _mutex;
