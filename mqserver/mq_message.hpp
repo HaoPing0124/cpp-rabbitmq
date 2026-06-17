@@ -20,8 +20,27 @@ namespace haoping
     class MessageMapper
     {
     public:
-        MessageMapper(const std::string &basedir, const std::string &qname)
+        MessageMapper(std::string &basedir, const std::string &qname)
+            : _qname(qname)
         {
+            // 如果目录不是以 / 结尾，就补一个 /，方便后面拼路径
+            if (basedir.back() != '/')
+                basedir.push_back('/');
+
+            // 拼出主数据文件路径
+            _datafile = basedir + qname + DATAFILE_SUBFIX;
+
+            // 拼出临时文件路径
+            _tmpfile = basedir + qname + TMPFILE_SUBFIX;
+
+            // 如果目录不存在，就创建目录
+            if (FileHelper(basedir).exists() == false)
+            {
+                assert(FileHelper::createDirectory(basedir));
+            }
+
+            // 确保主数据文件存在
+            createMsgFile();
         }
 
         // 创建消息文件
@@ -84,13 +103,14 @@ namespace haoping
         }
 
         // 删除消息的持久化
-        bool remove(const MessagePtr &msg)
+        bool remove(MessagePtr &msg)
         {
-            // 1. 将msg中的有效标志位修改为 '0'
+            // 1. 将msg中的有效标志位修改为 '0', 表示这条消息无效了
             msg->mutable_payload()->set_valid("0");
 
-            // 2. 对msg进行序列化
+            // 2. 把修改后的 payload 序列化成字符串
             std::string body = msg->payload().SerializeAsString();
+            // 新数据和旧数据长度必须相同
             if (body.size() != msg->length())
             {
                 DLOG("不能修改文件中的数据信息，因为新生成的数据与原数据长度不一致!");
@@ -111,7 +131,98 @@ namespace haoping
         }
 
         // 垃圾回收
-        std::list<MessagePtr> gc();
+        std::list<MessagePtr> gc()
+        {
+            bool ret;
+            std::list<MessagePtr> result;
+
+            // 1. 先加载出当前文件里的有效消息
+            ret = load(result);
+            if (ret == false)
+            {
+                DLOG("加载有效数据失败！");
+                return result;
+            }
+
+            // 2. 创建临时文件，把有效消息重新写进去
+            FileHelper::createFile(_tmpfile);
+            for (auto &msg : result)
+            {
+                DLOG("向临时文件写入数据: %s", msg->payload().body().c_str());
+                ret = insert(_tmpfile, msg);
+                if (ret == false)
+                {
+                    DLOG("向临时文件写入消息数据失败！！");
+                    return result;
+                }
+            }
+
+            // 3. 删除旧数据文件
+            ret = FileHelper::removeFile(_datafile);
+            if (ret == false)
+            {
+                DLOG("删除源文件失败！");
+                return result;
+            }
+
+            // 4. 把临时文件改名成正式数据文件
+            ret = FileHelper(_tmpfile).rename(_datafile);
+            if (ret == false)
+            {
+                DLOG("修改临时文件名称失败！");
+                return result;
+            }
+
+            // 5. 返回新的有效消息列表
+            return result;
+        }
+
+    private:
+        bool load(std::list<MessagePtr> &result)
+        {
+            // 1. 打开主数据文件，按“长度 + 数据”的格式逐条读取
+            FileHelper data_file_helper(_datafile);
+            size_t offset = 0, msg_size;
+            size_t fsize = data_file_helper.size();
+            bool ret;
+
+            while (offset < fsize)
+            {
+                // 2. 先读取消息长度
+                ret = data_file_helper.read((char *)&msg_size, offset, sizeof(size_t));
+                if (ret == false)
+                {
+                    DLOG("读取消息长度失败！");
+                    return false;
+                }
+                offset += sizeof(size_t);
+
+                // 3. 根据消息长度，读取消息内容
+                std::string msg_body(msg_size, '\0');
+                data_file_helper.read(&msg_body[0], offset, msg_size);
+                if (ret == false)
+                {
+                    DLOG("读取消息数据失败！");
+                    return false;
+                }
+                offset += msg_size;
+
+                // 4. 构造 Message 对象，并解析 payload
+                MessagePtr msgp = std::make_shared<Message>();
+                msgp->mutable_payload()->ParseFromString(msg_body);
+
+                // 5. 如果消息已被标记为无效，就跳过
+                if (msgp->payload().valid() == "0")
+                {
+                    DLOG("加载到无效消息：%s", msgp->payload().body().c_str());
+                    continue;
+                }
+
+                // 6. 有效消息保存起来
+                result.push_back(msgp);
+            }
+            return true;
+        }
 
     private:
         std::string _qname;    // 队列名
