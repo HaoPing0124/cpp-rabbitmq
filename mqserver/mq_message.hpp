@@ -71,35 +71,7 @@ namespace haoping
         // 新增消息的持久化
         bool insert(const std::string &filename, MessagePtr &msg)
         {
-            // 新增数据都是添加在文件末尾的
-            // 1. 进行消息的序列化，获取到格式化后的消息
-            std::string body = msg->payload().SerializeAsString();
-
-            // 2. 获取文件长度
-            FileHelper helper(filename);
-            size_t fsize = helper.size();
-            size_t msg_size = body.size();
-
-            // 写入逻辑：1. 先写入4字节数据长度， 2， 再写入指定长度数据
-            bool ret = helper.write((char *)&msg_size, fsize, sizeof(size_t));
-            if (ret == false)
-            {
-                DLOG("向队列数据文件写入数据长度失败！");
-                return false;
-            }
-
-            // 3. 将数据写入文件的指定位置
-            ret = helper.write(body.c_str(), fsize + sizeof(size_t), body.size());
-            if (ret == false)
-            {
-                DLOG("向队列数据文件写入数据失败！");
-                return false;
-            }
-
-            // 4. 更新msg中的实际存储信息
-            msg->set_offset(fsize + sizeof(size_t));
-            msg->set_length(body.size());
-            return true;
+            insert(_datafile, msg);
         }
 
         // 删除消息的持久化
@@ -117,7 +89,7 @@ namespace haoping
                 return false;
             }
 
-            // 3. 将序列化后的消息，写入到数据在文件中的指定位置（覆盖原有的数据）
+            // 3. 将序列化后的消息("0")，写入到数据在文件中的指定位置(偏移量位置)(覆盖原有的数据)
             FileHelper helper(_datafile);
             bool ret = helper.write(body.c_str(), msg->offset(), body.size());
             if (ret == false)
@@ -199,7 +171,7 @@ namespace haoping
 
                 // 3. 根据消息长度，读取消息内容
                 std::string msg_body(msg_size, '\0');
-                data_file_helper.read(&msg_body[0], offset, msg_size);
+                ret = data_file_helper.read(&msg_body[0], offset, msg_size);
                 if (ret == false)
                 {
                     DLOG("读取消息数据失败！");
@@ -221,6 +193,39 @@ namespace haoping
                 // 6. 有效消息保存起来
                 result.push_back(msgp);
             }
+            return true;
+        }
+
+        bool insert(const std::string &filename, MessagePtr &msg)
+        {
+            // 新增数据都是添加在文件末尾的
+            // 1. 进行消息的序列化，获取到格式化后的消息
+            std::string body = msg->payload().SerializeAsString();
+
+            // 2. 获取文件长度
+            FileHelper helper(filename);
+            size_t fsize = helper.size();
+            size_t msg_size = body.size();
+
+            // 写入逻辑：1. 先写入4字节数据长度， 2， 再写入指定长度数据
+            bool ret = helper.write((char *)&msg_size, fsize, sizeof(size_t));
+            if (ret == false)
+            {
+                DLOG("向队列数据文件写入数据长度失败！");
+                return false;
+            }
+
+            // 3. 将数据写入文件的指定位置
+            ret = helper.write(body.c_str(), fsize + sizeof(size_t), body.size());
+            if (ret == false)
+            {
+                DLOG("向队列数据文件写入数据失败！");
+                return false;
+            }
+
+            // 4. 更新msg中的实际存储信息
+            msg->set_offset(fsize + sizeof(size_t));
+            msg->set_length(body.size());
             return true;
         }
 
