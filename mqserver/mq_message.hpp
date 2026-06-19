@@ -234,6 +234,36 @@ namespace haoping
         std::string _datafile; // 消息数据文件
         std::string _tmpfile;  // 临时文件
     };
+
+    class QueueMessage
+    {
+    public:
+        using ptr = std::shared_ptr<QueueMessage>;
+        QueueMessage(std::string &basedir, const std::string &qname) : _mapper(basedir, qname),
+                                                                       _qname(qname), _valid_count(0), _total_count(0) {}
+        bool recovery();
+        bool insert(const BasicProperties *bp, const std::string &body, bool queue_is_durable);
+        MessagePtr front();
+
+        // 每次删除消息后，判断是否需要垃圾回收
+        bool remove(const std::string &msg_id);
+        size_t getable_count();
+        size_t total_count();
+        size_t durable_count();
+        size_t waitack_count();
+        void clear();
+
+    private:
+        std::mutex _mutex;
+        std::string _qname;
+        size_t _valid_count;
+        size_t _total_count;
+        MessageMapper _mapper;
+        std::list<MessagePtr> _msgs;                               // 待推送消息
+        std::unordered_map<std::string, MessagePtr> _durable_msgs; // 持久化消息hash
+        std::unordered_map<std::string, MessagePtr> _waitack_msgs; // 待确认消息hash
+    };
+
 }
 
 #endif
