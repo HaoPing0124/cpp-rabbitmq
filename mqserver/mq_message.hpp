@@ -241,7 +241,19 @@ namespace haoping
         using ptr = std::shared_ptr<QueueMessage>;
         QueueMessage(std::string &basedir, const std::string &qname) : _mapper(basedir, qname),
                                                                        _qname(qname), _valid_count(0), _total_count(0) {}
-        bool recovery();
+        bool recovery()
+        {
+            // 恢复历史消息
+            std::unique_lock<std::mutex> lock(_mutex);
+            _msgs = _mapper.gc();
+            for (auto &msg : _msgs)
+            {
+                _durable_msgs.insert(std::make_pair(msg->payload().properties().id(), msg));
+            }
+            _valid_count = _total_count = _msgs.size();
+            return true;
+        }
+
         bool insert(const BasicProperties *bp, const std::string &body, bool queue_is_durable);
         MessagePtr front();
 
