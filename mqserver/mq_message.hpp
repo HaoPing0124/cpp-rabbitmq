@@ -294,7 +294,20 @@ namespace haoping
             return true;
         }
 
-        MessagePtr front();
+        MessagePtr front()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            if (_msgs.size() == 0)
+            {
+                return MessagePtr();
+            }
+            // 获取一条队首消息：从_msgs中取出数据
+            MessagePtr msg = _msgs.front();
+            _msgs.pop_front();
+            // 将该消息对象，向待确认的hash表中添加一份，等到收到消息确认后进行删除
+            _waitack_msgs.insert(std::make_pair(msg->payload().properties().id(), msg));
+            return msg;
+        }
 
         // 每次删除消息后，判断是否需要垃圾回收
         bool remove(const std::string &msg_id);
