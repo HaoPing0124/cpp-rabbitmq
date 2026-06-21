@@ -254,7 +254,46 @@ namespace haoping
             return true;
         }
 
-        bool insert(const BasicProperties *bp, const std::string &body, bool queue_is_durable);
+        bool insert(const BasicProperties *bp, const std::string &body, bool queue_is_durable)
+        {
+            // 1. 构造消息对象
+            MessagePtr msg = std::make_shared<Message>();
+            msg->mutable_payload()->set_body(body);
+            if (bp != nullptr)
+            {
+                DeliveryMode mode = queue_is_durable ? bp->delivery_mode() : DeliveryMode::UNDURABLE;
+                msg->mutable_payload()->mutable_properties()->set_id(bp->id());
+                msg->mutable_payload()->mutable_properties()->set_delivery_mode(mode);
+                msg->mutable_payload()->mutable_properties()->set_routing_key(bp->routing_key());
+            }
+            else
+            {
+                DeliveryMode mode = queue_is_durable ? DeliveryMode::DURABLE : DeliveryMode::UNDURABLE;
+                msg->mutable_payload()->mutable_properties()->set_id(UUIDHelper::uuid());
+                msg->mutable_payload()->mutable_properties()->set_delivery_mode(mode);
+                msg->mutable_payload()->mutable_properties()->set_routing_key("");
+            }
+            std::unique_lock<std::mutex> lock(_mutex);
+            // 2. 判断消息是否需要持久化
+            if (msg->payload().properties().delivery_mode() == DeliveryMode::DURABLE)
+            {
+                msg->mutable_payload()->set_valid("1"); // 在持久化存储中表示数据有效
+                // 3. 进行持久化存储
+                bool ret = _mapper.insert(msg);
+                if (ret == false)
+                {
+                    DLOG("持久化存储消息：%s 失败了！", body.c_str());
+                    return false;
+                }
+                _valid_count += 1; // 持久化信息中的数据量+1
+                _total_count += 1;
+                _durable_msgs.insert(std::make_pair(msg->payload().properties().id(), msg));
+            }
+            // 4. 内存的管理
+            _msgs.push_back(msg);
+            return true;
+        }
+
         MessagePtr front();
 
         // 每次删除消息后，判断是否需要垃圾回收
