@@ -310,13 +310,40 @@ namespace haoping
         }
 
         // 每次删除消息后，判断是否需要垃圾回收
-        bool remove(const std::string &msg_id);
+        bool remove(const std::string &msg_id)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            // 1. 从待确认队列中查找消息
+            auto it = _waitack_msgs.find(msg_id);
+            if (it == _waitack_msgs.end())
+            {
+                DLOG("没有找到要删除的消息：%s!", msg_id.c_str());
+                return true;
+            }
+            // 2. 根据消息的持久化模式，决定是否删除持久化信息
+            if (it->second->payload().properties().delivery_mode() == DeliveryMode::DURABLE)
+            {
+                // 3. 删除持久化信息
+                _mapper.remove(it->second);
+                _durable_msgs.erase(msg_id);
+                _valid_count -= 1; // 持久化文件中有效消息数量 -1
+                gc();              // 内部判断是否需要垃圾回收，需要的话则回收一下
+            }
+            // 4. 删除内存中的信息
+            _waitack_msgs.erase(msg_id);
+            // DLOG("确认消息后，删除消息的管理成功：%s", it->second->payload().body().c_str());
+            return true;
+        }
+
         size_t getable_count();
         size_t total_count();
         size_t durable_count();
         size_t waitack_count();
         void clear();
 
+    private:
+        bool GCCheck();
+        void gc();
     private:
         std::mutex _mutex;
         std::string _qname;
