@@ -69,7 +69,7 @@ namespace haoping
         }
 
         // 新增消息的持久化
-        bool insert(const std::string &filename, MessagePtr &msg)
+        bool insert(MessagePtr &msg)
         {
             insert(_datafile, msg);
         }
