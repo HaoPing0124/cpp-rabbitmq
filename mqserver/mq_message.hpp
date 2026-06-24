@@ -335,7 +335,12 @@ namespace haoping
             return true;
         }
 
-        size_t getable_count();
+        // 获取表个数
+        size_t getable_count()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _msgs.size();
+        }
         size_t total_count();
         size_t durable_count();
         size_t waitack_count();
@@ -344,6 +349,7 @@ namespace haoping
     private:
         bool GCCheck();
         void gc();
+
     private:
         std::mutex _mutex;
         std::string _qname;
