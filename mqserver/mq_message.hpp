@@ -347,16 +347,37 @@ namespace haoping
         }
 
         // 总体消息数量
-        size_t total_count();
+        size_t total_count()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _total_count;
+        }
 
         // 持久化消息数量
-        size_t durable_count();
+        size_t durable_count()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _durable_msgs.size();
+        }
 
         // 待确认消息数量
-        size_t waitack_count();
+        size_t waitack_count()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _waitack_msgs.size();
+        }
 
         // 删除所有数据
-        void clear();
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _mapper.removeMsgFile();
+            _msgs.clear();
+            _durable_msgs.clear();
+            _waitack_msgs.clear();
+            _valid_count = 0;
+            _total_count = 0;
+        }
 
     private:
         bool GCCheck()
