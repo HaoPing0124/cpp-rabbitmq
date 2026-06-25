@@ -235,6 +235,7 @@ namespace haoping
         std::string _tmpfile;  // 临时文件
     };
 
+    // 以队列为单位进行管理
     class QueueMessage
     {
     public:
@@ -254,6 +255,7 @@ namespace haoping
             return true;
         }
 
+        // 新增消息
         bool insert(const BasicProperties *bp, const std::string &body, bool queue_is_durable)
         {
             // 1. 构造消息对象
@@ -294,6 +296,7 @@ namespace haoping
             return true;
         }
 
+        // 获取队首消息
         MessagePtr front()
         {
             std::unique_lock<std::mutex> lock(_mutex);
@@ -309,6 +312,7 @@ namespace haoping
             return msg;
         }
 
+        // 删除队列所有消息
         // 每次删除消息后，判断是否需要垃圾回收
         bool remove(const std::string &msg_id)
         {
@@ -352,10 +356,10 @@ namespace haoping
 
     private:
         std::mutex _mutex;
-        std::string _qname;
-        size_t _valid_count;
-        size_t _total_count;
-        MessageMapper _mapper;
+        std::string _qname;                                        // 队列名称
+        size_t _valid_count;                                       // 有效消息数量
+        size_t _total_count;                                       // 总体消息数量
+        MessageMapper _mapper;                                     // 持久化句柄
         std::list<MessagePtr> _msgs;                               // 待推送消息
         std::unordered_map<std::string, MessagePtr> _durable_msgs; // 持久化消息hash
         std::unordered_map<std::string, MessagePtr> _waitack_msgs; // 待确认消息hash
