@@ -261,7 +261,7 @@ namespace haoping
             // 1. 构造消息对象
             MessagePtr msg = std::make_shared<Message>();
             msg->mutable_payload()->set_body(body);
-            if (bp != nullptr)
+            if (bp != nullptr) // 若客户端有设置属性
             {
                 DeliveryMode mode = queue_is_durable ? bp->delivery_mode() : DeliveryMode::UNDURABLE;
                 msg->mutable_payload()->mutable_properties()->set_id(bp->id());
@@ -339,20 +339,59 @@ namespace haoping
             return true;
         }
 
-        // 获取表个数
+        // 可获取的消息数量
         size_t getable_count()
         {
             std::unique_lock<std::mutex> lock(_mutex);
             return _msgs.size();
         }
+
+        // 总体消息数量
         size_t total_count();
+
+        // 持久化消息数量
         size_t durable_count();
+
+        // 待确认消息数量
         size_t waitack_count();
+
+        // 删除所有数据
         void clear();
 
     private:
-        bool GCCheck();
-        void gc();
+        bool GCCheck()
+        {
+            // 持久化的消息总量大于2000， 且其中有效比例低于50%则需要持久化
+            if (_total_count > 2000 && _valid_count * 10 / _total_count < 5)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        void gc()
+        {
+            // 1. 进行垃圾回收，获取到垃圾回收后，有效的消息信息链表
+            if (GCCheck() == false)
+                return;
+            std::list<MessagePtr> msgs = _mapper.gc();
+            for (auto &msg : msgs)
+            {
+                auto it = _durable_msgs.find(msg->payload().properties().id());
+                if (it == _durable_msgs.end())
+                {
+                    DLOG("垃圾回收后，有一条持久化消息，在内存中没有进行管理!");
+                    _msgs.push_back(msg); /// 做法：重新添加到推送链表的末尾
+                    _durable_msgs.insert(std::make_pair(msg->payload().properties().id(), msg));
+                    continue;
+                }
+                // 2. 更新每一条消息的实际存储位置
+                it->second->set_offset(msg->offset());
+                it->second->set_length(msg->length());
+            }
+            // 3. 更新当前的有效消息数量 & 总的持久化消息数量
+            _valid_count = _total_count = msgs.size();
+        }
 
     private:
         std::mutex _mutex;
