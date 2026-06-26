@@ -433,6 +433,7 @@ namespace haoping
     class MessageManager
     {
     public:
+        using ptr = std::shared_ptr<MessageManager>;
         MessageManager(const std::string &basedir) : _basedir(basedir) {}
 
         // 初始化队列消息
@@ -587,6 +588,16 @@ namespace haoping
                 qmp = it->second;
             }
             return qmp->waitack_count();
+        }
+
+        // 清理消息数据
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            for (auto &qmsg : _queue_msgs)
+            {
+                qmsg.second->clear();
+            }
         }
 
     private:
