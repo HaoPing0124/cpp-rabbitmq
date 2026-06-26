@@ -523,15 +523,71 @@ namespace haoping
         }
 
         // 可获取的消息数量
-        size_t getable_count(const std::string &qname);
+        size_t getable_count(const std::string &qname)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("获取队列%s待推送消息数量失败：没有找到消息管理句柄!", qname.c_str());
+                    return 0;
+                }
+                qmp = it->second;
+            }
+            return qmp->getable_count();
+        }
 
         // 总体消息数量
-        size_t total_count(const std::string &qname);
+        size_t total_count(const std::string &qname)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("获取队列%s总持久化消息数量失败：没有找到消息管理句柄!", qname.c_str());
+                    return 0;
+                }
+                qmp = it->second;
+            }
+            return qmp->total_count();
+        }
         // 持久化消息数量
-        size_t durable_count(const std::string &qname);
+        size_t durable_count(const std::string &qname)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("获取队列%s有效持久化消息数量失败：没有找到消息管理句柄!", qname.c_str());
+                    return 0;
+                }
+                qmp = it->second;
+            }
+            return qmp->durable_count();
+        }
 
         // 待确认消息数量
-        size_t waitack_count(const std::string &qname);
+        size_t waitack_count(const std::string &qname)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("获取队列%s待确认消息数量失败：没有找到消息管理句柄!", qname.c_str());
+                    return 0;
+                }
+                qmp = it->second;
+            }
+            return qmp->waitack_count();
+        }
 
     private:
         std::mutex _mutex;
