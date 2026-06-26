@@ -261,6 +261,8 @@ namespace haoping
             // 1. 构造消息对象
             MessagePtr msg = std::make_shared<Message>();
             msg->mutable_payload()->set_body(body);
+
+            // 处理属性(分配UUID和路由键等)
             if (bp != nullptr) // 若客户端有设置属性
             {
                 DeliveryMode mode = queue_is_durable ? bp->delivery_mode() : DeliveryMode::UNDURABLE;
@@ -289,14 +291,15 @@ namespace haoping
                 }
                 _valid_count += 1; // 持久化信息中的数据量+1
                 _total_count += 1;
+                // 记录到持久化内存表中
                 _durable_msgs.insert(std::make_pair(msg->payload().properties().id(), msg));
             }
-            // 4. 内存的管理
+            // 4. 内存的管理(添加到带分发消息队列中)
             _msgs.push_back(msg);
             return true;
         }
 
-        // 获取队首消息
+        // 获取队首消息(ACK机制核心)
         MessagePtr front()
         {
             std::unique_lock<std::mutex> lock(_mutex);
@@ -307,12 +310,13 @@ namespace haoping
             // 获取一条队首消息：从_msgs中取出数据
             MessagePtr msg = _msgs.front();
             _msgs.pop_front();
-            // 将该消息对象，向待确认的hash表中添加一份，等到收到消息确认后进行删除
+            // 将该消息对象，向待确认的hash表中添加一份，等到收到消息确认后才能进行真正删除
             _waitack_msgs.insert(std::make_pair(msg->payload().properties().id(), msg));
             return msg;
         }
 
         // 删除队列所有消息
+        // 收到消费者的确认回执(ACK)，执行真正的物理与逻辑删除
         // 每次删除消息后，判断是否需要垃圾回收
         bool remove(const std::string &msg_id)
         {
@@ -429,24 +433,34 @@ namespace haoping
     class MessageManager
     {
     public:
-        MessageManager(const std::string &basedir) :_basedir(basedir) {}
+        MessageManager(const std::string &basedir) : _basedir(basedir) {}
 
         // 初始化队列消息
         void initQueueMessage(const std::string &qname)
         {
             std::unique_lock<std::mutex> lock(_mutex);
             auto it = _queue_msgs.find(qname);
-            if(it != _queue_msgs.end())
+            if (it != _queue_msgs.end())
             {
-                return ;
+                return;
             }
-            
+
             QueueMessage::ptr qmp = std::make_shared<QueueMessage>(_basedir, qname);
             _queue_msgs.insert(std::make_pair(qname, qmp));
         }
 
         // 销毁队列消息
-        void destroyQueueMessage(const std::string &qname);
+        void destroyQueueMessage(const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _queue_msgs.find(qname);
+            if (it == _queue_msgs.end())
+            {
+                return;
+            }
+            it->second->clear();
+            _queue_msgs.erase(qname);
+        }
 
         // 新增消息
         // 参数：1.向哪个队列新增消息 2.消息属性 3.消息内容 4.是否持久化
