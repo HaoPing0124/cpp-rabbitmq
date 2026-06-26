@@ -438,39 +438,89 @@ namespace haoping
         // 初始化队列消息
         void initQueueMessage(const std::string &qname)
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            auto it = _queue_msgs.find(qname);
-            if (it != _queue_msgs.end())
+            QueueMessage::ptr qmp;
             {
-                return;
-            }
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it != _queue_msgs.end())
+                {
+                    return;
+                }
 
-            QueueMessage::ptr qmp = std::make_shared<QueueMessage>(_basedir, qname);
-            _queue_msgs.insert(std::make_pair(qname, qmp));
+                qmp = std::make_shared<QueueMessage>(_basedir, qname);
+                _queue_msgs.insert(std::make_pair(qname, qmp));
+            }
+            qmp->recovery();
         }
 
         // 销毁队列消息
         void destroyQueueMessage(const std::string &qname)
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            auto it = _queue_msgs.find(qname);
-            if (it == _queue_msgs.end())
+            QueueMessage::ptr qmp;
             {
-                return;
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    return;
+                }
+                qmp = it->second;
+                _queue_msgs.erase(it);
             }
-            it->second->clear();
-            _queue_msgs.erase(qname);
+            qmp->clear();
         }
 
         // 新增消息
         // 参数：1.向哪个队列新增消息 2.消息属性 3.消息内容 4.是否持久化
-        bool insert(const std::string &qname, BasicProperties *bp, const std::string &body, DeliveryMode mode);
-
+        bool insert(const std::string &qname, BasicProperties *bp, const std::string &body, bool queue_is_durable)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("向队列%s新增消息失败：没有找到消息管理句柄!", qname.c_str());
+                    return false;
+                }
+                qmp = it->second;
+            }
+            return qmp->insert(bp, body, queue_is_durable);
+        }
         // 获取指定队列的队首消息
-        MessagePtr front(const std::string &qname);
+        MessagePtr front(const std::string &qname)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("获取队列%s队首消息失败：没有找到消息管理句柄!", qname.c_str());
+                    return MessagePtr();
+                }
+                qmp = it->second;
+            }
+            return qmp->front();
+        }
 
         // 确认消息
-        void ack(const std::string &qname, const std::string &msg_id);
+        void ack(const std::string &qname, const std::string &msg_id)
+        {
+            QueueMessage::ptr qmp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _queue_msgs.find(qname);
+                if (it == _queue_msgs.end())
+                {
+                    DLOG("确认队列%s消息%s失败：没有找到消息管理句柄!", qname.c_str(), msg_id.c_str());
+                    return;
+                }
+                qmp = it->second;
+            }
+            qmp->remove(msg_id);
+            return;
+        }
 
         // 可获取的消息数量
         size_t getable_count(const std::string &qname);
