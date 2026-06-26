@@ -425,6 +425,44 @@ namespace haoping
         std::unordered_map<std::string, MessagePtr> _waitack_msgs; // 待确认消息hash
     };
 
+    // 消息管理类
+    class MessageManager
+    {
+    public:
+        MessageManager(const std::string &basedir);
+
+        // 初始化队列消息
+        void initQueueMessage(const std::string &qname);
+
+        // 销毁队列消息
+        void destroyQueueMessage(const std::string &qname);
+
+        // 新增消息
+        // 参数：1.向哪个队列新增消息 2.消息属性 3.消息内容 4.是否持久化
+        bool insert(const std::string &qname, BasicProperties *bp, const std::string &body, DeliveryMode mode);
+
+        // 获取指定队列的队首消息
+        MessagePtr front(const std::string &qname);
+
+        // 确认消息
+        void ack(const std::string &qname, const std::string &msg_id);
+
+        // 可获取的消息数量
+        size_t getable_count(const std::string &qname);
+
+        // 总体消息数量
+        size_t total_count(const std::string &qname);
+        // 持久化消息数量
+        size_t durable_count(const std::string &qname);
+
+        // 待确认消息数量
+        size_t waitack_count(const std::string &qname);
+
+    private:
+        std::mutex _mutex;
+        std::string _basedir;
+        std::unordered_map<std::string, QueueMessage::ptr> _queue_msgs; // 队列管理对象
+    };
 }
 
 #endif
