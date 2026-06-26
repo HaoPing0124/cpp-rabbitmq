@@ -429,10 +429,21 @@ namespace haoping
     class MessageManager
     {
     public:
-        MessageManager(const std::string &basedir);
+        MessageManager(const std::string &basedir) :_basedir(basedir) {}
 
         // 初始化队列消息
-        void initQueueMessage(const std::string &qname);
+        void initQueueMessage(const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _queue_msgs.find(qname);
+            if(it != _queue_msgs.end())
+            {
+                return ;
+            }
+            
+            QueueMessage::ptr qmp = std::make_shared<QueueMessage>(_basedir, qname);
+            _queue_msgs.insert(std::make_pair(qname, qmp));
+        }
 
         // 销毁队列消息
         void destroyQueueMessage(const std::string &qname);
