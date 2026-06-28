@@ -35,6 +35,25 @@ TEST(message_test, insert_test)
     ASSERT_EQ(mmp->waitack_count("queue1"), 0);
 }
 
+//删除消息测试：确认一条消息，查看持久化消息数量，待确认消息数量
+TEST(message_test, delete_test) {
+    ASSERT_EQ(mmp->getable_count("queue1"), 5);
+    haoping::MessagePtr msg1 = mmp->front("queue1");
+    ASSERT_NE(msg1.get(), nullptr);
+    ASSERT_EQ(msg1->payload().body(), std::string("Hello World-1"));
+    ASSERT_EQ(mmp->getable_count("queue1"), 4);
+    ASSERT_EQ(mmp->waitack_count("queue1"), 1);
+    mmp->ack("queue1", msg1->payload().properties().id());
+    ASSERT_EQ(mmp->waitack_count("queue1"), 0);
+    ASSERT_EQ(mmp->durable_count("queue1"), 3);
+    ASSERT_EQ(mmp->total_count("queue1"), 4);
+}
+
+//销毁测试
+TEST(message_test, clear) {
+    mmp->destroyQueueMessage("queue1");
+}
+
 int main(int argc, char *argv[])
 {
     testing::InitGoogleTest(&argc, argv);
