@@ -35,8 +35,44 @@ TEST(message_test, insert_test)
     ASSERT_EQ(mmp->waitack_count("queue1"), 0);
 }
 
-//删除消息测试：确认一条消息，查看持久化消息数量，待确认消息数量
-TEST(message_test, delete_test) {
+// 获取消息测试：获取一条消息，然后在不进行确认的情况下，查看可获取消息数量，待确认消息数量，以及测试消息获取的顺序
+TEST(message_test, select_test)
+{
+    ASSERT_EQ(mmp->getable_count("queue1"), 5);
+    haoping::MessagePtr msg1 = mmp->front("queue1");
+    ASSERT_NE(msg1.get(), nullptr);
+    ASSERT_EQ(msg1->payload().body(), std::string("Hello World-1"));
+    ASSERT_EQ(mmp->getable_count("queue1"), 4);
+    ASSERT_EQ(mmp->waitack_count("queue1"), 1);
+
+    haoping::MessagePtr msg2 = mmp->front("queue1");
+    ASSERT_NE(msg2.get(), nullptr);
+    ASSERT_EQ(msg2->payload().body(), std::string("Hello World-2"));
+    ASSERT_EQ(mmp->getable_count("queue1"), 3);
+    ASSERT_EQ(mmp->waitack_count("queue1"), 2);
+
+    haoping::MessagePtr msg3 = mmp->front("queue1");
+    ASSERT_NE(msg3.get(), nullptr);
+    ASSERT_EQ(msg3->payload().body(), std::string("Hello World-3"));
+    ASSERT_EQ(mmp->getable_count("queue1"), 2);
+    ASSERT_EQ(mmp->waitack_count("queue1"), 3);
+
+    haoping::MessagePtr msg4 = mmp->front("queue1");
+    ASSERT_NE(msg4.get(), nullptr);
+    ASSERT_EQ(msg4->payload().body(), std::string("Hello World-4"));
+    ASSERT_EQ(mmp->getable_count("queue1"), 1);
+    ASSERT_EQ(mmp->waitack_count("queue1"), 4);
+
+    haoping::MessagePtr msg5 = mmp->front("queue1");
+    ASSERT_NE(msg5.get(), nullptr);
+    ASSERT_EQ(msg5->payload().body(), std::string("Hello World-5"));
+    ASSERT_EQ(mmp->getable_count("queue1"), 0);
+    ASSERT_EQ(mmp->waitack_count("queue1"), 5);
+}
+
+// 删除消息测试：确认一条消息，查看持久化消息数量，待确认消息数量
+TEST(message_test, delete_test)
+{
     ASSERT_EQ(mmp->getable_count("queue1"), 5);
     haoping::MessagePtr msg1 = mmp->front("queue1");
     ASSERT_NE(msg1.get(), nullptr);
@@ -49,8 +85,9 @@ TEST(message_test, delete_test) {
     ASSERT_EQ(mmp->total_count("queue1"), 4);
 }
 
-//销毁测试
-TEST(message_test, clear) {
+// 销毁测试
+TEST(message_test, clear)
+{
     mmp->destroyQueueMessage("queue1");
 }
 
