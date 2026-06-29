@@ -139,6 +139,7 @@ namespace haoping
     class BindingManager
     {
     public:
+        using ptr = std::shared_ptr<BindingManager>;
         BindingManager(const std::string &dbfile)
             : _mapper(dbfile)
         {
