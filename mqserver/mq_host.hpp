@@ -19,13 +19,12 @@ namespace haoping
               _bmp(std::make_shared<BindingManager>(dbfile)),
               _mmp(std::make_shared<MessageManager>(basedir))
         {
-            //获取到所有的队列信息，通过队列名称恢复历史消息数据
+            // 获取到所有的队列信息，通过队列名称恢复历史消息数据
             QueueMap qm = _mqmp->allQueues();
-            for(auto &q : qm)
+            for (auto &q : qm)
             {
                 _mmp->initQueueMessage(q.first);
             }
-            
         }
 
         // 声明交换机
@@ -39,7 +38,7 @@ namespace haoping
         // 删除交换机
         void deleteExchange(const std::string &name)
         {
-            //删除交换机的时候，需要将交换机相关的绑定信息也删除掉。
+            // 删除交换机的时候，需要将交换机相关的绑定信息也删除掉。
             _bmp->removeExchangeBindings(name);
             return _emp->deleteExchange(name);
         }
@@ -49,10 +48,22 @@ namespace haoping
                           bool qdurable,
                           bool qexclusive,
                           bool qauto_delete,
-                          const std::unordered_map<std::string, std::string> &qargs);
+                          const std::unordered_map<std::string, std::string> &qargs)
+        {
+            // 初始化队列的消息句柄（消息的存储管理）
+            // 队列的创建
+            _mmp->initQueueMessage(qname);
+            return _mqmp->declareQueue(qname, qdurable, qexclusive, qauto_delete, qargs);
+        }
 
         // 删除队列
-        void deleteQueue(const std::string &name);
+        void deleteQueue(const std::string &name)
+        {
+            // 删除的时候队列相关的数据有两个：队列的消息，队列的绑定信息
+            _mmp->destroyQueueMessage(name);
+            _bmp->removeQueueBindings(name);
+            return _mqmp->deleteQueue(name);
+        }
 
         // 增加绑定信息
         bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool durable);
@@ -73,10 +84,10 @@ namespace haoping
 
     private:
         std::string _host_name;
-        ExchangeManager::ptr _emp;
-        MsgQueueManager::ptr _mqmp;
-        BindingManager::ptr _bmp;
-        MessageManager::ptr _mmp;
+        ExchangeManager::ptr _emp;  // 交换机操作句柄
+        MsgQueueManager::ptr _mqmp; // 队列操作句柄
+        BindingManager::ptr _bmp;   // 绑定信息操作句柄
+        MessageManager::ptr _mmp;   // 消息管理操作句柄
     };
 }
 
