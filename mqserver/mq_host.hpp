@@ -125,7 +125,13 @@ namespace haoping
         }
 
         // 清理数据
-        void clear();
+        void clear()
+        {
+            _emp->clear();
+            _mqmp->clear();
+            _bmp->clear();
+            _mmp->clear();
+        }
 
     private:
         std::string _host_name;
