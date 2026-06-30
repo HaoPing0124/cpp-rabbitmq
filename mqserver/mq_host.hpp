@@ -100,13 +100,29 @@ namespace haoping
         }
 
         // 发布消息
-        bool basicPublish(const std::string &qname, BasicProperties *bp, const std::string &body);
+        bool basicPublish(const std::string &qname, BasicProperties *bp, const std::string &body)
+        {
+            // 检查是否有此队列
+            MsgQueue::ptr mqp = _mqmp->selectQueue(qname);
+            if (mqp.get() == nullptr)
+            {
+                DLOG("发布消息失败，队列%s不存在！", qname.c_str());
+                return false;
+            }
+            return _mmp->insert(qname, bp, body, mqp->durable);
+        }
 
         // 推送消息(消费)
-        MessagePtr basicConsume(const std::string &qname);
+        MessagePtr basicConsume(const std::string &qname)
+        {
+            return _mmp->front(qname);
+        }
 
         // 确认请求
-        void basicAck(const std::string &qname, const std::string &msgid);
+        void basicAck(const std::string &qname, const std::string &msgid)
+        {
+            return _mmp->ack(qname, msgid);
+        }
 
         // 清理数据
         void clear();
