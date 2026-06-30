@@ -68,12 +68,15 @@ namespace haoping
         // 增加绑定信息
         bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool durable)
         {
+            // 检查是否有此交换机
             Exchange::ptr ep = _emp->selectExchange(ename);
             if (ep.get() == nullptr)
             {
                 DLOG("进行队列绑定失败，交换机%s不存在！", ename.c_str());
                 return false;
             }
+
+            // 检查是否有此队列
             MsgQueue::ptr mqp = _mqmp->selectQueue(qname);
             if (mqp.get() == nullptr)
             {

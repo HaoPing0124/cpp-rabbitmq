@@ -155,6 +155,8 @@ namespace haoping
         {
             _msg_queues = _mapper.recovery();
         }
+
+        // 参数：1.队列名 2.是否持久化 3.是否独立 4.是否自动删除 5.其他参数
         bool declareQueue(const std::string &qname,
                           bool qdurable,
                           bool qexclusive,
