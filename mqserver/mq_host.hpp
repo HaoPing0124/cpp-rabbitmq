@@ -66,9 +66,35 @@ namespace haoping
         }
 
         // 增加绑定信息
-        bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool durable);
+        bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool durable)
+        {
+            Exchange::ptr ep = _emp->selectExchange(ename);
+            if (ep.get() == nullptr)
+            {
+                DLOG("进行队列绑定失败，交换机%s不存在！", ename.c_str());
+                return false;
+            }
+            MsgQueue::ptr mqp = _mqmp->selectQueue(qname);
+            if (mqp.get() == nullptr)
+            {
+                DLOG("进行队列绑定失败，队列%s不存在！", qname.c_str());
+                return false;
+            }
+            // 交换机 和 队列同时持久化才能设置为持久化
+            return _bmp->bind(ename, qname, key, ep->durable && mqp->durable);
+        }
+
         // 解除绑定信息
-        bool unBind(const std::string &ename, const std::string &qname);
+        bool unBind(const std::string &ename, const std::string &qname)
+        {
+            return _bmp->unBind(ename, qname);
+        }
+
+        // 获取交换机绑定信息
+        MsgQueueBindingMap exchangeBindings(const std::string &ename)
+        {
+            return _bmp->getExchangeBindings(ename);
+        }
 
         // 发布消息
         bool basicPublish(const std::string &qname, BasicProperties *bp, const std::string &body);
