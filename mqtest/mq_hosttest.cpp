@@ -89,6 +89,17 @@ TEST_F(HostTest, remove_exchange)
     ASSERT_EQ(_host->existsBinding("exchange1", "queue3"), false);
 }
 
+TEST_F(HostTest, remove_queue)
+{
+    _host->deleteQueue("queue1");
+    ASSERT_EQ(_host->existsBinding("exchange1", "queue1"), false);
+    ASSERT_EQ(_host->existsBinding("exchange2", "queue1"), false);
+    ASSERT_EQ(_host->existsBinding("exchange3", "queue1"), false);
+
+    haoping::MessagePtr msg1 = _host->basicConsume("queue1");
+    ASSERT_EQ(msg1.get(), nullptr);
+}
+
 TEST_F(HostTest, ack_message)
 {
     haoping::MessagePtr msg1 = _host->basicConsume("queue1");
