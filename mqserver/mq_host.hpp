@@ -12,6 +12,7 @@ namespace haoping
     class VirtualHost
     {
     public:
+        using ptr = std::shared_ptr<VirtualHost>;
         VirtualHost(const std::string const host_name, std::string &basedir, const std::string &dbfile)
             : _host_name(host_name),
               _emp(std::make_shared<ExchangeManager>(dbfile)),
@@ -43,6 +44,18 @@ namespace haoping
             return _emp->deleteExchange(name);
         }
 
+        // 判断交换机是否存在
+        bool existsExchange(const std::string &name)
+        {
+            return _emp->exists(name);
+        }
+
+        // 查找交换机
+        Exchange::ptr selectExchange(const std::string &ename)
+        {
+            return _emp->selectExchange(ename);
+        }
+
         // 声明队列
         bool declareQueue(const std::string &qname,
                           bool qdurable,
@@ -65,8 +78,20 @@ namespace haoping
             return _mqmp->deleteQueue(name);
         }
 
+        // 判断队列是否存在
+        bool existsQueue(const std::string &name)
+        {
+            return _mqmp->exists(name);
+        }
+
+        // 获取所有队列
+        QueueMap allQueues()
+        {
+            return _mqmp->allQueues();
+        }
+
         // 增加绑定信息
-        bool bind(const std::string &ename, const std::string &qname, const std::string &key, bool durable)
+        bool bind(const std::string &ename, const std::string &qname, const std::string &key)
         {
             // 检查是否有此交换机
             Exchange::ptr ep = _emp->selectExchange(ename);
@@ -97,6 +122,12 @@ namespace haoping
         MsgQueueBindingMap exchangeBindings(const std::string &ename)
         {
             return _bmp->getExchangeBindings(ename);
+        }
+
+        // 判断绑定信息是否存在
+        bool existsBinding(const std::string &ename, const std::string &qname)
+        {
+            return _bmp->exists(ename, qname);
         }
 
         // 发布消息
