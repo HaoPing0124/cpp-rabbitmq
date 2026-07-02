@@ -13,8 +13,8 @@ namespace haoping
     {
     public:
         using ptr = std::shared_ptr<VirtualHost>;
-        VirtualHost(const std::string const host_name, std::string &basedir, const std::string &dbfile)
-            : _host_name(host_name),
+        VirtualHost(const std::string &hname, const std::string &basedir, const std::string &dbfile)
+            : _host_name(hname),
               _emp(std::make_shared<ExchangeManager>(dbfile)),
               _mqmp(std::make_shared<MsgQueueManager>(dbfile)),
               _bmp(std::make_shared<BindingManager>(dbfile)),

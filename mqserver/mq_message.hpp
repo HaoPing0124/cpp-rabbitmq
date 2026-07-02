@@ -71,7 +71,7 @@ namespace haoping
         // 新增消息的持久化
         bool insert(MessagePtr &msg)
         {
-            insert(_datafile, msg);
+            return insert(_datafile, msg);
         }
 
         // 删除消息的持久化

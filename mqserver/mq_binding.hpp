@@ -177,16 +177,17 @@ namespace haoping
             if (eit == _bindings.end())
             {
                 // 没有交换机相关的绑定信息
-                return;
+                return false;
             }
             auto qit = eit->second.find(qname);
             if (qit == eit->second.end())
             {
                 // 交换机没有队列相关的绑定信息
-                return;
+                return false;
             }
             _mapper.remove(ename, qname);
             _bindings[ename].erase(qname);
+            return true;
         }
 
         // 移除交换机绑定信息
