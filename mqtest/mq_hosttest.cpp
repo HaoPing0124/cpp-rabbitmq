@@ -81,6 +81,14 @@ TEST_F(HostTest, init_test)
     ASSERT_EQ(msg4.get(), nullptr);
 }
 
+TEST_F(HostTest, remove_exchange)
+{
+    _host->deleteExchange("exchange1");
+    ASSERT_EQ(_host->existsBinding("exchange1", "queue1"), false);
+    ASSERT_EQ(_host->existsBinding("exchange1", "queue2"), false);
+    ASSERT_EQ(_host->existsBinding("exchange1", "queue3"), false);
+}
+
 TEST_F(HostTest, ack_message)
 {
     haoping::MessagePtr msg1 = _host->basicConsume("queue1");
