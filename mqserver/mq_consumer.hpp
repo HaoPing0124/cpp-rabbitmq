@@ -10,16 +10,23 @@
 #include <vector>
 #include <functional>
 
-namespace bitmq
+namespace haoping
 {
     struct Consumer
     {
+        using ConsumerCallback = std::function<void(const std::string, const BasicProperties *bp, const std::string)>;
         using ptr = std::shared_ptr<Consumer>;
         std::string tag;   // 消费者标识
         std::string qname; // 消费者订阅的队列名称
         bool auto_ack;     // 自动确认标志
+        ConsumerCallback callback;
 
         Consumer()
+        {
+            DLOG("new Consumer: %p", this);
+        }
+
+        Consumer(const std::string &ctag, const std::string &queue_name, bool ack_flag, const ConsumerCallback &cb) : tag(ctag), qname(queue_name), auto_ack(ack_flag), callback(std::move(cb))
         {
             DLOG("new Consumer: %p", this);
         }
@@ -48,10 +55,10 @@ namespace bitmq
 
         // 是否为空
         bool empty();
-        
+
         // 判断指定消费者是否存在
         bool exists();
-        
+
         // 清理所有消费者
         void clear();
 
