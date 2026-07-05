@@ -68,6 +68,25 @@ namespace haoping
         uint64_t _rr_seq; // 轮转序号
         std::vector<Consumer::ptr> _consumers;
     };
+
+    class ConsumerManager
+    {
+    public:
+        using ptr = std::shared_ptr<ConsumerManager>;
+        ConsumerManager() {}
+        void initQueueConsumer();
+        void destroyQueueConsumer();
+        Consumer::ptr create();
+        void remove();
+        Consumer::ptr choose();
+        bool empty();
+        bool exists();
+        void clear();
+
+    private:
+        std::mutex _mutex;
+        std::unordered_map<std::string, QueueConsumer::ptr> _qconsumers;
+    };
 }
 
 #endif
