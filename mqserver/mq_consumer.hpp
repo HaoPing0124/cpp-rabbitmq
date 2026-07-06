@@ -90,16 +90,55 @@ namespace haoping
         }
 
         // 队列获取消费者：RR轮转获取
-        Consumer::ptr choose();
+        Consumer::ptr choose()
+        {
+            // 1.加锁
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            if (_consumers.size() == 0)
+            {
+                return Consumer::ptr();
+            }
+
+            // 2.获取当前轮转到的下标
+            int idx = _rr_seq % _consumers.size();
+            _rr_seq++;
+
+            // 3.获取对象并返回
+            return _consumers[idx];
+        }
 
         // 是否为空
-        bool empty();
+        bool empty()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            return _consumers.size() == 0;
+        }
 
         // 判断指定消费者是否存在
-        bool exists(const std::string &ctag);
+        bool exists(const std::string &ctag)
+        {
+            // 1.加锁
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // 2. 遍历查找
+            for (auto it = _consumers.begin(); it != _consumers.end(); ++it)
+            {
+                if ((*it)->tag == ctag)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         // 清理所有消费者
-        void clear();
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _consumers.clear();
+            _rr_seq = 0;
+        }
 
     private:
         std::string _qname; // 队列名称
