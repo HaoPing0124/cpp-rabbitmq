@@ -12,9 +12,9 @@
 
 namespace haoping
 {
+    using ConsumerCallback = std::function<void(const std::string, const BasicProperties *bp, const std::string)>;
     struct Consumer
     {
-        using ConsumerCallback = std::function<void(const std::string, const BasicProperties *bp, const std::string)>;
         using ptr = std::shared_ptr<Consumer>;
         std::string tag;   // 消费者标识
         std::string qname; // 消费者订阅的队列名称
@@ -26,7 +26,9 @@ namespace haoping
             DLOG("new Consumer: %p", this);
         }
 
-        Consumer(const std::string &ctag, const std::string &queue_name, bool ack_flag, const ConsumerCallback &cb) : tag(ctag), qname(queue_name), auto_ack(ack_flag), callback(std::move(cb))
+        // 参数：1.标识 2.队列名称 3.ack标志 4.回调函数
+        Consumer(const std::string &ctag, const std::string &queue_name, bool ack_flag, ConsumerCallback &cb)
+            : tag(ctag), qname(queue_name), auto_ack(ack_flag), callback(std::move(cb))
         {
             DLOG("new Consumer: %p", this);
         }
@@ -42,13 +44,50 @@ namespace haoping
     {
     public:
         using ptr = std::shared_ptr<QueueConsumer>;
-        QueueConsumer(const std::string &qname) : _qname(qname), _rr_seq(0) {}
+        QueueConsumer(const std::string &qname)
+            : _qname(qname), _rr_seq(0) {}
 
         // 队列新增消费者
-        Consumer::ptr create();
+        Consumer::ptr create(const std::string &ctag, const std::string &queue_name, bool ack_flag, ConsumerCallback &cb)
+        {
+            // 1. 加锁
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // 2. 判断消费者是否重复
+            for (auto &consumer : _consumers)
+            {
+                // 有重复
+                if (consumer->tag == ctag)
+                {
+                    return Consumer::ptr();
+                }
+            }
+
+            // 3. 没有重复则新增--构造对象
+            auto consumer = std::make_shared<Consumer>(ctag, queue_name, ack_flag, cb);
+
+            // 4. 添加管理后返回对象
+            _consumers.push_back(consumer);
+            return consumer;
+        }
 
         // 队列移除消费者
-        void remove();
+        void remove(const std::string &ctag)
+        {
+            // 1. 加锁
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // 2. 遍历查找--删除
+            for (auto it = _consumers.begin(); it != _consumers.end(); ++it)
+            {
+                if ((*it)->tag == ctag)
+                {
+                    _consumers.erase(it);
+                    return;
+                }
+            }
+            return;
+        }
 
         // 队列获取消费者：RR轮转获取
         Consumer::ptr choose();
@@ -57,15 +96,15 @@ namespace haoping
         bool empty();
 
         // 判断指定消费者是否存在
-        bool exists();
+        bool exists(const std::string &ctag);
 
         // 清理所有消费者
         void clear();
 
     private:
-        std::string _qname;
-        std::mutex _mutex;
-        uint64_t _rr_seq; // 轮转序号
+        std::string _qname; // 队列名称
+        std::mutex _mutex;  // 互斥锁
+        uint64_t _rr_seq;   // 轮转序号
         std::vector<Consumer::ptr> _consumers;
     };
 
