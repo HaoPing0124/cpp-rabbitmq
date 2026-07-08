@@ -152,8 +152,27 @@ namespace haoping
     public:
         using ptr = std::shared_ptr<ConsumerManager>;
         ConsumerManager() {}
-        void initQueueConsumer();
-        void destroyQueueConsumer();
+        void initQueueConsumer(const std::string &qname)
+        {
+            // 1. 加锁
+            std::unique_lock<std::mutex> lock(_mutex);
+            // 2. 重复判断
+            auto it = _qconsumers.find(qname);
+            if (it != _qconsumers.end())
+            {
+                return;
+            }
+            // 3. 新增
+            auto qconsumers = std::make_shared<QueueConsumer>(qname);
+            _qconsumers.insert(std::make_pair(qname, qconsumers));
+        }
+
+        void destroyQueueConsumer(const std::string &qname)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _qconsumers.erase(qname);
+        }
+        
         Consumer::ptr create();
         void remove();
         Consumer::ptr choose();
