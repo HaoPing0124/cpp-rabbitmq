@@ -206,10 +206,59 @@ namespace haoping
             return qcp->remove(ctag);
         }
 
-        Consumer::ptr choose();
-        bool empty();
-        bool exists();
-        void clear();
+        Consumer::ptr choose(const std::string &queue_name)
+        {
+            QueueConsumer::ptr qcp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _qconsumers.find(queue_name);
+                if (it == _qconsumers.end())
+                {
+                    DLOG("没有找到队列 %s 的消费者管理句柄！", queue_name.c_str());
+                    return Consumer::ptr();
+                }
+                qcp = it->second;
+            }
+            return qcp->choose();
+        }
+
+        bool empty(const std::string &queue_name)
+        {
+            QueueConsumer::ptr qcp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _qconsumers.find(queue_name);
+                if (it == _qconsumers.end())
+                {
+                    DLOG("没有找到队列 %s 的消费者管理句柄！", queue_name.c_str());
+                    return false;
+                }
+                qcp = it->second;
+            }
+            return qcp->empty();
+        }
+
+        bool exists(const std::string &ctag, const std::string &queue_name)
+        {
+            QueueConsumer::ptr qcp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _qconsumers.find(queue_name);
+                if (it == _qconsumers.end())
+                {
+                    DLOG("没有找到队列 %s 的消费者管理句柄！", queue_name.c_str());
+                    return false;
+                }
+                qcp = it->second;
+            }
+            return qcp->exists(ctag);
+        }
+
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _qconsumers.clear();
+        }
 
     private:
         std::mutex _mutex;
