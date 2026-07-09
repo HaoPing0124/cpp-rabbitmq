@@ -48,7 +48,7 @@ namespace haoping
             : _qname(qname), _rr_seq(0) {}
 
         // 队列新增消费者
-        Consumer::ptr create(const std::string &ctag, const std::string &queue_name, bool ack_flag, ConsumerCallback &cb)
+        Consumer::ptr create(const std::string &ctag, const std::string &queue_name, bool ack_flag, const ConsumerCallback &cb)
         {
             // 1. 加锁
             std::unique_lock<std::mutex> lock(_mutex);
@@ -172,9 +172,40 @@ namespace haoping
             std::unique_lock<std::mutex> lock(_mutex);
             _qconsumers.erase(qname);
         }
-        
-        Consumer::ptr create();
-        void remove();
+
+        Consumer::ptr create(const std::string &ctag, const std::string &queue_name, bool ack_flag, const ConsumerCallback &cb)
+        {
+            // 获取队列的消费者管理单元句柄，通过句柄完成新建
+            QueueConsumer::ptr qcp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _qconsumers.find(queue_name);
+                if (it == _qconsumers.end())
+                {
+                    DLOG("没有找到队列 %s 的消费者管理句柄！", queue_name.c_str());
+                    return Consumer::ptr();
+                }
+                qcp = it->second;
+            }
+            return qcp->create(ctag, queue_name, ack_flag, cb);
+        }
+
+        void remove(const std::string &ctag, const std::string &queue_name)
+        {
+            QueueConsumer::ptr qcp;
+            {
+                std::unique_lock<std::mutex> lock(_mutex);
+                auto it = _qconsumers.find(queue_name);
+                if (it == _qconsumers.end())
+                {
+                    DLOG("没有找到队列 %s 的消费者管理句柄！", queue_name.c_str());
+                    return;
+                }
+                qcp = it->second;
+            }
+            return qcp->remove(ctag);
+        }
+
         Consumer::ptr choose();
         bool empty();
         bool exists();
