@@ -27,7 +27,7 @@ namespace haoping
         }
 
         // 参数：1.标识 2.队列名称 3.ack标志 4.回调函数
-        Consumer(const std::string &ctag, const std::string &queue_name, bool ack_flag, ConsumerCallback &cb)
+        Consumer(const std::string &ctag, const std::string &queue_name, bool ack_flag, const ConsumerCallback &cb)
             : tag(ctag), qname(queue_name), auto_ack(ack_flag), callback(std::move(cb))
         {
             DLOG("new Consumer: %p", this);

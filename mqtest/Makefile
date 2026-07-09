@@ -1,4 +1,6 @@
-.PHONY:mq_routetest
+.PHONY:mq_consumertest
+mq_consumertest:mq_consumertest.cpp ../mqcommon/mq_msg.pb.cc
+	g++ -o $@ $^ -std=c++17 -lgtest -lprotobuf -lsqlite3
 mq_routetest:mq_routetest.cpp ../mqcommon/mq_msg.pb.cc
 	g++ -o $@ $^ -std=c++17 -lgtest -lprotobuf -lsqlite3
 mq_hosttest:mq_hosttest.cpp ../mqcommon/mq_msg.pb.cc
