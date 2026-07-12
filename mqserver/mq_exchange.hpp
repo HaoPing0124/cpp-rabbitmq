@@ -27,12 +27,12 @@ namespace haoping
         // 4.是否自动删除标志
         bool auto_delete;
         // 5.其他参数
-        std::unordered_map<std::string, std::string> args;
+        google::protobuf::Map<std::string, std::string> args;
 
         Exchange() {}
 
         Exchange(const std::string &ename, ExchangeType etype,
-                 bool edurable, bool eauto_delete, std::unordered_map<std::string, std::string> &eargs)
+                 bool edurable, bool eauto_delete, google::protobuf::Map<std::string, std::string> &eargs)
             : name(ename), type(etype), durable(edurable),
               auto_delete(eauto_delete), args(eargs)
         {
@@ -66,6 +66,7 @@ namespace haoping
         }
     };
 
+    using ExchangeMap = std::unordered_map<std::string, Exchange::ptr>;
     // 定义交换机数据持久化管理类 -- 数据存储在 sqlite 数据库中
     class ExchangeMapper
     {
@@ -183,7 +184,7 @@ namespace haoping
         // 声明交换机
         bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
-                             std::unordered_map<std::string, std::string> &args)
+                             google::protobuf::Map<std::string, std::string> &args)
         {
             // 1.非线程安全 需加锁
             std::unique_lock<std::mutex> lock(_mutex);
@@ -267,8 +268,8 @@ namespace haoping
 
     private:
         std::mutex _mutex;
-        ExchangeMapper _mapper;                                    // 持久化管理
-        std::unordered_map<std::string, Exchange::ptr> _exchanges; // 交换机数据对象管理
+        ExchangeMapper _mapper; // 持久化管理
+        ExchangeMap _exchanges; // 交换机数据对象管理
     };
 }
 

@@ -21,14 +21,14 @@ namespace haoping
         bool durable;                                         // 是否持久化标志
         bool exclusive;                                       // 是否独占标志
         bool auto_delete;                                     // 是否自动删除标志
-        std::unordered_map<std::string, std::string> args; // 其他参数
+        google::protobuf::Map<std::string, std::string> args; // 其他参数
 
         MsgQueue() {}
         MsgQueue(const std::string &qname,
                  bool qdurable,
                  bool qexclusive,
                  bool qauto_delete,
-                 const std::unordered_map<std::string, std::string> &qargs)
+                 const google::protobuf::Map<std::string, std::string> &qargs)
             : name(qname), durable(qdurable), exclusive(qexclusive),
               auto_delete(qauto_delete), args(qargs)
         {
@@ -161,7 +161,7 @@ namespace haoping
                           bool qdurable,
                           bool qexclusive,
                           bool qauto_delete,
-                          const std::unordered_map<std::string, std::string> &qargs)
+                          const google::protobuf::Map<std::string, std::string> &qargs)
         {
             std::unique_lock<std::mutex> lock(_mutex);
             auto it = _msg_queues.find(qname);

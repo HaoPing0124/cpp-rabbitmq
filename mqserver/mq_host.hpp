@@ -31,7 +31,7 @@ namespace haoping
         // 声明交换机
         bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
-                             std::unordered_map<std::string, std::string> &args)
+                             google::protobuf::Map<std::string, std::string> &args)
         {
             return _emp->declareExchange(name, type, durable, auto_delete, args);
         }
@@ -61,7 +61,7 @@ namespace haoping
                           bool qdurable,
                           bool qexclusive,
                           bool qauto_delete,
-                          const std::unordered_map<std::string, std::string> &qargs)
+                          const google::protobuf::Map<std::string, std::string> &qargs)
         {
             // 初始化队列的消息句柄（消息的存储管理）
             // 队列的创建
