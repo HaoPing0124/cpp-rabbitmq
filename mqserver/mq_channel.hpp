@@ -54,16 +54,51 @@ namespace haoping
         }
 
         // 交换机的声明与删除
-        void declareExchange();
-        void deleteExchange();
+        void declareExchange(const declareExchangeRequestPtr &req)
+        {
+            bool ret = _host->declareExchange(req->exchang_name(),
+                                              req->exchang_type(), req->durable(),
+                                              req->auto_delete(), req->args());
+            return basicResponse(ret, req->rid(), req->cid());
+        }
+        void deleteExchange(const deleteExchangeRequestPtr &req)
+        {
+            _host->deleteExchange(req->exchang_name());
+            return basicResponse(true, req->rid(), req->cid());
+        }
 
         // 队列的声明与删除
-        void declareQueue();
-        void deleteQueue();
+        void declareQueue(const declareQueueRequestPtr &req)
+        {
+            bool ret = _host->declareQueue(req->queue_name(),
+                                           req->durable(), req->exclusive(),
+                                           req->auto_delete(), req->args());
+
+            if (ret == false)
+            {
+                return basicResponse(false, req->rid(), req->cid());
+            }
+            _cmp->initQueueConsumer(req->queue_name()); // 初始化队列的消费者管理句柄
+            return basicResponse(true, req->rid(), req->cid());
+        }
+        void deleteQueue(const deleteQueueRequestPtr &req)
+        {
+            _cmp->destroyQueueConsumer(req->queue_name());
+            _host->deleteQueue(req->queue_name());
+            return basicResponse(true, req->rid(), req->cid());
+        }
 
         // 队列的绑定与解除绑定
-        void queueBind();
-        void queueUnBind();
+        void queueBind(const queueBindRequestPtr &req)
+        {
+            bool ret = _host->bind(req->exchang_name(), req->queue_name(), req->binding_key());
+            return basicResponse(ret, req->rid(), req->cid());
+        }
+        void queueUnBind(const queueUnBindRequestPtr &req)
+        {
+            _host->unBind(req->exchang_name(), req->queue_name());
+            return basicResponse(true, req->rid(), req->cid());
+        }
 
         // 消息的发布
         void basicPublish();
@@ -76,6 +111,16 @@ namespace haoping
 
         // 取消订阅
         void basicCancel();
+
+    private:
+        void basicResponse(bool ok, const std::string &rid, const std::string &cid)
+        {
+            basicCommonResponse resp;
+            resp.set_ok(ok);
+            resp.set_rid(rid);
+            resp.set_cid(cid);
+            _codec->send(_conn, resp);
+        }
 
     private:
         std::string _cid;                   // 信道channel ID

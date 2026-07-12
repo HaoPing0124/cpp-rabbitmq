@@ -31,7 +31,7 @@ namespace haoping
         // 声明交换机
         bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
-                             google::protobuf::Map<std::string, std::string> &args)
+                             const google::protobuf::Map<std::string, std::string> &args)
         {
             return _emp->declareExchange(name, type, durable, auto_delete, args);
         }
