@@ -101,8 +101,58 @@ namespace haoping
         }
 
         // 消息的发布
-        void basicPublish();
+        void basicPublish(const basicPublishRequestPtr &req)
+        {
+            // 1.根据客户端给出的交换机名称，查找交换机
+            auto ep = _host->selectExchange(req->exchang_name());
+            // 如果没有找到交换机，说明发布目标不存在
+            if (ep.get() == nullptr)
+            {
+                // 给客户端回复：发布失败
+                basicResponse(false, req->rid(), req->cid());
+            }
 
+            // 2.获取这个交换机绑定的所有队列
+            MsgQueueBindingMap mqbm = _host->exchangeBindings(req->exchang_name());
+
+            // properties保存消息属性
+            // 请求可能没有设置消息属性，所以先设置为空指针
+            BasicProperties *properties = nullptr;
+
+            // routing_key保存消息的路由键
+            // 如果请求没有属性，routing_key暂时就是空字符串
+            std::string routing_key;
+
+            // 判断客户端是否设置了消息属性
+            if (req->has_properties())
+            {
+                // 取得请求对象内部的消息属性对象地址
+                properties = req->mutable_properties();
+
+                // 从消息属性中取出routing_key
+                routing_key = properties->routing_key();
+            }
+
+            // 3.遍历交换机绑定的每一个队列
+            for (auto &binding : mqbm)
+            {
+                // 判断当前队列是否符合路由条件
+                if (Router::route(ep->type, routing_key, binding.second->binding_key))
+                {
+                    // 4.把消息放进匹配成功的队列
+                    _host->basicPublish(binding.first, properties, req->body());
+
+                    // 5.生成一个消费任务
+                    // 这个任务将来执行时，实际上调用: this->consume(binding.first)
+                    auto task = std::bind(&Channel::consumer, this, binding.first);
+
+                    // 将消费任务交给线程池
+                    _pool->push(task);
+                }
+            }
+            // 给生产者客户端回复：发布请求处理完成
+            return basicResponse(true, req->rid(), req->cid());
+        }
         // 消息的确认
         void basicAck();
 
@@ -113,6 +163,30 @@ namespace haoping
         void basicCancel();
 
     private:
+        void consumer(const std::string &qname)
+        {
+            // 指定队列消费消息
+            // 1. 从队列中取出一条消息
+            MessagePtr mp = _host->basicConsume(qname);
+            if (mp.get() == nullptr)
+            {
+                DLOG("执行消费任务失败，%s 队列没有消息！", qname.c_str());
+                return;
+            }
+            // 2. 从队列订阅者中取出一个订阅者
+            Consumer::ptr cp = _cmp->choose(qname);
+            if (cp.get() == nullptr)
+            {
+                DLOG("执行消费任务失败，%s 队列没有消费者！", qname.c_str());
+                return;
+            }
+            // 3. 调用订阅者对应的消息处理函数，实现消息的推送
+            cp->callback(cp->tag, mp->mutable_payload()->mutable_properties(), mp->payload().body());
+            // 4. 判断如果订阅者是自动确认---不需要等待确认，直接删除消息，否则需要外部收到消息确认后再删除
+            if (cp->auto_ack)
+                _host->basicAck(qname, mp->payload().properties().id());
+        }
+
         void basicResponse(bool ok, const std::string &rid, const std::string &cid)
         {
             basicCommonResponse resp;
