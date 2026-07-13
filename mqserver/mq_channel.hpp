@@ -153,6 +153,7 @@ namespace haoping
             // 给生产者客户端回复：发布请求处理完成
             return basicResponse(true, req->rid(), req->cid());
         }
+
         // 消息的确认
         void basicAck(const basicAckRequestPtr &req)
         {
@@ -161,12 +162,52 @@ namespace haoping
         }
 
         // 订阅队列消息
-        void basicConsume();
+        void basicConsume(const basicConsumeRequestPtr &req)
+        {
+            // 1. 判断队列是否存在
+            bool ret = _host->existsQueue(req->queue_name());
+            if (ret == false)
+            {
+                return basicResponse(false, req->rid(), req->cid());
+            }
+
+            // 2. 创建队列的消费者
+            auto cb = std::bind(&Channel::callback, this, std::placeholders::_1,
+                                std::placeholders::_2, std::placeholders::_3);
+
+            // 创建了消费者之后，当前的channel角色就是个消费者
+            _consumer = _cmp->create(req->consumer_tag(), req->queue_name(), req->auto_ack(), cb);
+            if (_consumer.get() == nullptr)
+            {
+                return basicResponse(false, req->rid(), req->cid());
+            }
+            return basicResponse(true, req->rid(), req->cid());
+        }
 
         // 取消订阅
-        void basicCancel();
+        void basicCancel(const basicCancelRequestPtr &req)
+        {
+            _cmp->remove(req->consumer_tag(), req->queue_name());
+            return basicResponse(true, req->rid(), req->cid());
+        }
 
     private:
+        void callback(const std::string tag, const BasicProperties *bp, const std::string &body)
+        {
+            basicConsumeResponse resp;
+            resp.set_cid(_cid);
+            resp.set_consumer_tag(tag);
+            resp.set_body(body);
+
+            if (bp)
+            {
+                resp.mutable_properties()->set_id(bp->id());
+                resp.mutable_properties()->set_delivery_mode(bp->delivery_mode());
+                resp.mutable_properties()->set_routing_key(bp->routing_key());
+            }
+            _codec->send(_conn, resp);
+        }
+
         void consume(const std::string &qname)
         {
             // 指定队列消费消息
