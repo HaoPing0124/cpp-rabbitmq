@@ -15,8 +15,8 @@
 namespace haoping
 {
     using ProtobufCodecPtr = std::shared_ptr<ProtobufCodec>;
-    using openChannelRequstPtr = std::shared_ptr<openChannelRequst>;
-    using closeChannelRequstPtr = std::shared_ptr<closeChannelRequst>;
+    using openChannelRequestPtr = std::shared_ptr<openChannelRequest>;
+    using closeChannelRequestPtr = std::shared_ptr<closeChannelRequest>;
     using declareExchangeRequestPtr = std::shared_ptr<declareExchangeRequest>;
     using deleteExchangeRequestPtr = std::shared_ptr<deleteExchangeRequest>;
     using declareQueueRequestPtr = std::shared_ptr<declareQueueRequest>;
@@ -25,9 +25,9 @@ namespace haoping
     using queueUnBindRequestPtr = std::shared_ptr<queueUnBindRequest>;
     using basicPublishRequestPtr = std::shared_ptr<basicPublishRequest>;
     using basicAckRequestPtr = std::shared_ptr<basicAckRequest>;
-    using basicConsumerRequestPtr = std::shared_ptr<basicConsumerRequest>;
+    using basicConsumeRequestPtr = std::shared_ptr<basicConsumeRequest>;
     using basicCancelRequestPtr = std::shared_ptr<basicCancelRequest>;
-    using basicConsumerResponsePtr = std::shared_ptr<basicConsumerResponse>;
+    using basicConsumeResponsePtr = std::shared_ptr<basicConsumeResponse>;
     using basicCommonResponsePtr = std::shared_ptr<basicCommonResponse>;
 
     class Channel
@@ -56,14 +56,14 @@ namespace haoping
         // 交换机的声明与删除
         void declareExchange(const declareExchangeRequestPtr &req)
         {
-            bool ret = _host->declareExchange(req->exchang_name(),
-                                              req->exchang_type(), req->durable(),
+            bool ret = _host->declareExchange(req->exchange_name(),
+                                              req->exchange_type(), req->durable(),
                                               req->auto_delete(), req->args());
             return basicResponse(ret, req->rid(), req->cid());
         }
         void deleteExchange(const deleteExchangeRequestPtr &req)
         {
-            _host->deleteExchange(req->exchang_name());
+            _host->deleteExchange(req->exchange_name());
             return basicResponse(true, req->rid(), req->cid());
         }
 
@@ -91,12 +91,12 @@ namespace haoping
         // 队列的绑定与解除绑定
         void queueBind(const queueBindRequestPtr &req)
         {
-            bool ret = _host->bind(req->exchang_name(), req->queue_name(), req->binding_key());
+            bool ret = _host->bind(req->exchange_name(), req->queue_name(), req->binding_key());
             return basicResponse(ret, req->rid(), req->cid());
         }
         void queueUnBind(const queueUnBindRequestPtr &req)
         {
-            _host->unBind(req->exchang_name(), req->queue_name());
+            _host->unBind(req->exchange_name(), req->queue_name());
             return basicResponse(true, req->rid(), req->cid());
         }
 
@@ -104,7 +104,7 @@ namespace haoping
         void basicPublish(const basicPublishRequestPtr &req)
         {
             // 1.根据客户端给出的交换机名称，查找交换机
-            auto ep = _host->selectExchange(req->exchang_name());
+            auto ep = _host->selectExchange(req->exchange_name());
             // 如果没有找到交换机，说明发布目标不存在
             if (ep.get() == nullptr)
             {
@@ -113,7 +113,7 @@ namespace haoping
             }
 
             // 2.获取这个交换机绑定的所有队列
-            MsgQueueBindingMap mqbm = _host->exchangeBindings(req->exchang_name());
+            MsgQueueBindingMap mqbm = _host->exchangeBindings(req->exchange_name());
 
             // properties保存消息属性
             // 请求可能没有设置消息属性，所以先设置为空指针
@@ -144,7 +144,7 @@ namespace haoping
 
                     // 5.生成一个消费任务
                     // 这个任务将来执行时，实际上调用: this->consume(binding.first)
-                    auto task = std::bind(&Channel::consumer, this, binding.first);
+                    auto task = std::bind(&Channel::consume, this, binding.first);
 
                     // 将消费任务交给线程池
                     _pool->push(task);
@@ -154,7 +154,7 @@ namespace haoping
             return basicResponse(true, req->rid(), req->cid());
         }
         // 消息的确认
-        void basicAck();
+        void basicAck(const basicAckRequestPtr &req);
 
         // 订阅队列消息
         void basicConsume();
@@ -163,7 +163,7 @@ namespace haoping
         void basicCancel();
 
     private:
-        void consumer(const std::string &qname)
+        void consume(const std::string &qname)
         {
             // 指定队列消费消息
             // 1. 从队列中取出一条消息
