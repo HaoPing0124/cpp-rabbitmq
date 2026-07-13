@@ -46,6 +46,7 @@ namespace haoping
 
         ~Channel()
         {
+            // 如果当前信道已经创建消费者，需要先从消费者管理器中移除
             if (_consumer.get() != nullptr)
             {
                 _cmp->remove(_consumer->tag, _consumer->qname);
@@ -56,6 +57,8 @@ namespace haoping
         // 交换机的声明与删除
         void declareExchange(const declareExchangeRequestPtr &req)
         {
+            // 从请求中取得交换机名称、类型、持久化等参数
+            // 交给虚拟主机完成交换机声明
             bool ret = _host->declareExchange(req->exchange_name(),
                                               req->exchange_type(), req->durable(),
                                               req->auto_delete(), req->args());
@@ -70,33 +73,47 @@ namespace haoping
         // 队列的声明与删除
         void declareQueue(const declareQueueRequestPtr &req)
         {
+            // 从请求中取得队列名称、持久化、独占等参数
+            // 交给虚拟主机完成队列声明
             bool ret = _host->declareQueue(req->queue_name(),
                                            req->durable(), req->exclusive(),
                                            req->auto_delete(), req->args());
 
+            // 队列声明失败，直接向客户端返回失败响应
             if (ret == false)
             {
                 return basicResponse(false, req->rid(), req->cid());
             }
+
+            // 队列声明成功后，为该队列创建消费者管理结构
             _cmp->initQueueConsumer(req->queue_name()); // 初始化队列的消费者管理句柄
             return basicResponse(true, req->rid(), req->cid());
         }
         void deleteQueue(const deleteQueueRequestPtr &req)
         {
+            // 删除队列之前，先销毁该队列对应的消费者管理结构
             _cmp->destroyQueueConsumer(req->queue_name());
+
+            // 删除虚拟主机中保存的队列
             _host->deleteQueue(req->queue_name());
+
             return basicResponse(true, req->rid(), req->cid());
         }
 
         // 队列的绑定与解除绑定
         void queueBind(const queueBindRequestPtr &req)
         {
+            // 将指定队列通过绑定键绑定到指定交换机
             bool ret = _host->bind(req->exchange_name(), req->queue_name(), req->binding_key());
+
+            // 将绑定结果返回给客户端
             return basicResponse(ret, req->rid(), req->cid());
         }
         void queueUnBind(const queueUnBindRequestPtr &req)
         {
+            // 解除指定交换机和指定队列之间的绑定关系
             _host->unBind(req->exchange_name(), req->queue_name());
+
             return basicResponse(true, req->rid(), req->cid());
         }
 
@@ -105,6 +122,7 @@ namespace haoping
         {
             // 1.根据客户端给出的交换机名称，查找交换机
             auto ep = _host->selectExchange(req->exchange_name());
+
             // 如果没有找到交换机，说明发布目标不存在
             if (ep.get() == nullptr)
             {
@@ -136,6 +154,9 @@ namespace haoping
             // 3.遍历交换机绑定的每一个队列
             for (auto &binding : mqbm)
             {
+                // binding.first表示当前绑定的队列名称
+                // binding.second表示当前绑定关系对象
+
                 // 判断当前队列是否符合路由条件
                 if (Router::route(ep->type, routing_key, binding.second->binding_key))
                 {
@@ -157,7 +178,10 @@ namespace haoping
         // 消息的确认
         void basicAck(const basicAckRequestPtr &req)
         {
+            // 根据队列名称和消息ID确认消息
+            // 虚拟主机收到确认后会删除对应的待确认消息
             _host->basicAck(req->queue_name(), req->message_id());
+
             return basicResponse(true, req->rid(), req->cid());
         }
 
@@ -172,29 +196,41 @@ namespace haoping
             }
 
             // 2. 创建队列的消费者
+            // 将Channel::callback包装成消费者收到消息后的回调函数
+            // 三个占位符分别对应 1.消费者标签 2.消息属性 3.消息正文
             auto cb = std::bind(&Channel::callback, this, std::placeholders::_1,
                                 std::placeholders::_2, std::placeholders::_3);
 
             // 创建了消费者之后，当前的channel角色就是个消费者
             _consumer = _cmp->create(req->consumer_tag(), req->queue_name(), req->auto_ack(), cb);
+
+            // 消费者创建失败，向客户端返回失败响应
             if (_consumer.get() == nullptr)
             {
                 return basicResponse(false, req->rid(), req->cid());
             }
+
             return basicResponse(true, req->rid(), req->cid());
         }
 
         // 取消订阅
         void basicCancel(const basicCancelRequestPtr &req)
         {
+            // 根据消费者标签和队列名称删除消费者
             _cmp->remove(req->consumer_tag(), req->queue_name());
+
             return basicResponse(true, req->rid(), req->cid());
         }
 
     private:
+        // 消费者收到消息后执行的回调函数
+        // 负责把服务端队列中的消息封装成响应并推送给客户端
+        // 参数：1.tag 表示消费者标签 2.bp 表示消息属性 3.body 表示消息正文
         void callback(const std::string tag, const BasicProperties *bp, const std::string &body)
         {
+            // 创建服务端向消费者推送消息的响应对象
             basicConsumeResponse resp;
+
             resp.set_cid(_cid);
             resp.set_consumer_tag(tag);
             resp.set_body(body);
@@ -208,6 +244,7 @@ namespace haoping
             _codec->send(_conn, resp);
         }
 
+        // 执行一次指定队列的消息消费任务
         void consume(const std::string &qname)
         {
             // 指定队列消费消息
@@ -218,6 +255,7 @@ namespace haoping
                 DLOG("执行消费任务失败，%s 队列没有消息！", qname.c_str());
                 return;
             }
+
             // 2. 从队列订阅者中取出一个订阅者
             Consumer::ptr cp = _cmp->choose(qname);
             if (cp.get() == nullptr)
@@ -225,16 +263,24 @@ namespace haoping
                 DLOG("执行消费任务失败，%s 队列没有消费者！", qname.c_str());
                 return;
             }
+
             // 3. 调用订阅者对应的消息处理函数，实现消息的推送
             cp->callback(cp->tag, mp->mutable_payload()->mutable_properties(), mp->payload().body());
+
             // 4. 判断如果订阅者是自动确认---不需要等待确认，直接删除消息，否则需要外部收到消息确认后再删除
             if (cp->auto_ack)
                 _host->basicAck(qname, mp->payload().properties().id());
         }
 
+        // 向客户端发送通用处理结果响应
+        // 1.ok表示请求处理是否成功
+        // 2.rid表示请求ID，用于让客户端找到对应的请求
+        // 3.cid表示信道ID，用于区分请求属于哪个信道
         void basicResponse(bool ok, const std::string &rid, const std::string &cid)
         {
+            // 创建通用响应对象
             basicCommonResponse resp;
+
             resp.set_ok(ok);
             resp.set_rid(rid);
             resp.set_cid(cid);
