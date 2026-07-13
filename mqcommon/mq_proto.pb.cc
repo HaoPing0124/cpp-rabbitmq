@@ -21,32 +21,32 @@ namespace _pb = ::PROTOBUF_NAMESPACE_ID;
 namespace _pbi = _pb::internal;
 
 namespace haoping {
-PROTOBUF_CONSTEXPR openChannelRequst::openChannelRequst(
+PROTOBUF_CONSTEXPR openChannelRequest::openChannelRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
-struct openChannelRequstDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR openChannelRequstDefaultTypeInternal()
+struct openChannelRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR openChannelRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~openChannelRequstDefaultTypeInternal() {}
+  ~openChannelRequestDefaultTypeInternal() {}
   union {
-    openChannelRequst _instance;
+    openChannelRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 openChannelRequstDefaultTypeInternal _openChannelRequst_default_instance_;
-PROTOBUF_CONSTEXPR closeChannelRequst::closeChannelRequst(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 openChannelRequestDefaultTypeInternal _openChannelRequest_default_instance_;
+PROTOBUF_CONSTEXPR closeChannelRequest::closeChannelRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
-struct closeChannelRequstDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR closeChannelRequstDefaultTypeInternal()
+struct closeChannelRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR closeChannelRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~closeChannelRequstDefaultTypeInternal() {}
+  ~closeChannelRequestDefaultTypeInternal() {}
   union {
-    closeChannelRequst _instance;
+    closeChannelRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 closeChannelRequstDefaultTypeInternal _closeChannelRequst_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 closeChannelRequestDefaultTypeInternal _closeChannelRequest_default_instance_;
 PROTOBUF_CONSTEXPR declareExchangeRequest_ArgsEntry_DoNotUse::declareExchangeRequest_ArgsEntry_DoNotUse(
     ::_pbi::ConstantInitialized){}
 struct declareExchangeRequest_ArgsEntry_DoNotUseDefaultTypeInternal {
@@ -63,8 +63,8 @@ PROTOBUF_CONSTEXPR declareExchangeRequest::declareExchangeRequest(
   : args_(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{})
   , rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_type_(0)
+  , exchange_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , exchange_type_(0)
 
   , durable_(false)
   , auto_delete_(false){}
@@ -81,7 +81,7 @@ PROTOBUF_CONSTEXPR deleteExchangeRequest::deleteExchangeRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+  , exchange_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct deleteExchangeRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR deleteExchangeRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -138,7 +138,7 @@ PROTOBUF_CONSTEXPR queueBindRequest::queueBindRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , exchange_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , queue_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , binding_key_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct queueBindRequestDefaultTypeInternal {
@@ -154,7 +154,7 @@ PROTOBUF_CONSTEXPR queueUnBindRequest::queueUnBindRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , exchange_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , queue_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct queueUnBindRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR queueUnBindRequestDefaultTypeInternal()
@@ -169,7 +169,7 @@ PROTOBUF_CONSTEXPR basicPublishRequest::basicPublishRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , exchange_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , body_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , properties_(nullptr){}
 struct basicPublishRequestDefaultTypeInternal {
@@ -185,7 +185,7 @@ PROTOBUF_CONSTEXPR basicAckRequest::basicAckRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchang_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , queue_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , message_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct basicAckRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR basicAckRequestDefaultTypeInternal()
@@ -196,22 +196,22 @@ struct basicAckRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 basicAckRequestDefaultTypeInternal _basicAckRequest_default_instance_;
-PROTOBUF_CONSTEXPR basicConsumerRequest::basicConsumerRequest(
+PROTOBUF_CONSTEXPR basicConsumeRequest::basicConsumeRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , consumer_tag_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , queue_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , auto_ack_(false){}
-struct basicConsumerRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR basicConsumerRequestDefaultTypeInternal()
+struct basicConsumeRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR basicConsumeRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~basicConsumerRequestDefaultTypeInternal() {}
+  ~basicConsumeRequestDefaultTypeInternal() {}
   union {
-    basicConsumerRequest _instance;
+    basicConsumeRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 basicConsumerRequestDefaultTypeInternal _basicConsumerRequest_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 basicConsumeRequestDefaultTypeInternal _basicConsumeRequest_default_instance_;
 PROTOBUF_CONSTEXPR basicCancelRequest::basicCancelRequest(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
@@ -227,21 +227,21 @@ struct basicCancelRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 basicCancelRequestDefaultTypeInternal _basicCancelRequest_default_instance_;
-PROTOBUF_CONSTEXPR basicConsumerResponse::basicConsumerResponse(
+PROTOBUF_CONSTEXPR basicConsumeResponse::basicConsumeResponse(
     ::_pbi::ConstantInitialized)
   : cid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , consumer_tag_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , body_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , properties_(nullptr){}
-struct basicConsumerResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR basicConsumerResponseDefaultTypeInternal()
+struct basicConsumeResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR basicConsumeResponseDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~basicConsumerResponseDefaultTypeInternal() {}
+  ~basicConsumeResponseDefaultTypeInternal() {}
   union {
-    basicConsumerResponse _instance;
+    basicConsumeResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 basicConsumerResponseDefaultTypeInternal _basicConsumerResponse_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 basicConsumeResponseDefaultTypeInternal _basicConsumeResponse_default_instance_;
 PROTOBUF_CONSTEXPR basicCommonResponse::basicCommonResponse(
     ::_pbi::ConstantInitialized)
   : rid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
@@ -263,21 +263,21 @@ static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors
 
 const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::haoping::openChannelRequst, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::haoping::openChannelRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::haoping::openChannelRequst, rid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::openChannelRequst, cid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::openChannelRequest, rid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::openChannelRequest, cid_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::haoping::closeChannelRequst, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::haoping::closeChannelRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::haoping::closeChannelRequst, rid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::closeChannelRequst, cid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::closeChannelRequest, rid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::closeChannelRequest, cid_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest_ArgsEntry_DoNotUse, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest_ArgsEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -296,8 +296,8 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, rid_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, exchang_name_),
-  PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, exchang_type_),
+  PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, exchange_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, exchange_type_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, durable_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, auto_delete_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareExchangeRequest, args_),
@@ -309,7 +309,7 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::haoping::deleteExchangeRequest, rid_),
   PROTOBUF_FIELD_OFFSET(::haoping::deleteExchangeRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::deleteExchangeRequest, exchang_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::deleteExchangeRequest, exchange_name_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareQueueRequest_ArgsEntry_DoNotUse, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::haoping::declareQueueRequest_ArgsEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -350,7 +350,7 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::haoping::queueBindRequest, rid_),
   PROTOBUF_FIELD_OFFSET(::haoping::queueBindRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::queueBindRequest, exchang_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::queueBindRequest, exchange_name_),
   PROTOBUF_FIELD_OFFSET(::haoping::queueBindRequest, queue_name_),
   PROTOBUF_FIELD_OFFSET(::haoping::queueBindRequest, binding_key_),
   ~0u,  // no _has_bits_
@@ -361,7 +361,7 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::haoping::queueUnBindRequest, rid_),
   PROTOBUF_FIELD_OFFSET(::haoping::queueUnBindRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::queueUnBindRequest, exchang_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::queueUnBindRequest, exchange_name_),
   PROTOBUF_FIELD_OFFSET(::haoping::queueUnBindRequest, queue_name_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, _internal_metadata_),
@@ -371,7 +371,7 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, rid_),
   PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, exchang_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, exchange_name_),
   PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, body_),
   PROTOBUF_FIELD_OFFSET(::haoping::basicPublishRequest, properties_),
   ~0u,  // no _has_bits_
@@ -382,19 +382,19 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::haoping::basicAckRequest, rid_),
   PROTOBUF_FIELD_OFFSET(::haoping::basicAckRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicAckRequest, exchang_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicAckRequest, queue_name_),
   PROTOBUF_FIELD_OFFSET(::haoping::basicAckRequest, message_id_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerRequest, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerRequest, rid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerRequest, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerRequest, consumer_tag_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerRequest, queue_name_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerRequest, auto_ack_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeRequest, rid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeRequest, cid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeRequest, consumer_tag_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeRequest, queue_name_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeRequest, auto_ack_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::haoping::basicCancelRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -406,15 +406,15 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   PROTOBUF_FIELD_OFFSET(::haoping::basicCancelRequest, consumer_tag_),
   PROTOBUF_FIELD_OFFSET(::haoping::basicCancelRequest, queue_name_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerResponse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerResponse, cid_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerResponse, consumer_tag_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerResponse, body_),
-  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumerResponse, properties_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeResponse, cid_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeResponse, consumer_tag_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeResponse, body_),
+  PROTOBUF_FIELD_OFFSET(::haoping::basicConsumeResponse, properties_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::haoping::basicCommonResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -426,8 +426,8 @@ const uint32_t TableStruct_mq_5fproto_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
   PROTOBUF_FIELD_OFFSET(::haoping::basicCommonResponse, ok_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::haoping::openChannelRequst)},
-  { 8, -1, -1, sizeof(::haoping::closeChannelRequst)},
+  { 0, -1, -1, sizeof(::haoping::openChannelRequest)},
+  { 8, -1, -1, sizeof(::haoping::closeChannelRequest)},
   { 16, 24, -1, sizeof(::haoping::declareExchangeRequest_ArgsEntry_DoNotUse)},
   { 26, -1, -1, sizeof(::haoping::declareExchangeRequest)},
   { 39, -1, -1, sizeof(::haoping::deleteExchangeRequest)},
@@ -438,15 +438,15 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 91, -1, -1, sizeof(::haoping::queueUnBindRequest)},
   { 101, -1, -1, sizeof(::haoping::basicPublishRequest)},
   { 112, -1, -1, sizeof(::haoping::basicAckRequest)},
-  { 122, -1, -1, sizeof(::haoping::basicConsumerRequest)},
+  { 122, -1, -1, sizeof(::haoping::basicConsumeRequest)},
   { 133, -1, -1, sizeof(::haoping::basicCancelRequest)},
-  { 143, -1, -1, sizeof(::haoping::basicConsumerResponse)},
+  { 143, -1, -1, sizeof(::haoping::basicConsumeResponse)},
   { 153, -1, -1, sizeof(::haoping::basicCommonResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::haoping::_openChannelRequst_default_instance_._instance,
-  &::haoping::_closeChannelRequst_default_instance_._instance,
+  &::haoping::_openChannelRequest_default_instance_._instance,
+  &::haoping::_closeChannelRequest_default_instance_._instance,
   &::haoping::_declareExchangeRequest_ArgsEntry_DoNotUse_default_instance_._instance,
   &::haoping::_declareExchangeRequest_default_instance_._instance,
   &::haoping::_deleteExchangeRequest_default_instance_._instance,
@@ -457,60 +457,60 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::haoping::_queueUnBindRequest_default_instance_._instance,
   &::haoping::_basicPublishRequest_default_instance_._instance,
   &::haoping::_basicAckRequest_default_instance_._instance,
-  &::haoping::_basicConsumerRequest_default_instance_._instance,
+  &::haoping::_basicConsumeRequest_default_instance_._instance,
   &::haoping::_basicCancelRequest_default_instance_._instance,
-  &::haoping::_basicConsumerResponse_default_instance_._instance,
+  &::haoping::_basicConsumeResponse_default_instance_._instance,
   &::haoping::_basicCommonResponse_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_mq_5fproto_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\016mq_proto.proto\022\007haoping\032\014mq_msg.proto\""
-  "-\n\021openChannelRequst\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid"
-  "\030\002 \001(\t\".\n\022closeChannelRequst\022\013\n\003rid\030\001 \001("
-  "\t\022\013\n\003cid\030\002 \001(\t\"\201\002\n\026declareExchangeReques"
-  "t\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\024\n\014exchang_n"
-  "ame\030\003 \001(\t\022+\n\014exchang_type\030\004 \001(\0162\025.haopin"
-  "g.ExchangeType\022\017\n\007durable\030\005 \001(\010\022\023\n\013auto_"
-  "delete\030\006 \001(\010\0227\n\004args\030\007 \003(\0132).haoping.dec"
-  "lareExchangeRequest.ArgsEntry\032+\n\tArgsEnt"
-  "ry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"G\n\025de"
-  "leteExchangeRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030"
-  "\002 \001(\t\022\024\n\014exchang_name\030\003 \001(\t\"\337\001\n\023declareQ"
-  "ueueRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\022\n"
-  "\nqueue_name\030\003 \001(\t\022\021\n\texclusive\030\004 \001(\010\022\017\n\007"
-  "durable\030\005 \001(\010\022\023\n\013auto_delete\030\006 \001(\010\0224\n\004ar"
-  "gs\030\007 \003(\0132&.haoping.declareQueueRequest.A"
-  "rgsEntry\032+\n\tArgsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005va"
-  "lue\030\002 \001(\t:\0028\001\"B\n\022deleteQueueRequest\022\013\n\003r"
-  "id\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\022\n\nqueue_name\030\003 \001("
-  "\t\"k\n\020queueBindRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003ci"
-  "d\030\002 \001(\t\022\024\n\014exchang_name\030\003 \001(\t\022\022\n\nqueue_n"
-  "ame\030\004 \001(\t\022\023\n\013binding_key\030\005 \001(\t\"X\n\022queueU"
-  "nBindRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\024"
-  "\n\014exchang_name\030\003 \001(\t\022\022\n\nqueue_name\030\004 \001(\t"
-  "\"\201\001\n\023basicPublishRequest\022\013\n\003rid\030\001 \001(\t\022\013\n"
-  "\003cid\030\002 \001(\t\022\024\n\014exchang_name\030\003 \001(\t\022\014\n\004body"
-  "\030\004 \001(\t\022,\n\nproperties\030\005 \001(\0132\030.haoping.Bas"
-  "icProperties\"U\n\017basicAckRequest\022\013\n\003rid\030\001"
-  " \001(\t\022\013\n\003cid\030\002 \001(\t\022\024\n\014exchang_name\030\003 \001(\t\022"
-  "\022\n\nmessage_id\030\004 \001(\t\"l\n\024basicConsumerRequ"
-  "est\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\024\n\014consume"
-  "r_tag\030\003 \001(\t\022\022\n\nqueue_name\030\004 \001(\t\022\020\n\010auto_"
-  "ack\030\005 \001(\010\"X\n\022basicCancelRequest\022\013\n\003rid\030\001"
-  " \001(\t\022\013\n\003cid\030\002 \001(\t\022\024\n\014consumer_tag\030\003 \001(\t\022"
-  "\022\n\nqueue_name\030\004 \001(\t\"v\n\025basicConsumerResp"
-  "onse\022\013\n\003cid\030\001 \001(\t\022\024\n\014consumer_tag\030\002 \001(\t\022"
-  "\014\n\004body\030\003 \001(\t\022,\n\nproperties\030\004 \001(\0132\030.haop"
-  "ing.BasicProperties\";\n\023basicCommonRespon"
-  "se\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\n\n\002ok\030\003 \001(\010"
-  "b\006proto3"
+  ".\n\022openChannelRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003ci"
+  "d\030\002 \001(\t\"/\n\023closeChannelRequest\022\013\n\003rid\030\001 "
+  "\001(\t\022\013\n\003cid\030\002 \001(\t\"\203\002\n\026declareExchangeRequ"
+  "est\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\025\n\rexchang"
+  "e_name\030\003 \001(\t\022,\n\rexchange_type\030\004 \001(\0162\025.ha"
+  "oping.ExchangeType\022\017\n\007durable\030\005 \001(\010\022\023\n\013a"
+  "uto_delete\030\006 \001(\010\0227\n\004args\030\007 \003(\0132).haoping"
+  ".declareExchangeRequest.ArgsEntry\032+\n\tArg"
+  "sEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"H"
+  "\n\025deleteExchangeRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003"
+  "cid\030\002 \001(\t\022\025\n\rexchange_name\030\003 \001(\t\"\337\001\n\023dec"
+  "lareQueueRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001"
+  "(\t\022\022\n\nqueue_name\030\003 \001(\t\022\021\n\texclusive\030\004 \001("
+  "\010\022\017\n\007durable\030\005 \001(\010\022\023\n\013auto_delete\030\006 \001(\010\022"
+  "4\n\004args\030\007 \003(\0132&.haoping.declareQueueRequ"
+  "est.ArgsEntry\032+\n\tArgsEntry\022\013\n\003key\030\001 \001(\t\022"
+  "\r\n\005value\030\002 \001(\t:\0028\001\"B\n\022deleteQueueRequest"
+  "\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\022\n\nqueue_name"
+  "\030\003 \001(\t\"l\n\020queueBindRequest\022\013\n\003rid\030\001 \001(\t\022"
+  "\013\n\003cid\030\002 \001(\t\022\025\n\rexchange_name\030\003 \001(\t\022\022\n\nq"
+  "ueue_name\030\004 \001(\t\022\023\n\013binding_key\030\005 \001(\t\"Y\n\022"
+  "queueUnBindRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002"
+  " \001(\t\022\025\n\rexchange_name\030\003 \001(\t\022\022\n\nqueue_nam"
+  "e\030\004 \001(\t\"\202\001\n\023basicPublishRequest\022\013\n\003rid\030\001"
+  " \001(\t\022\013\n\003cid\030\002 \001(\t\022\025\n\rexchange_name\030\003 \001(\t"
+  "\022\014\n\004body\030\004 \001(\t\022,\n\nproperties\030\005 \001(\0132\030.hao"
+  "ping.BasicProperties\"S\n\017basicAckRequest\022"
+  "\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\022\n\nqueue_name\030"
+  "\003 \001(\t\022\022\n\nmessage_id\030\004 \001(\t\"k\n\023basicConsum"
+  "eRequest\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\024\n\014co"
+  "nsumer_tag\030\003 \001(\t\022\022\n\nqueue_name\030\004 \001(\t\022\020\n\010"
+  "auto_ack\030\005 \001(\010\"X\n\022basicCancelRequest\022\013\n\003"
+  "rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\024\n\014consumer_tag\030\003"
+  " \001(\t\022\022\n\nqueue_name\030\004 \001(\t\"u\n\024basicConsume"
+  "Response\022\013\n\003cid\030\001 \001(\t\022\024\n\014consumer_tag\030\002 "
+  "\001(\t\022\014\n\004body\030\003 \001(\t\022,\n\nproperties\030\004 \001(\0132\030."
+  "haoping.BasicProperties\";\n\023basicCommonRe"
+  "sponse\022\013\n\003rid\030\001 \001(\t\022\013\n\003cid\030\002 \001(\t\022\n\n\002ok\030\003"
+  " \001(\010b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_mq_5fproto_2eproto_deps[1] = {
   &::descriptor_table_mq_5fmsg_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_mq_5fproto_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mq_5fproto_2eproto = {
-    false, false, 1568, descriptor_table_protodef_mq_5fproto_2eproto,
+    false, false, 1572, descriptor_table_protodef_mq_5fproto_2eproto,
     "mq_proto.proto",
     &descriptor_table_mq_5fproto_2eproto_once, descriptor_table_mq_5fproto_2eproto_deps, 1, 16,
     schemas, file_default_instances, TableStruct_mq_5fproto_2eproto::offsets,
@@ -527,17 +527,17 @@ namespace haoping {
 
 // ===================================================================
 
-class openChannelRequst::_Internal {
+class openChannelRequest::_Internal {
  public:
 };
 
-openChannelRequst::openChannelRequst(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+openChannelRequest::openChannelRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  // @@protoc_insertion_point(arena_constructor:haoping.openChannelRequst)
+  // @@protoc_insertion_point(arena_constructor:haoping.openChannelRequest)
 }
-openChannelRequst::openChannelRequst(const openChannelRequst& from)
+openChannelRequest::openChannelRequest(const openChannelRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   rid_.InitDefault();
@@ -556,10 +556,10 @@ openChannelRequst::openChannelRequst(const openChannelRequst& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  // @@protoc_insertion_point(copy_constructor:haoping.openChannelRequst)
+  // @@protoc_insertion_point(copy_constructor:haoping.openChannelRequest)
 }
 
-inline void openChannelRequst::SharedCtor() {
+inline void openChannelRequest::SharedCtor() {
 rid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   rid_.Set("", GetArenaForAllocation());
@@ -570,8 +570,8 @@ cid_.InitDefault();
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-openChannelRequst::~openChannelRequst() {
-  // @@protoc_insertion_point(destructor:haoping.openChannelRequst)
+openChannelRequest::~openChannelRequest() {
+  // @@protoc_insertion_point(destructor:haoping.openChannelRequest)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -579,18 +579,18 @@ openChannelRequst::~openChannelRequst() {
   SharedDtor();
 }
 
-inline void openChannelRequst::SharedDtor() {
+inline void openChannelRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
 }
 
-void openChannelRequst::SetCachedSize(int size) const {
+void openChannelRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void openChannelRequst::Clear() {
-// @@protoc_insertion_point(message_clear_start:haoping.openChannelRequst)
+void openChannelRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:haoping.openChannelRequest)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -600,7 +600,7 @@ void openChannelRequst::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* openChannelRequst::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* openChannelRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -612,7 +612,7 @@ const char* openChannelRequst::_InternalParse(const char* ptr, ::_pbi::ParseCont
           auto str = _internal_mutable_rid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.openChannelRequst.rid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.openChannelRequest.rid"));
         } else
           goto handle_unusual;
         continue;
@@ -622,7 +622,7 @@ const char* openChannelRequst::_InternalParse(const char* ptr, ::_pbi::ParseCont
           auto str = _internal_mutable_cid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.openChannelRequst.cid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.openChannelRequest.cid"));
         } else
           goto handle_unusual;
         continue;
@@ -649,9 +649,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* openChannelRequst::_InternalSerialize(
+uint8_t* openChannelRequest::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:haoping.openChannelRequst)
+  // @@protoc_insertion_point(serialize_to_array_start:haoping.openChannelRequest)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -660,7 +660,7 @@ uint8_t* openChannelRequst::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_rid().data(), static_cast<int>(this->_internal_rid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.openChannelRequst.rid");
+      "haoping.openChannelRequest.rid");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_rid(), target);
   }
@@ -670,7 +670,7 @@ uint8_t* openChannelRequst::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.openChannelRequst.cid");
+      "haoping.openChannelRequest.cid");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_cid(), target);
   }
@@ -679,12 +679,12 @@ uint8_t* openChannelRequst::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:haoping.openChannelRequst)
+  // @@protoc_insertion_point(serialize_to_array_end:haoping.openChannelRequest)
   return target;
 }
 
-size_t openChannelRequst::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:haoping.openChannelRequst)
+size_t openChannelRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:haoping.openChannelRequest)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -708,21 +708,21 @@ size_t openChannelRequst::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData openChannelRequst::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData openChannelRequest::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    openChannelRequst::MergeImpl
+    openChannelRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*openChannelRequst::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*openChannelRequest::GetClassData() const { return &_class_data_; }
 
-void openChannelRequst::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+void openChannelRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
                       const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<openChannelRequst *>(to)->MergeFrom(
-      static_cast<const openChannelRequst &>(from));
+  static_cast<openChannelRequest *>(to)->MergeFrom(
+      static_cast<const openChannelRequest &>(from));
 }
 
 
-void openChannelRequst::MergeFrom(const openChannelRequst& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:haoping.openChannelRequst)
+void openChannelRequest::MergeFrom(const openChannelRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:haoping.openChannelRequest)
   GOOGLE_DCHECK_NE(&from, this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -736,18 +736,18 @@ void openChannelRequst::MergeFrom(const openChannelRequst& from) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void openChannelRequst::CopyFrom(const openChannelRequst& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:haoping.openChannelRequst)
+void openChannelRequest::CopyFrom(const openChannelRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:haoping.openChannelRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool openChannelRequst::IsInitialized() const {
+bool openChannelRequest::IsInitialized() const {
   return true;
 }
 
-void openChannelRequst::InternalSwap(openChannelRequst* other) {
+void openChannelRequest::InternalSwap(openChannelRequest* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -762,7 +762,7 @@ void openChannelRequst::InternalSwap(openChannelRequst* other) {
   );
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata openChannelRequst::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata openChannelRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mq_5fproto_2eproto_getter, &descriptor_table_mq_5fproto_2eproto_once,
       file_level_metadata_mq_5fproto_2eproto[0]);
@@ -770,17 +770,17 @@ void openChannelRequst::InternalSwap(openChannelRequst* other) {
 
 // ===================================================================
 
-class closeChannelRequst::_Internal {
+class closeChannelRequest::_Internal {
  public:
 };
 
-closeChannelRequst::closeChannelRequst(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+closeChannelRequest::closeChannelRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  // @@protoc_insertion_point(arena_constructor:haoping.closeChannelRequst)
+  // @@protoc_insertion_point(arena_constructor:haoping.closeChannelRequest)
 }
-closeChannelRequst::closeChannelRequst(const closeChannelRequst& from)
+closeChannelRequest::closeChannelRequest(const closeChannelRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   rid_.InitDefault();
@@ -799,10 +799,10 @@ closeChannelRequst::closeChannelRequst(const closeChannelRequst& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  // @@protoc_insertion_point(copy_constructor:haoping.closeChannelRequst)
+  // @@protoc_insertion_point(copy_constructor:haoping.closeChannelRequest)
 }
 
-inline void closeChannelRequst::SharedCtor() {
+inline void closeChannelRequest::SharedCtor() {
 rid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   rid_.Set("", GetArenaForAllocation());
@@ -813,8 +813,8 @@ cid_.InitDefault();
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-closeChannelRequst::~closeChannelRequst() {
-  // @@protoc_insertion_point(destructor:haoping.closeChannelRequst)
+closeChannelRequest::~closeChannelRequest() {
+  // @@protoc_insertion_point(destructor:haoping.closeChannelRequest)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -822,18 +822,18 @@ closeChannelRequst::~closeChannelRequst() {
   SharedDtor();
 }
 
-inline void closeChannelRequst::SharedDtor() {
+inline void closeChannelRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
 }
 
-void closeChannelRequst::SetCachedSize(int size) const {
+void closeChannelRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void closeChannelRequst::Clear() {
-// @@protoc_insertion_point(message_clear_start:haoping.closeChannelRequst)
+void closeChannelRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:haoping.closeChannelRequest)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -843,7 +843,7 @@ void closeChannelRequst::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* closeChannelRequst::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* closeChannelRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -855,7 +855,7 @@ const char* closeChannelRequst::_InternalParse(const char* ptr, ::_pbi::ParseCon
           auto str = _internal_mutable_rid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.closeChannelRequst.rid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.closeChannelRequest.rid"));
         } else
           goto handle_unusual;
         continue;
@@ -865,7 +865,7 @@ const char* closeChannelRequst::_InternalParse(const char* ptr, ::_pbi::ParseCon
           auto str = _internal_mutable_cid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.closeChannelRequst.cid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.closeChannelRequest.cid"));
         } else
           goto handle_unusual;
         continue;
@@ -892,9 +892,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* closeChannelRequst::_InternalSerialize(
+uint8_t* closeChannelRequest::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:haoping.closeChannelRequst)
+  // @@protoc_insertion_point(serialize_to_array_start:haoping.closeChannelRequest)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -903,7 +903,7 @@ uint8_t* closeChannelRequst::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_rid().data(), static_cast<int>(this->_internal_rid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.closeChannelRequst.rid");
+      "haoping.closeChannelRequest.rid");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_rid(), target);
   }
@@ -913,7 +913,7 @@ uint8_t* closeChannelRequst::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.closeChannelRequst.cid");
+      "haoping.closeChannelRequest.cid");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_cid(), target);
   }
@@ -922,12 +922,12 @@ uint8_t* closeChannelRequst::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:haoping.closeChannelRequst)
+  // @@protoc_insertion_point(serialize_to_array_end:haoping.closeChannelRequest)
   return target;
 }
 
-size_t closeChannelRequst::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:haoping.closeChannelRequst)
+size_t closeChannelRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:haoping.closeChannelRequest)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -951,21 +951,21 @@ size_t closeChannelRequst::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData closeChannelRequst::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData closeChannelRequest::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    closeChannelRequst::MergeImpl
+    closeChannelRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*closeChannelRequst::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*closeChannelRequest::GetClassData() const { return &_class_data_; }
 
-void closeChannelRequst::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+void closeChannelRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
                       const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<closeChannelRequst *>(to)->MergeFrom(
-      static_cast<const closeChannelRequst &>(from));
+  static_cast<closeChannelRequest *>(to)->MergeFrom(
+      static_cast<const closeChannelRequest &>(from));
 }
 
 
-void closeChannelRequst::MergeFrom(const closeChannelRequst& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:haoping.closeChannelRequst)
+void closeChannelRequest::MergeFrom(const closeChannelRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:haoping.closeChannelRequest)
   GOOGLE_DCHECK_NE(&from, this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -979,18 +979,18 @@ void closeChannelRequst::MergeFrom(const closeChannelRequst& from) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void closeChannelRequst::CopyFrom(const closeChannelRequst& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:haoping.closeChannelRequst)
+void closeChannelRequest::CopyFrom(const closeChannelRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:haoping.closeChannelRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool closeChannelRequst::IsInitialized() const {
+bool closeChannelRequest::IsInitialized() const {
   return true;
 }
 
-void closeChannelRequst::InternalSwap(closeChannelRequst* other) {
+void closeChannelRequest::InternalSwap(closeChannelRequest* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -1005,7 +1005,7 @@ void closeChannelRequst::InternalSwap(closeChannelRequst* other) {
   );
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata closeChannelRequst::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata closeChannelRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mq_5fproto_2eproto_getter, &descriptor_table_mq_5fproto_2eproto_once,
       file_level_metadata_mq_5fproto_2eproto[1]);
@@ -1061,17 +1061,17 @@ declareExchangeRequest::declareExchangeRequest(const declareExchangeRequest& fro
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  exchang_name_.InitDefault();
+  exchange_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchang_name_.Set("", GetArenaForAllocation());
+    exchange_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_exchang_name().empty()) {
-    exchang_name_.Set(from._internal_exchang_name(), 
+  if (!from._internal_exchange_name().empty()) {
+    exchange_name_.Set(from._internal_exchange_name(), 
       GetArenaForAllocation());
   }
-  ::memcpy(&exchang_type_, &from.exchang_type_,
+  ::memcpy(&exchange_type_, &from.exchange_type_,
     static_cast<size_t>(reinterpret_cast<char*>(&auto_delete_) -
-    reinterpret_cast<char*>(&exchang_type_)) + sizeof(auto_delete_));
+    reinterpret_cast<char*>(&exchange_type_)) + sizeof(auto_delete_));
   // @@protoc_insertion_point(copy_constructor:haoping.declareExchangeRequest)
 }
 
@@ -1084,14 +1084,14 @@ cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchang_name_.InitDefault();
+exchange_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchang_name_.Set("", GetArenaForAllocation());
+  exchange_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&exchang_type_) - reinterpret_cast<char*>(this)),
+    reinterpret_cast<char*>(&exchange_type_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&auto_delete_) -
-    reinterpret_cast<char*>(&exchang_type_)) + sizeof(auto_delete_));
+    reinterpret_cast<char*>(&exchange_type_)) + sizeof(auto_delete_));
 }
 
 declareExchangeRequest::~declareExchangeRequest() {
@@ -1109,7 +1109,7 @@ inline void declareExchangeRequest::SharedDtor() {
   args_.Destruct();
   rid_.Destroy();
   cid_.Destroy();
-  exchang_name_.Destroy();
+  exchange_name_.Destroy();
 }
 
 void declareExchangeRequest::ArenaDtor(void* object) {
@@ -1129,10 +1129,10 @@ void declareExchangeRequest::Clear() {
   args_.Clear();
   rid_.ClearToEmpty();
   cid_.ClearToEmpty();
-  exchang_name_.ClearToEmpty();
-  ::memset(&exchang_type_, 0, static_cast<size_t>(
+  exchange_name_.ClearToEmpty();
+  ::memset(&exchange_type_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&auto_delete_) -
-      reinterpret_cast<char*>(&exchang_type_)) + sizeof(auto_delete_));
+      reinterpret_cast<char*>(&exchange_type_)) + sizeof(auto_delete_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1162,22 +1162,22 @@ const char* declareExchangeRequest::_InternalParse(const char* ptr, ::_pbi::Pars
         } else
           goto handle_unusual;
         continue;
-      // string exchang_name = 3;
+      // string exchange_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_exchang_name();
+          auto str = _internal_mutable_exchange_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.declareExchangeRequest.exchang_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.declareExchangeRequest.exchange_name"));
         } else
           goto handle_unusual;
         continue;
-      // .haoping.ExchangeType exchang_type = 4;
+      // .haoping.ExchangeType exchange_type = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_exchang_type(static_cast<::haoping::ExchangeType>(val));
+          _internal_set_exchange_type(static_cast<::haoping::ExchangeType>(val));
         } else
           goto handle_unusual;
         continue;
@@ -1259,21 +1259,21 @@ uint8_t* declareExchangeRequest::_InternalSerialize(
         2, this->_internal_cid(), target);
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchang_name().data(), static_cast<int>(this->_internal_exchang_name().length()),
+      this->_internal_exchange_name().data(), static_cast<int>(this->_internal_exchange_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.declareExchangeRequest.exchang_name");
+      "haoping.declareExchangeRequest.exchange_name");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_exchang_name(), target);
+        3, this->_internal_exchange_name(), target);
   }
 
-  // .haoping.ExchangeType exchang_type = 4;
-  if (this->_internal_exchang_type() != 0) {
+  // .haoping.ExchangeType exchange_type = 4;
+  if (this->_internal_exchange_type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      4, this->_internal_exchang_type(), target);
+      4, this->_internal_exchange_type(), target);
   }
 
   // bool durable = 5;
@@ -1357,17 +1357,17 @@ size_t declareExchangeRequest::ByteSizeLong() const {
         this->_internal_cid());
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchang_name());
+        this->_internal_exchange_name());
   }
 
-  // .haoping.ExchangeType exchang_type = 4;
-  if (this->_internal_exchang_type() != 0) {
+  // .haoping.ExchangeType exchange_type = 4;
+  if (this->_internal_exchange_type() != 0) {
     total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_exchang_type());
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_exchange_type());
   }
 
   // bool durable = 5;
@@ -1409,11 +1409,11 @@ void declareExchangeRequest::MergeFrom(const declareExchangeRequest& from) {
   if (!from._internal_cid().empty()) {
     _internal_set_cid(from._internal_cid());
   }
-  if (!from._internal_exchang_name().empty()) {
-    _internal_set_exchang_name(from._internal_exchang_name());
+  if (!from._internal_exchange_name().empty()) {
+    _internal_set_exchange_name(from._internal_exchange_name());
   }
-  if (from._internal_exchang_type() != 0) {
-    _internal_set_exchang_type(from._internal_exchang_type());
+  if (from._internal_exchange_type() != 0) {
+    _internal_set_exchange_type(from._internal_exchange_type());
   }
   if (from._internal_durable() != 0) {
     _internal_set_durable(from._internal_durable());
@@ -1450,15 +1450,15 @@ void declareExchangeRequest::InternalSwap(declareExchangeRequest* other) {
       &other->cid_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchang_name_, lhs_arena,
-      &other->exchang_name_, rhs_arena
+      &exchange_name_, lhs_arena,
+      &other->exchange_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(declareExchangeRequest, auto_delete_)
       + sizeof(declareExchangeRequest::auto_delete_)
-      - PROTOBUF_FIELD_OFFSET(declareExchangeRequest, exchang_type_)>(
-          reinterpret_cast<char*>(&exchang_type_),
-          reinterpret_cast<char*>(&other->exchang_type_));
+      - PROTOBUF_FIELD_OFFSET(declareExchangeRequest, exchange_type_)>(
+          reinterpret_cast<char*>(&exchange_type_),
+          reinterpret_cast<char*>(&other->exchange_type_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata declareExchangeRequest::GetMetadata() const {
@@ -1498,12 +1498,12 @@ deleteExchangeRequest::deleteExchangeRequest(const deleteExchangeRequest& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  exchang_name_.InitDefault();
+  exchange_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchang_name_.Set("", GetArenaForAllocation());
+    exchange_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_exchang_name().empty()) {
-    exchang_name_.Set(from._internal_exchang_name(), 
+  if (!from._internal_exchange_name().empty()) {
+    exchange_name_.Set(from._internal_exchange_name(), 
       GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:haoping.deleteExchangeRequest)
@@ -1518,9 +1518,9 @@ cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchang_name_.InitDefault();
+exchange_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchang_name_.Set("", GetArenaForAllocation());
+  exchange_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -1537,7 +1537,7 @@ inline void deleteExchangeRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
-  exchang_name_.Destroy();
+  exchange_name_.Destroy();
 }
 
 void deleteExchangeRequest::SetCachedSize(int size) const {
@@ -1552,7 +1552,7 @@ void deleteExchangeRequest::Clear() {
 
   rid_.ClearToEmpty();
   cid_.ClearToEmpty();
-  exchang_name_.ClearToEmpty();
+  exchange_name_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1582,13 +1582,13 @@ const char* deleteExchangeRequest::_InternalParse(const char* ptr, ::_pbi::Parse
         } else
           goto handle_unusual;
         continue;
-      // string exchang_name = 3;
+      // string exchange_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_exchang_name();
+          auto str = _internal_mutable_exchange_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.deleteExchangeRequest.exchang_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.deleteExchangeRequest.exchange_name"));
         } else
           goto handle_unusual;
         continue;
@@ -1641,14 +1641,14 @@ uint8_t* deleteExchangeRequest::_InternalSerialize(
         2, this->_internal_cid(), target);
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchang_name().data(), static_cast<int>(this->_internal_exchang_name().length()),
+      this->_internal_exchange_name().data(), static_cast<int>(this->_internal_exchange_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.deleteExchangeRequest.exchang_name");
+      "haoping.deleteExchangeRequest.exchange_name");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_exchang_name(), target);
+        3, this->_internal_exchange_name(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1681,11 +1681,11 @@ size_t deleteExchangeRequest::ByteSizeLong() const {
         this->_internal_cid());
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchang_name());
+        this->_internal_exchange_name());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1716,8 +1716,8 @@ void deleteExchangeRequest::MergeFrom(const deleteExchangeRequest& from) {
   if (!from._internal_cid().empty()) {
     _internal_set_cid(from._internal_cid());
   }
-  if (!from._internal_exchang_name().empty()) {
-    _internal_set_exchang_name(from._internal_exchang_name());
+  if (!from._internal_exchange_name().empty()) {
+    _internal_set_exchange_name(from._internal_exchange_name());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1747,8 +1747,8 @@ void deleteExchangeRequest::InternalSwap(deleteExchangeRequest* other) {
       &other->cid_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchang_name_, lhs_arena,
-      &other->exchang_name_, rhs_arena
+      &exchange_name_, lhs_arena,
+      &other->exchange_name_, rhs_arena
   );
 }
 
@@ -2533,12 +2533,12 @@ queueBindRequest::queueBindRequest(const queueBindRequest& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  exchang_name_.InitDefault();
+  exchange_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchang_name_.Set("", GetArenaForAllocation());
+    exchange_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_exchang_name().empty()) {
-    exchang_name_.Set(from._internal_exchang_name(), 
+  if (!from._internal_exchange_name().empty()) {
+    exchange_name_.Set(from._internal_exchange_name(), 
       GetArenaForAllocation());
   }
   queue_name_.InitDefault();
@@ -2569,9 +2569,9 @@ cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchang_name_.InitDefault();
+exchange_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchang_name_.Set("", GetArenaForAllocation());
+  exchange_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 queue_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -2596,7 +2596,7 @@ inline void queueBindRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
-  exchang_name_.Destroy();
+  exchange_name_.Destroy();
   queue_name_.Destroy();
   binding_key_.Destroy();
 }
@@ -2613,7 +2613,7 @@ void queueBindRequest::Clear() {
 
   rid_.ClearToEmpty();
   cid_.ClearToEmpty();
-  exchang_name_.ClearToEmpty();
+  exchange_name_.ClearToEmpty();
   queue_name_.ClearToEmpty();
   binding_key_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -2645,13 +2645,13 @@ const char* queueBindRequest::_InternalParse(const char* ptr, ::_pbi::ParseConte
         } else
           goto handle_unusual;
         continue;
-      // string exchang_name = 3;
+      // string exchange_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_exchang_name();
+          auto str = _internal_mutable_exchange_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.queueBindRequest.exchang_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.queueBindRequest.exchange_name"));
         } else
           goto handle_unusual;
         continue;
@@ -2724,14 +2724,14 @@ uint8_t* queueBindRequest::_InternalSerialize(
         2, this->_internal_cid(), target);
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchang_name().data(), static_cast<int>(this->_internal_exchang_name().length()),
+      this->_internal_exchange_name().data(), static_cast<int>(this->_internal_exchange_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.queueBindRequest.exchang_name");
+      "haoping.queueBindRequest.exchange_name");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_exchang_name(), target);
+        3, this->_internal_exchange_name(), target);
   }
 
   // string queue_name = 4;
@@ -2784,11 +2784,11 @@ size_t queueBindRequest::ByteSizeLong() const {
         this->_internal_cid());
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchang_name());
+        this->_internal_exchange_name());
   }
 
   // string queue_name = 4;
@@ -2833,8 +2833,8 @@ void queueBindRequest::MergeFrom(const queueBindRequest& from) {
   if (!from._internal_cid().empty()) {
     _internal_set_cid(from._internal_cid());
   }
-  if (!from._internal_exchang_name().empty()) {
-    _internal_set_exchang_name(from._internal_exchang_name());
+  if (!from._internal_exchange_name().empty()) {
+    _internal_set_exchange_name(from._internal_exchange_name());
   }
   if (!from._internal_queue_name().empty()) {
     _internal_set_queue_name(from._internal_queue_name());
@@ -2870,8 +2870,8 @@ void queueBindRequest::InternalSwap(queueBindRequest* other) {
       &other->cid_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchang_name_, lhs_arena,
-      &other->exchang_name_, rhs_arena
+      &exchange_name_, lhs_arena,
+      &other->exchange_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &queue_name_, lhs_arena,
@@ -2920,12 +2920,12 @@ queueUnBindRequest::queueUnBindRequest(const queueUnBindRequest& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  exchang_name_.InitDefault();
+  exchange_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchang_name_.Set("", GetArenaForAllocation());
+    exchange_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_exchang_name().empty()) {
-    exchang_name_.Set(from._internal_exchang_name(), 
+  if (!from._internal_exchange_name().empty()) {
+    exchange_name_.Set(from._internal_exchange_name(), 
       GetArenaForAllocation());
   }
   queue_name_.InitDefault();
@@ -2948,9 +2948,9 @@ cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchang_name_.InitDefault();
+exchange_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchang_name_.Set("", GetArenaForAllocation());
+  exchange_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 queue_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -2971,7 +2971,7 @@ inline void queueUnBindRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
-  exchang_name_.Destroy();
+  exchange_name_.Destroy();
   queue_name_.Destroy();
 }
 
@@ -2987,7 +2987,7 @@ void queueUnBindRequest::Clear() {
 
   rid_.ClearToEmpty();
   cid_.ClearToEmpty();
-  exchang_name_.ClearToEmpty();
+  exchange_name_.ClearToEmpty();
   queue_name_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -3018,13 +3018,13 @@ const char* queueUnBindRequest::_InternalParse(const char* ptr, ::_pbi::ParseCon
         } else
           goto handle_unusual;
         continue;
-      // string exchang_name = 3;
+      // string exchange_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_exchang_name();
+          auto str = _internal_mutable_exchange_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.queueUnBindRequest.exchang_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.queueUnBindRequest.exchange_name"));
         } else
           goto handle_unusual;
         continue;
@@ -3087,14 +3087,14 @@ uint8_t* queueUnBindRequest::_InternalSerialize(
         2, this->_internal_cid(), target);
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchang_name().data(), static_cast<int>(this->_internal_exchang_name().length()),
+      this->_internal_exchange_name().data(), static_cast<int>(this->_internal_exchange_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.queueUnBindRequest.exchang_name");
+      "haoping.queueUnBindRequest.exchange_name");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_exchang_name(), target);
+        3, this->_internal_exchange_name(), target);
   }
 
   // string queue_name = 4;
@@ -3137,11 +3137,11 @@ size_t queueUnBindRequest::ByteSizeLong() const {
         this->_internal_cid());
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchang_name());
+        this->_internal_exchange_name());
   }
 
   // string queue_name = 4;
@@ -3179,8 +3179,8 @@ void queueUnBindRequest::MergeFrom(const queueUnBindRequest& from) {
   if (!from._internal_cid().empty()) {
     _internal_set_cid(from._internal_cid());
   }
-  if (!from._internal_exchang_name().empty()) {
-    _internal_set_exchang_name(from._internal_exchang_name());
+  if (!from._internal_exchange_name().empty()) {
+    _internal_set_exchange_name(from._internal_exchange_name());
   }
   if (!from._internal_queue_name().empty()) {
     _internal_set_queue_name(from._internal_queue_name());
@@ -3213,8 +3213,8 @@ void queueUnBindRequest::InternalSwap(queueUnBindRequest* other) {
       &other->cid_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchang_name_, lhs_arena,
-      &other->exchang_name_, rhs_arena
+      &exchange_name_, lhs_arena,
+      &other->exchange_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &queue_name_, lhs_arena,
@@ -3270,12 +3270,12 @@ basicPublishRequest::basicPublishRequest(const basicPublishRequest& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  exchang_name_.InitDefault();
+  exchange_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchang_name_.Set("", GetArenaForAllocation());
+    exchange_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_exchang_name().empty()) {
-    exchang_name_.Set(from._internal_exchang_name(), 
+  if (!from._internal_exchange_name().empty()) {
+    exchange_name_.Set(from._internal_exchange_name(), 
       GetArenaForAllocation());
   }
   body_.InitDefault();
@@ -3303,9 +3303,9 @@ cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchang_name_.InitDefault();
+exchange_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchang_name_.Set("", GetArenaForAllocation());
+  exchange_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 body_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -3327,7 +3327,7 @@ inline void basicPublishRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
-  exchang_name_.Destroy();
+  exchange_name_.Destroy();
   body_.Destroy();
   if (this != internal_default_instance()) delete properties_;
 }
@@ -3344,7 +3344,7 @@ void basicPublishRequest::Clear() {
 
   rid_.ClearToEmpty();
   cid_.ClearToEmpty();
-  exchang_name_.ClearToEmpty();
+  exchange_name_.ClearToEmpty();
   body_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && properties_ != nullptr) {
     delete properties_;
@@ -3379,13 +3379,13 @@ const char* basicPublishRequest::_InternalParse(const char* ptr, ::_pbi::ParseCo
         } else
           goto handle_unusual;
         continue;
-      // string exchang_name = 3;
+      // string exchange_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_exchang_name();
+          auto str = _internal_mutable_exchange_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicPublishRequest.exchang_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicPublishRequest.exchange_name"));
         } else
           goto handle_unusual;
         continue;
@@ -3456,14 +3456,14 @@ uint8_t* basicPublishRequest::_InternalSerialize(
         2, this->_internal_cid(), target);
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchang_name().data(), static_cast<int>(this->_internal_exchang_name().length()),
+      this->_internal_exchange_name().data(), static_cast<int>(this->_internal_exchange_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicPublishRequest.exchang_name");
+      "haoping.basicPublishRequest.exchange_name");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_exchang_name(), target);
+        3, this->_internal_exchange_name(), target);
   }
 
   // string body = 4;
@@ -3513,11 +3513,11 @@ size_t basicPublishRequest::ByteSizeLong() const {
         this->_internal_cid());
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string exchange_name = 3;
+  if (!this->_internal_exchange_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchang_name());
+        this->_internal_exchange_name());
   }
 
   // string body = 4;
@@ -3562,8 +3562,8 @@ void basicPublishRequest::MergeFrom(const basicPublishRequest& from) {
   if (!from._internal_cid().empty()) {
     _internal_set_cid(from._internal_cid());
   }
-  if (!from._internal_exchang_name().empty()) {
-    _internal_set_exchang_name(from._internal_exchang_name());
+  if (!from._internal_exchange_name().empty()) {
+    _internal_set_exchange_name(from._internal_exchange_name());
   }
   if (!from._internal_body().empty()) {
     _internal_set_body(from._internal_body());
@@ -3599,8 +3599,8 @@ void basicPublishRequest::InternalSwap(basicPublishRequest* other) {
       &other->cid_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchang_name_, lhs_arena,
-      &other->exchang_name_, rhs_arena
+      &exchange_name_, lhs_arena,
+      &other->exchange_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &body_, lhs_arena,
@@ -3646,12 +3646,12 @@ basicAckRequest::basicAckRequest(const basicAckRequest& from)
     cid_.Set(from._internal_cid(), 
       GetArenaForAllocation());
   }
-  exchang_name_.InitDefault();
+  queue_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchang_name_.Set("", GetArenaForAllocation());
+    queue_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_exchang_name().empty()) {
-    exchang_name_.Set(from._internal_exchang_name(), 
+  if (!from._internal_queue_name().empty()) {
+    queue_name_.Set(from._internal_queue_name(), 
       GetArenaForAllocation());
   }
   message_id_.InitDefault();
@@ -3674,9 +3674,9 @@ cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchang_name_.InitDefault();
+queue_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchang_name_.Set("", GetArenaForAllocation());
+  queue_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 message_id_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -3697,7 +3697,7 @@ inline void basicAckRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
-  exchang_name_.Destroy();
+  queue_name_.Destroy();
   message_id_.Destroy();
 }
 
@@ -3713,7 +3713,7 @@ void basicAckRequest::Clear() {
 
   rid_.ClearToEmpty();
   cid_.ClearToEmpty();
-  exchang_name_.ClearToEmpty();
+  queue_name_.ClearToEmpty();
   message_id_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -3744,13 +3744,13 @@ const char* basicAckRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
         } else
           goto handle_unusual;
         continue;
-      // string exchang_name = 3;
+      // string queue_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_exchang_name();
+          auto str = _internal_mutable_queue_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicAckRequest.exchang_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicAckRequest.queue_name"));
         } else
           goto handle_unusual;
         continue;
@@ -3813,14 +3813,14 @@ uint8_t* basicAckRequest::_InternalSerialize(
         2, this->_internal_cid(), target);
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string queue_name = 3;
+  if (!this->_internal_queue_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchang_name().data(), static_cast<int>(this->_internal_exchang_name().length()),
+      this->_internal_queue_name().data(), static_cast<int>(this->_internal_queue_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicAckRequest.exchang_name");
+      "haoping.basicAckRequest.queue_name");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_exchang_name(), target);
+        3, this->_internal_queue_name(), target);
   }
 
   // string message_id = 4;
@@ -3863,11 +3863,11 @@ size_t basicAckRequest::ByteSizeLong() const {
         this->_internal_cid());
   }
 
-  // string exchang_name = 3;
-  if (!this->_internal_exchang_name().empty()) {
+  // string queue_name = 3;
+  if (!this->_internal_queue_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchang_name());
+        this->_internal_queue_name());
   }
 
   // string message_id = 4;
@@ -3905,8 +3905,8 @@ void basicAckRequest::MergeFrom(const basicAckRequest& from) {
   if (!from._internal_cid().empty()) {
     _internal_set_cid(from._internal_cid());
   }
-  if (!from._internal_exchang_name().empty()) {
-    _internal_set_exchang_name(from._internal_exchang_name());
+  if (!from._internal_queue_name().empty()) {
+    _internal_set_queue_name(from._internal_queue_name());
   }
   if (!from._internal_message_id().empty()) {
     _internal_set_message_id(from._internal_message_id());
@@ -3939,8 +3939,8 @@ void basicAckRequest::InternalSwap(basicAckRequest* other) {
       &other->cid_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchang_name_, lhs_arena,
-      &other->exchang_name_, rhs_arena
+      &queue_name_, lhs_arena,
+      &other->queue_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &message_id_, lhs_arena,
@@ -3956,17 +3956,17 @@ void basicAckRequest::InternalSwap(basicAckRequest* other) {
 
 // ===================================================================
 
-class basicConsumerRequest::_Internal {
+class basicConsumeRequest::_Internal {
  public:
 };
 
-basicConsumerRequest::basicConsumerRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+basicConsumeRequest::basicConsumeRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  // @@protoc_insertion_point(arena_constructor:haoping.basicConsumerRequest)
+  // @@protoc_insertion_point(arena_constructor:haoping.basicConsumeRequest)
 }
-basicConsumerRequest::basicConsumerRequest(const basicConsumerRequest& from)
+basicConsumeRequest::basicConsumeRequest(const basicConsumeRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   rid_.InitDefault();
@@ -4002,10 +4002,10 @@ basicConsumerRequest::basicConsumerRequest(const basicConsumerRequest& from)
       GetArenaForAllocation());
   }
   auto_ack_ = from.auto_ack_;
-  // @@protoc_insertion_point(copy_constructor:haoping.basicConsumerRequest)
+  // @@protoc_insertion_point(copy_constructor:haoping.basicConsumeRequest)
 }
 
-inline void basicConsumerRequest::SharedCtor() {
+inline void basicConsumeRequest::SharedCtor() {
 rid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   rid_.Set("", GetArenaForAllocation());
@@ -4025,8 +4025,8 @@ queue_name_.InitDefault();
 auto_ack_ = false;
 }
 
-basicConsumerRequest::~basicConsumerRequest() {
-  // @@protoc_insertion_point(destructor:haoping.basicConsumerRequest)
+basicConsumeRequest::~basicConsumeRequest() {
+  // @@protoc_insertion_point(destructor:haoping.basicConsumeRequest)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -4034,7 +4034,7 @@ basicConsumerRequest::~basicConsumerRequest() {
   SharedDtor();
 }
 
-inline void basicConsumerRequest::SharedDtor() {
+inline void basicConsumeRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   rid_.Destroy();
   cid_.Destroy();
@@ -4042,12 +4042,12 @@ inline void basicConsumerRequest::SharedDtor() {
   queue_name_.Destroy();
 }
 
-void basicConsumerRequest::SetCachedSize(int size) const {
+void basicConsumeRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void basicConsumerRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:haoping.basicConsumerRequest)
+void basicConsumeRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:haoping.basicConsumeRequest)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -4060,7 +4060,7 @@ void basicConsumerRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* basicConsumerRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* basicConsumeRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -4072,7 +4072,7 @@ const char* basicConsumerRequest::_InternalParse(const char* ptr, ::_pbi::ParseC
           auto str = _internal_mutable_rid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerRequest.rid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeRequest.rid"));
         } else
           goto handle_unusual;
         continue;
@@ -4082,7 +4082,7 @@ const char* basicConsumerRequest::_InternalParse(const char* ptr, ::_pbi::ParseC
           auto str = _internal_mutable_cid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerRequest.cid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeRequest.cid"));
         } else
           goto handle_unusual;
         continue;
@@ -4092,7 +4092,7 @@ const char* basicConsumerRequest::_InternalParse(const char* ptr, ::_pbi::ParseC
           auto str = _internal_mutable_consumer_tag();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerRequest.consumer_tag"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeRequest.consumer_tag"));
         } else
           goto handle_unusual;
         continue;
@@ -4102,7 +4102,7 @@ const char* basicConsumerRequest::_InternalParse(const char* ptr, ::_pbi::ParseC
           auto str = _internal_mutable_queue_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerRequest.queue_name"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeRequest.queue_name"));
         } else
           goto handle_unusual;
         continue;
@@ -4137,9 +4137,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* basicConsumerRequest::_InternalSerialize(
+uint8_t* basicConsumeRequest::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:haoping.basicConsumerRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:haoping.basicConsumeRequest)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -4148,7 +4148,7 @@ uint8_t* basicConsumerRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_rid().data(), static_cast<int>(this->_internal_rid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerRequest.rid");
+      "haoping.basicConsumeRequest.rid");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_rid(), target);
   }
@@ -4158,7 +4158,7 @@ uint8_t* basicConsumerRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerRequest.cid");
+      "haoping.basicConsumeRequest.cid");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_cid(), target);
   }
@@ -4168,7 +4168,7 @@ uint8_t* basicConsumerRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_consumer_tag().data(), static_cast<int>(this->_internal_consumer_tag().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerRequest.consumer_tag");
+      "haoping.basicConsumeRequest.consumer_tag");
     target = stream->WriteStringMaybeAliased(
         3, this->_internal_consumer_tag(), target);
   }
@@ -4178,7 +4178,7 @@ uint8_t* basicConsumerRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_queue_name().data(), static_cast<int>(this->_internal_queue_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerRequest.queue_name");
+      "haoping.basicConsumeRequest.queue_name");
     target = stream->WriteStringMaybeAliased(
         4, this->_internal_queue_name(), target);
   }
@@ -4193,12 +4193,12 @@ uint8_t* basicConsumerRequest::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:haoping.basicConsumerRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:haoping.basicConsumeRequest)
   return target;
 }
 
-size_t basicConsumerRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:haoping.basicConsumerRequest)
+size_t basicConsumeRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:haoping.basicConsumeRequest)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -4241,21 +4241,21 @@ size_t basicConsumerRequest::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData basicConsumerRequest::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData basicConsumeRequest::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    basicConsumerRequest::MergeImpl
+    basicConsumeRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*basicConsumerRequest::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*basicConsumeRequest::GetClassData() const { return &_class_data_; }
 
-void basicConsumerRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+void basicConsumeRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
                       const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<basicConsumerRequest *>(to)->MergeFrom(
-      static_cast<const basicConsumerRequest &>(from));
+  static_cast<basicConsumeRequest *>(to)->MergeFrom(
+      static_cast<const basicConsumeRequest &>(from));
 }
 
 
-void basicConsumerRequest::MergeFrom(const basicConsumerRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:haoping.basicConsumerRequest)
+void basicConsumeRequest::MergeFrom(const basicConsumeRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:haoping.basicConsumeRequest)
   GOOGLE_DCHECK_NE(&from, this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4278,18 +4278,18 @@ void basicConsumerRequest::MergeFrom(const basicConsumerRequest& from) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void basicConsumerRequest::CopyFrom(const basicConsumerRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:haoping.basicConsumerRequest)
+void basicConsumeRequest::CopyFrom(const basicConsumeRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:haoping.basicConsumeRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool basicConsumerRequest::IsInitialized() const {
+bool basicConsumeRequest::IsInitialized() const {
   return true;
 }
 
-void basicConsumerRequest::InternalSwap(basicConsumerRequest* other) {
+void basicConsumeRequest::InternalSwap(basicConsumeRequest* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -4313,7 +4313,7 @@ void basicConsumerRequest::InternalSwap(basicConsumerRequest* other) {
   swap(auto_ack_, other->auto_ack_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata basicConsumerRequest::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata basicConsumeRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mq_5fproto_2eproto_getter, &descriptor_table_mq_5fproto_2eproto_once,
       file_level_metadata_mq_5fproto_2eproto[12]);
@@ -4660,28 +4660,28 @@ void basicCancelRequest::InternalSwap(basicCancelRequest* other) {
 
 // ===================================================================
 
-class basicConsumerResponse::_Internal {
+class basicConsumeResponse::_Internal {
  public:
-  static const ::haoping::BasicProperties& properties(const basicConsumerResponse* msg);
+  static const ::haoping::BasicProperties& properties(const basicConsumeResponse* msg);
 };
 
 const ::haoping::BasicProperties&
-basicConsumerResponse::_Internal::properties(const basicConsumerResponse* msg) {
+basicConsumeResponse::_Internal::properties(const basicConsumeResponse* msg) {
   return *msg->properties_;
 }
-void basicConsumerResponse::clear_properties() {
+void basicConsumeResponse::clear_properties() {
   if (GetArenaForAllocation() == nullptr && properties_ != nullptr) {
     delete properties_;
   }
   properties_ = nullptr;
 }
-basicConsumerResponse::basicConsumerResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+basicConsumeResponse::basicConsumeResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  // @@protoc_insertion_point(arena_constructor:haoping.basicConsumerResponse)
+  // @@protoc_insertion_point(arena_constructor:haoping.basicConsumeResponse)
 }
-basicConsumerResponse::basicConsumerResponse(const basicConsumerResponse& from)
+basicConsumeResponse::basicConsumeResponse(const basicConsumeResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   cid_.InitDefault();
@@ -4713,10 +4713,10 @@ basicConsumerResponse::basicConsumerResponse(const basicConsumerResponse& from)
   } else {
     properties_ = nullptr;
   }
-  // @@protoc_insertion_point(copy_constructor:haoping.basicConsumerResponse)
+  // @@protoc_insertion_point(copy_constructor:haoping.basicConsumeResponse)
 }
 
-inline void basicConsumerResponse::SharedCtor() {
+inline void basicConsumeResponse::SharedCtor() {
 cid_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   cid_.Set("", GetArenaForAllocation());
@@ -4732,8 +4732,8 @@ body_.InitDefault();
 properties_ = nullptr;
 }
 
-basicConsumerResponse::~basicConsumerResponse() {
-  // @@protoc_insertion_point(destructor:haoping.basicConsumerResponse)
+basicConsumeResponse::~basicConsumeResponse() {
+  // @@protoc_insertion_point(destructor:haoping.basicConsumeResponse)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -4741,7 +4741,7 @@ basicConsumerResponse::~basicConsumerResponse() {
   SharedDtor();
 }
 
-inline void basicConsumerResponse::SharedDtor() {
+inline void basicConsumeResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   cid_.Destroy();
   consumer_tag_.Destroy();
@@ -4749,12 +4749,12 @@ inline void basicConsumerResponse::SharedDtor() {
   if (this != internal_default_instance()) delete properties_;
 }
 
-void basicConsumerResponse::SetCachedSize(int size) const {
+void basicConsumeResponse::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void basicConsumerResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:haoping.basicConsumerResponse)
+void basicConsumeResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:haoping.basicConsumeResponse)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -4769,7 +4769,7 @@ void basicConsumerResponse::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* basicConsumerResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* basicConsumeResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -4781,7 +4781,7 @@ const char* basicConsumerResponse::_InternalParse(const char* ptr, ::_pbi::Parse
           auto str = _internal_mutable_cid();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerResponse.cid"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeResponse.cid"));
         } else
           goto handle_unusual;
         continue;
@@ -4791,7 +4791,7 @@ const char* basicConsumerResponse::_InternalParse(const char* ptr, ::_pbi::Parse
           auto str = _internal_mutable_consumer_tag();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerResponse.consumer_tag"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeResponse.consumer_tag"));
         } else
           goto handle_unusual;
         continue;
@@ -4801,7 +4801,7 @@ const char* basicConsumerResponse::_InternalParse(const char* ptr, ::_pbi::Parse
           auto str = _internal_mutable_body();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumerResponse.body"));
+          CHK_(::_pbi::VerifyUTF8(str, "haoping.basicConsumeResponse.body"));
         } else
           goto handle_unusual;
         continue;
@@ -4836,9 +4836,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* basicConsumerResponse::_InternalSerialize(
+uint8_t* basicConsumeResponse::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:haoping.basicConsumerResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:haoping.basicConsumeResponse)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -4847,7 +4847,7 @@ uint8_t* basicConsumerResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerResponse.cid");
+      "haoping.basicConsumeResponse.cid");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_cid(), target);
   }
@@ -4857,7 +4857,7 @@ uint8_t* basicConsumerResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_consumer_tag().data(), static_cast<int>(this->_internal_consumer_tag().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerResponse.consumer_tag");
+      "haoping.basicConsumeResponse.consumer_tag");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_consumer_tag(), target);
   }
@@ -4867,7 +4867,7 @@ uint8_t* basicConsumerResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_body().data(), static_cast<int>(this->_internal_body().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "haoping.basicConsumerResponse.body");
+      "haoping.basicConsumeResponse.body");
     target = stream->WriteStringMaybeAliased(
         3, this->_internal_body(), target);
   }
@@ -4883,12 +4883,12 @@ uint8_t* basicConsumerResponse::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:haoping.basicConsumerResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:haoping.basicConsumeResponse)
   return target;
 }
 
-size_t basicConsumerResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:haoping.basicConsumerResponse)
+size_t basicConsumeResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:haoping.basicConsumeResponse)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -4926,21 +4926,21 @@ size_t basicConsumerResponse::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData basicConsumerResponse::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData basicConsumeResponse::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    basicConsumerResponse::MergeImpl
+    basicConsumeResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*basicConsumerResponse::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*basicConsumeResponse::GetClassData() const { return &_class_data_; }
 
-void basicConsumerResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+void basicConsumeResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
                       const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<basicConsumerResponse *>(to)->MergeFrom(
-      static_cast<const basicConsumerResponse &>(from));
+  static_cast<basicConsumeResponse *>(to)->MergeFrom(
+      static_cast<const basicConsumeResponse &>(from));
 }
 
 
-void basicConsumerResponse::MergeFrom(const basicConsumerResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:haoping.basicConsumerResponse)
+void basicConsumeResponse::MergeFrom(const basicConsumeResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:haoping.basicConsumeResponse)
   GOOGLE_DCHECK_NE(&from, this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4960,18 +4960,18 @@ void basicConsumerResponse::MergeFrom(const basicConsumerResponse& from) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void basicConsumerResponse::CopyFrom(const basicConsumerResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:haoping.basicConsumerResponse)
+void basicConsumeResponse::CopyFrom(const basicConsumeResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:haoping.basicConsumeResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool basicConsumerResponse::IsInitialized() const {
+bool basicConsumeResponse::IsInitialized() const {
   return true;
 }
 
-void basicConsumerResponse::InternalSwap(basicConsumerResponse* other) {
+void basicConsumeResponse::InternalSwap(basicConsumeResponse* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -4991,7 +4991,7 @@ void basicConsumerResponse::InternalSwap(basicConsumerResponse* other) {
   swap(properties_, other->properties_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata basicConsumerResponse::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata basicConsumeResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mq_5fproto_2eproto_getter, &descriptor_table_mq_5fproto_2eproto_once,
       file_level_metadata_mq_5fproto_2eproto[14]);
@@ -5269,13 +5269,13 @@ void basicCommonResponse::InternalSwap(basicCommonResponse* other) {
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace haoping
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::haoping::openChannelRequst*
-Arena::CreateMaybeMessage< ::haoping::openChannelRequst >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::haoping::openChannelRequst >(arena);
+template<> PROTOBUF_NOINLINE ::haoping::openChannelRequest*
+Arena::CreateMaybeMessage< ::haoping::openChannelRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::haoping::openChannelRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::haoping::closeChannelRequst*
-Arena::CreateMaybeMessage< ::haoping::closeChannelRequst >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::haoping::closeChannelRequst >(arena);
+template<> PROTOBUF_NOINLINE ::haoping::closeChannelRequest*
+Arena::CreateMaybeMessage< ::haoping::closeChannelRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::haoping::closeChannelRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::haoping::declareExchangeRequest_ArgsEntry_DoNotUse*
 Arena::CreateMaybeMessage< ::haoping::declareExchangeRequest_ArgsEntry_DoNotUse >(Arena* arena) {
@@ -5317,17 +5317,17 @@ template<> PROTOBUF_NOINLINE ::haoping::basicAckRequest*
 Arena::CreateMaybeMessage< ::haoping::basicAckRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::haoping::basicAckRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::haoping::basicConsumerRequest*
-Arena::CreateMaybeMessage< ::haoping::basicConsumerRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::haoping::basicConsumerRequest >(arena);
+template<> PROTOBUF_NOINLINE ::haoping::basicConsumeRequest*
+Arena::CreateMaybeMessage< ::haoping::basicConsumeRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::haoping::basicConsumeRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::haoping::basicCancelRequest*
 Arena::CreateMaybeMessage< ::haoping::basicCancelRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::haoping::basicCancelRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::haoping::basicConsumerResponse*
-Arena::CreateMaybeMessage< ::haoping::basicConsumerResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::haoping::basicConsumerResponse >(arena);
+template<> PROTOBUF_NOINLINE ::haoping::basicConsumeResponse*
+Arena::CreateMaybeMessage< ::haoping::basicConsumeResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::haoping::basicConsumeResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::haoping::basicCommonResponse*
 Arena::CreateMaybeMessage< ::haoping::basicCommonResponse >(Arena* arena) {

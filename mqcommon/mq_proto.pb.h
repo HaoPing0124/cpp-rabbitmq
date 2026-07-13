@@ -58,18 +58,18 @@ extern basicCancelRequestDefaultTypeInternal _basicCancelRequest_default_instanc
 class basicCommonResponse;
 struct basicCommonResponseDefaultTypeInternal;
 extern basicCommonResponseDefaultTypeInternal _basicCommonResponse_default_instance_;
-class basicConsumerRequest;
-struct basicConsumerRequestDefaultTypeInternal;
-extern basicConsumerRequestDefaultTypeInternal _basicConsumerRequest_default_instance_;
-class basicConsumerResponse;
-struct basicConsumerResponseDefaultTypeInternal;
-extern basicConsumerResponseDefaultTypeInternal _basicConsumerResponse_default_instance_;
+class basicConsumeRequest;
+struct basicConsumeRequestDefaultTypeInternal;
+extern basicConsumeRequestDefaultTypeInternal _basicConsumeRequest_default_instance_;
+class basicConsumeResponse;
+struct basicConsumeResponseDefaultTypeInternal;
+extern basicConsumeResponseDefaultTypeInternal _basicConsumeResponse_default_instance_;
 class basicPublishRequest;
 struct basicPublishRequestDefaultTypeInternal;
 extern basicPublishRequestDefaultTypeInternal _basicPublishRequest_default_instance_;
-class closeChannelRequst;
-struct closeChannelRequstDefaultTypeInternal;
-extern closeChannelRequstDefaultTypeInternal _closeChannelRequst_default_instance_;
+class closeChannelRequest;
+struct closeChannelRequestDefaultTypeInternal;
+extern closeChannelRequestDefaultTypeInternal _closeChannelRequest_default_instance_;
 class declareExchangeRequest;
 struct declareExchangeRequestDefaultTypeInternal;
 extern declareExchangeRequestDefaultTypeInternal _declareExchangeRequest_default_instance_;
@@ -88,9 +88,9 @@ extern deleteExchangeRequestDefaultTypeInternal _deleteExchangeRequest_default_i
 class deleteQueueRequest;
 struct deleteQueueRequestDefaultTypeInternal;
 extern deleteQueueRequestDefaultTypeInternal _deleteQueueRequest_default_instance_;
-class openChannelRequst;
-struct openChannelRequstDefaultTypeInternal;
-extern openChannelRequstDefaultTypeInternal _openChannelRequst_default_instance_;
+class openChannelRequest;
+struct openChannelRequestDefaultTypeInternal;
+extern openChannelRequestDefaultTypeInternal _openChannelRequest_default_instance_;
 class queueBindRequest;
 struct queueBindRequestDefaultTypeInternal;
 extern queueBindRequestDefaultTypeInternal _queueBindRequest_default_instance_;
@@ -102,17 +102,17 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::haoping::basicAckRequest* Arena::CreateMaybeMessage<::haoping::basicAckRequest>(Arena*);
 template<> ::haoping::basicCancelRequest* Arena::CreateMaybeMessage<::haoping::basicCancelRequest>(Arena*);
 template<> ::haoping::basicCommonResponse* Arena::CreateMaybeMessage<::haoping::basicCommonResponse>(Arena*);
-template<> ::haoping::basicConsumerRequest* Arena::CreateMaybeMessage<::haoping::basicConsumerRequest>(Arena*);
-template<> ::haoping::basicConsumerResponse* Arena::CreateMaybeMessage<::haoping::basicConsumerResponse>(Arena*);
+template<> ::haoping::basicConsumeRequest* Arena::CreateMaybeMessage<::haoping::basicConsumeRequest>(Arena*);
+template<> ::haoping::basicConsumeResponse* Arena::CreateMaybeMessage<::haoping::basicConsumeResponse>(Arena*);
 template<> ::haoping::basicPublishRequest* Arena::CreateMaybeMessage<::haoping::basicPublishRequest>(Arena*);
-template<> ::haoping::closeChannelRequst* Arena::CreateMaybeMessage<::haoping::closeChannelRequst>(Arena*);
+template<> ::haoping::closeChannelRequest* Arena::CreateMaybeMessage<::haoping::closeChannelRequest>(Arena*);
 template<> ::haoping::declareExchangeRequest* Arena::CreateMaybeMessage<::haoping::declareExchangeRequest>(Arena*);
 template<> ::haoping::declareExchangeRequest_ArgsEntry_DoNotUse* Arena::CreateMaybeMessage<::haoping::declareExchangeRequest_ArgsEntry_DoNotUse>(Arena*);
 template<> ::haoping::declareQueueRequest* Arena::CreateMaybeMessage<::haoping::declareQueueRequest>(Arena*);
 template<> ::haoping::declareQueueRequest_ArgsEntry_DoNotUse* Arena::CreateMaybeMessage<::haoping::declareQueueRequest_ArgsEntry_DoNotUse>(Arena*);
 template<> ::haoping::deleteExchangeRequest* Arena::CreateMaybeMessage<::haoping::deleteExchangeRequest>(Arena*);
 template<> ::haoping::deleteQueueRequest* Arena::CreateMaybeMessage<::haoping::deleteQueueRequest>(Arena*);
-template<> ::haoping::openChannelRequst* Arena::CreateMaybeMessage<::haoping::openChannelRequst>(Arena*);
+template<> ::haoping::openChannelRequest* Arena::CreateMaybeMessage<::haoping::openChannelRequest>(Arena*);
 template<> ::haoping::queueBindRequest* Arena::CreateMaybeMessage<::haoping::queueBindRequest>(Arena*);
 template<> ::haoping::queueUnBindRequest* Arena::CreateMaybeMessage<::haoping::queueUnBindRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -120,24 +120,24 @@ namespace haoping {
 
 // ===================================================================
 
-class openChannelRequst final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.openChannelRequst) */ {
+class openChannelRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.openChannelRequest) */ {
  public:
-  inline openChannelRequst() : openChannelRequst(nullptr) {}
-  ~openChannelRequst() override;
-  explicit PROTOBUF_CONSTEXPR openChannelRequst(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline openChannelRequest() : openChannelRequest(nullptr) {}
+  ~openChannelRequest() override;
+  explicit PROTOBUF_CONSTEXPR openChannelRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  openChannelRequst(const openChannelRequst& from);
-  openChannelRequst(openChannelRequst&& from) noexcept
-    : openChannelRequst() {
+  openChannelRequest(const openChannelRequest& from);
+  openChannelRequest(openChannelRequest&& from) noexcept
+    : openChannelRequest() {
     *this = ::std::move(from);
   }
 
-  inline openChannelRequst& operator=(const openChannelRequst& from) {
+  inline openChannelRequest& operator=(const openChannelRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline openChannelRequst& operator=(openChannelRequst&& from) noexcept {
+  inline openChannelRequest& operator=(openChannelRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -160,20 +160,20 @@ class openChannelRequst final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const openChannelRequst& default_instance() {
+  static const openChannelRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const openChannelRequst* internal_default_instance() {
-    return reinterpret_cast<const openChannelRequst*>(
-               &_openChannelRequst_default_instance_);
+  static inline const openChannelRequest* internal_default_instance() {
+    return reinterpret_cast<const openChannelRequest*>(
+               &_openChannelRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(openChannelRequst& a, openChannelRequst& b) {
+  friend void swap(openChannelRequest& a, openChannelRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(openChannelRequst* other) {
+  inline void Swap(openChannelRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -186,7 +186,7 @@ class openChannelRequst final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(openChannelRequst* other) {
+  void UnsafeArenaSwap(openChannelRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -194,13 +194,13 @@ class openChannelRequst final :
 
   // implements Message ----------------------------------------------
 
-  openChannelRequst* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<openChannelRequst>(arena);
+  openChannelRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<openChannelRequest>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const openChannelRequst& from);
+  void CopyFrom(const openChannelRequest& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const openChannelRequst& from);
+  void MergeFrom(const openChannelRequest& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -217,15 +217,15 @@ class openChannelRequst final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(openChannelRequst* other);
+  void InternalSwap(openChannelRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "haoping.openChannelRequst";
+    return "haoping.openChannelRequest";
   }
   protected:
-  explicit openChannelRequst(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit openChannelRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -270,7 +270,7 @@ class openChannelRequst final :
   std::string* _internal_mutable_cid();
   public:
 
-  // @@protoc_insertion_point(class_scope:haoping.openChannelRequst)
+  // @@protoc_insertion_point(class_scope:haoping.openChannelRequest)
  private:
   class _Internal;
 
@@ -284,24 +284,24 @@ class openChannelRequst final :
 };
 // -------------------------------------------------------------------
 
-class closeChannelRequst final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.closeChannelRequst) */ {
+class closeChannelRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.closeChannelRequest) */ {
  public:
-  inline closeChannelRequst() : closeChannelRequst(nullptr) {}
-  ~closeChannelRequst() override;
-  explicit PROTOBUF_CONSTEXPR closeChannelRequst(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline closeChannelRequest() : closeChannelRequest(nullptr) {}
+  ~closeChannelRequest() override;
+  explicit PROTOBUF_CONSTEXPR closeChannelRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  closeChannelRequst(const closeChannelRequst& from);
-  closeChannelRequst(closeChannelRequst&& from) noexcept
-    : closeChannelRequst() {
+  closeChannelRequest(const closeChannelRequest& from);
+  closeChannelRequest(closeChannelRequest&& from) noexcept
+    : closeChannelRequest() {
     *this = ::std::move(from);
   }
 
-  inline closeChannelRequst& operator=(const closeChannelRequst& from) {
+  inline closeChannelRequest& operator=(const closeChannelRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline closeChannelRequst& operator=(closeChannelRequst&& from) noexcept {
+  inline closeChannelRequest& operator=(closeChannelRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -324,20 +324,20 @@ class closeChannelRequst final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const closeChannelRequst& default_instance() {
+  static const closeChannelRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const closeChannelRequst* internal_default_instance() {
-    return reinterpret_cast<const closeChannelRequst*>(
-               &_closeChannelRequst_default_instance_);
+  static inline const closeChannelRequest* internal_default_instance() {
+    return reinterpret_cast<const closeChannelRequest*>(
+               &_closeChannelRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(closeChannelRequst& a, closeChannelRequst& b) {
+  friend void swap(closeChannelRequest& a, closeChannelRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(closeChannelRequst* other) {
+  inline void Swap(closeChannelRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -350,7 +350,7 @@ class closeChannelRequst final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(closeChannelRequst* other) {
+  void UnsafeArenaSwap(closeChannelRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -358,13 +358,13 @@ class closeChannelRequst final :
 
   // implements Message ----------------------------------------------
 
-  closeChannelRequst* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<closeChannelRequst>(arena);
+  closeChannelRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<closeChannelRequest>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const closeChannelRequst& from);
+  void CopyFrom(const closeChannelRequest& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const closeChannelRequst& from);
+  void MergeFrom(const closeChannelRequest& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -381,15 +381,15 @@ class closeChannelRequst final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(closeChannelRequst* other);
+  void InternalSwap(closeChannelRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "haoping.closeChannelRequst";
+    return "haoping.closeChannelRequest";
   }
   protected:
-  explicit closeChannelRequst(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit closeChannelRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -434,7 +434,7 @@ class closeChannelRequst final :
   std::string* _internal_mutable_cid();
   public:
 
-  // @@protoc_insertion_point(class_scope:haoping.closeChannelRequst)
+  // @@protoc_insertion_point(class_scope:haoping.closeChannelRequest)
  private:
   class _Internal;
 
@@ -601,8 +601,8 @@ class declareExchangeRequest final :
     kArgsFieldNumber = 7,
     kRidFieldNumber = 1,
     kCidFieldNumber = 2,
-    kExchangNameFieldNumber = 3,
-    kExchangTypeFieldNumber = 4,
+    kExchangeNameFieldNumber = 3,
+    kExchangeTypeFieldNumber = 4,
     kDurableFieldNumber = 5,
     kAutoDeleteFieldNumber = 6,
   };
@@ -651,27 +651,27 @@ class declareExchangeRequest final :
   std::string* _internal_mutable_cid();
   public:
 
-  // string exchang_name = 3;
-  void clear_exchang_name();
-  const std::string& exchang_name() const;
+  // string exchange_name = 3;
+  void clear_exchange_name();
+  const std::string& exchange_name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_exchang_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_exchang_name();
-  PROTOBUF_NODISCARD std::string* release_exchang_name();
-  void set_allocated_exchang_name(std::string* exchang_name);
+  void set_exchange_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_exchange_name();
+  PROTOBUF_NODISCARD std::string* release_exchange_name();
+  void set_allocated_exchange_name(std::string* exchange_name);
   private:
-  const std::string& _internal_exchang_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchang_name(const std::string& value);
-  std::string* _internal_mutable_exchang_name();
+  const std::string& _internal_exchange_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchange_name(const std::string& value);
+  std::string* _internal_mutable_exchange_name();
   public:
 
-  // .haoping.ExchangeType exchang_type = 4;
-  void clear_exchang_type();
-  ::haoping::ExchangeType exchang_type() const;
-  void set_exchang_type(::haoping::ExchangeType value);
+  // .haoping.ExchangeType exchange_type = 4;
+  void clear_exchange_type();
+  ::haoping::ExchangeType exchange_type() const;
+  void set_exchange_type(::haoping::ExchangeType value);
   private:
-  ::haoping::ExchangeType _internal_exchang_type() const;
-  void _internal_set_exchang_type(::haoping::ExchangeType value);
+  ::haoping::ExchangeType _internal_exchange_type() const;
+  void _internal_set_exchange_type(::haoping::ExchangeType value);
   public:
 
   // bool durable = 5;
@@ -706,8 +706,8 @@ class declareExchangeRequest final :
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> args_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchang_name_;
-  int exchang_type_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchange_name_;
+  int exchange_type_;
   bool durable_;
   bool auto_delete_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -836,7 +836,7 @@ class deleteExchangeRequest final :
   enum : int {
     kRidFieldNumber = 1,
     kCidFieldNumber = 2,
-    kExchangNameFieldNumber = 3,
+    kExchangeNameFieldNumber = 3,
   };
   // string rid = 1;
   void clear_rid();
@@ -866,18 +866,18 @@ class deleteExchangeRequest final :
   std::string* _internal_mutable_cid();
   public:
 
-  // string exchang_name = 3;
-  void clear_exchang_name();
-  const std::string& exchang_name() const;
+  // string exchange_name = 3;
+  void clear_exchange_name();
+  const std::string& exchange_name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_exchang_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_exchang_name();
-  PROTOBUF_NODISCARD std::string* release_exchang_name();
-  void set_allocated_exchang_name(std::string* exchang_name);
+  void set_exchange_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_exchange_name();
+  PROTOBUF_NODISCARD std::string* release_exchange_name();
+  void set_allocated_exchange_name(std::string* exchange_name);
   private:
-  const std::string& _internal_exchang_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchang_name(const std::string& value);
-  std::string* _internal_mutable_exchang_name();
+  const std::string& _internal_exchange_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchange_name(const std::string& value);
+  std::string* _internal_mutable_exchange_name();
   public:
 
   // @@protoc_insertion_point(class_scope:haoping.deleteExchangeRequest)
@@ -889,7 +889,7 @@ class deleteExchangeRequest final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchang_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchange_name_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mq_5fproto_2eproto;
 };
@@ -1463,7 +1463,7 @@ class queueBindRequest final :
   enum : int {
     kRidFieldNumber = 1,
     kCidFieldNumber = 2,
-    kExchangNameFieldNumber = 3,
+    kExchangeNameFieldNumber = 3,
     kQueueNameFieldNumber = 4,
     kBindingKeyFieldNumber = 5,
   };
@@ -1495,18 +1495,18 @@ class queueBindRequest final :
   std::string* _internal_mutable_cid();
   public:
 
-  // string exchang_name = 3;
-  void clear_exchang_name();
-  const std::string& exchang_name() const;
+  // string exchange_name = 3;
+  void clear_exchange_name();
+  const std::string& exchange_name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_exchang_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_exchang_name();
-  PROTOBUF_NODISCARD std::string* release_exchang_name();
-  void set_allocated_exchang_name(std::string* exchang_name);
+  void set_exchange_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_exchange_name();
+  PROTOBUF_NODISCARD std::string* release_exchange_name();
+  void set_allocated_exchange_name(std::string* exchange_name);
   private:
-  const std::string& _internal_exchang_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchang_name(const std::string& value);
-  std::string* _internal_mutable_exchang_name();
+  const std::string& _internal_exchange_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchange_name(const std::string& value);
+  std::string* _internal_mutable_exchange_name();
   public:
 
   // string queue_name = 4;
@@ -1546,7 +1546,7 @@ class queueBindRequest final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchang_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchange_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr queue_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr binding_key_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1675,7 +1675,7 @@ class queueUnBindRequest final :
   enum : int {
     kRidFieldNumber = 1,
     kCidFieldNumber = 2,
-    kExchangNameFieldNumber = 3,
+    kExchangeNameFieldNumber = 3,
     kQueueNameFieldNumber = 4,
   };
   // string rid = 1;
@@ -1706,18 +1706,18 @@ class queueUnBindRequest final :
   std::string* _internal_mutable_cid();
   public:
 
-  // string exchang_name = 3;
-  void clear_exchang_name();
-  const std::string& exchang_name() const;
+  // string exchange_name = 3;
+  void clear_exchange_name();
+  const std::string& exchange_name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_exchang_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_exchang_name();
-  PROTOBUF_NODISCARD std::string* release_exchang_name();
-  void set_allocated_exchang_name(std::string* exchang_name);
+  void set_exchange_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_exchange_name();
+  PROTOBUF_NODISCARD std::string* release_exchange_name();
+  void set_allocated_exchange_name(std::string* exchange_name);
   private:
-  const std::string& _internal_exchang_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchang_name(const std::string& value);
-  std::string* _internal_mutable_exchang_name();
+  const std::string& _internal_exchange_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchange_name(const std::string& value);
+  std::string* _internal_mutable_exchange_name();
   public:
 
   // string queue_name = 4;
@@ -1743,7 +1743,7 @@ class queueUnBindRequest final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchang_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchange_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr queue_name_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mq_5fproto_2eproto;
@@ -1871,7 +1871,7 @@ class basicPublishRequest final :
   enum : int {
     kRidFieldNumber = 1,
     kCidFieldNumber = 2,
-    kExchangNameFieldNumber = 3,
+    kExchangeNameFieldNumber = 3,
     kBodyFieldNumber = 4,
     kPropertiesFieldNumber = 5,
   };
@@ -1903,18 +1903,18 @@ class basicPublishRequest final :
   std::string* _internal_mutable_cid();
   public:
 
-  // string exchang_name = 3;
-  void clear_exchang_name();
-  const std::string& exchang_name() const;
+  // string exchange_name = 3;
+  void clear_exchange_name();
+  const std::string& exchange_name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_exchang_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_exchang_name();
-  PROTOBUF_NODISCARD std::string* release_exchang_name();
-  void set_allocated_exchang_name(std::string* exchang_name);
+  void set_exchange_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_exchange_name();
+  PROTOBUF_NODISCARD std::string* release_exchange_name();
+  void set_allocated_exchange_name(std::string* exchange_name);
   private:
-  const std::string& _internal_exchang_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchang_name(const std::string& value);
-  std::string* _internal_mutable_exchang_name();
+  const std::string& _internal_exchange_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchange_name(const std::string& value);
+  std::string* _internal_mutable_exchange_name();
   public:
 
   // string body = 4;
@@ -1958,7 +1958,7 @@ class basicPublishRequest final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchang_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchange_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr body_;
   ::haoping::BasicProperties* properties_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -2087,7 +2087,7 @@ class basicAckRequest final :
   enum : int {
     kRidFieldNumber = 1,
     kCidFieldNumber = 2,
-    kExchangNameFieldNumber = 3,
+    kQueueNameFieldNumber = 3,
     kMessageIdFieldNumber = 4,
   };
   // string rid = 1;
@@ -2118,18 +2118,18 @@ class basicAckRequest final :
   std::string* _internal_mutable_cid();
   public:
 
-  // string exchang_name = 3;
-  void clear_exchang_name();
-  const std::string& exchang_name() const;
+  // string queue_name = 3;
+  void clear_queue_name();
+  const std::string& queue_name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_exchang_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_exchang_name();
-  PROTOBUF_NODISCARD std::string* release_exchang_name();
-  void set_allocated_exchang_name(std::string* exchang_name);
+  void set_queue_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_queue_name();
+  PROTOBUF_NODISCARD std::string* release_queue_name();
+  void set_allocated_queue_name(std::string* queue_name);
   private:
-  const std::string& _internal_exchang_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_exchang_name(const std::string& value);
-  std::string* _internal_mutable_exchang_name();
+  const std::string& _internal_queue_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_queue_name(const std::string& value);
+  std::string* _internal_mutable_queue_name();
   public:
 
   // string message_id = 4;
@@ -2155,31 +2155,31 @@ class basicAckRequest final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr exchang_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr queue_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mq_5fproto_2eproto;
 };
 // -------------------------------------------------------------------
 
-class basicConsumerRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.basicConsumerRequest) */ {
+class basicConsumeRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.basicConsumeRequest) */ {
  public:
-  inline basicConsumerRequest() : basicConsumerRequest(nullptr) {}
-  ~basicConsumerRequest() override;
-  explicit PROTOBUF_CONSTEXPR basicConsumerRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline basicConsumeRequest() : basicConsumeRequest(nullptr) {}
+  ~basicConsumeRequest() override;
+  explicit PROTOBUF_CONSTEXPR basicConsumeRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  basicConsumerRequest(const basicConsumerRequest& from);
-  basicConsumerRequest(basicConsumerRequest&& from) noexcept
-    : basicConsumerRequest() {
+  basicConsumeRequest(const basicConsumeRequest& from);
+  basicConsumeRequest(basicConsumeRequest&& from) noexcept
+    : basicConsumeRequest() {
     *this = ::std::move(from);
   }
 
-  inline basicConsumerRequest& operator=(const basicConsumerRequest& from) {
+  inline basicConsumeRequest& operator=(const basicConsumeRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline basicConsumerRequest& operator=(basicConsumerRequest&& from) noexcept {
+  inline basicConsumeRequest& operator=(basicConsumeRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -2202,20 +2202,20 @@ class basicConsumerRequest final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const basicConsumerRequest& default_instance() {
+  static const basicConsumeRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const basicConsumerRequest* internal_default_instance() {
-    return reinterpret_cast<const basicConsumerRequest*>(
-               &_basicConsumerRequest_default_instance_);
+  static inline const basicConsumeRequest* internal_default_instance() {
+    return reinterpret_cast<const basicConsumeRequest*>(
+               &_basicConsumeRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     12;
 
-  friend void swap(basicConsumerRequest& a, basicConsumerRequest& b) {
+  friend void swap(basicConsumeRequest& a, basicConsumeRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(basicConsumerRequest* other) {
+  inline void Swap(basicConsumeRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -2228,7 +2228,7 @@ class basicConsumerRequest final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(basicConsumerRequest* other) {
+  void UnsafeArenaSwap(basicConsumeRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -2236,13 +2236,13 @@ class basicConsumerRequest final :
 
   // implements Message ----------------------------------------------
 
-  basicConsumerRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<basicConsumerRequest>(arena);
+  basicConsumeRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<basicConsumeRequest>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const basicConsumerRequest& from);
+  void CopyFrom(const basicConsumeRequest& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const basicConsumerRequest& from);
+  void MergeFrom(const basicConsumeRequest& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -2259,15 +2259,15 @@ class basicConsumerRequest final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(basicConsumerRequest* other);
+  void InternalSwap(basicConsumeRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "haoping.basicConsumerRequest";
+    return "haoping.basicConsumeRequest";
   }
   protected:
-  explicit basicConsumerRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit basicConsumeRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -2352,7 +2352,7 @@ class basicConsumerRequest final :
   void _internal_set_auto_ack(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:haoping.basicConsumerRequest)
+  // @@protoc_insertion_point(class_scope:haoping.basicConsumeRequest)
  private:
   class _Internal;
 
@@ -2565,24 +2565,24 @@ class basicCancelRequest final :
 };
 // -------------------------------------------------------------------
 
-class basicConsumerResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.basicConsumerResponse) */ {
+class basicConsumeResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:haoping.basicConsumeResponse) */ {
  public:
-  inline basicConsumerResponse() : basicConsumerResponse(nullptr) {}
-  ~basicConsumerResponse() override;
-  explicit PROTOBUF_CONSTEXPR basicConsumerResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline basicConsumeResponse() : basicConsumeResponse(nullptr) {}
+  ~basicConsumeResponse() override;
+  explicit PROTOBUF_CONSTEXPR basicConsumeResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  basicConsumerResponse(const basicConsumerResponse& from);
-  basicConsumerResponse(basicConsumerResponse&& from) noexcept
-    : basicConsumerResponse() {
+  basicConsumeResponse(const basicConsumeResponse& from);
+  basicConsumeResponse(basicConsumeResponse&& from) noexcept
+    : basicConsumeResponse() {
     *this = ::std::move(from);
   }
 
-  inline basicConsumerResponse& operator=(const basicConsumerResponse& from) {
+  inline basicConsumeResponse& operator=(const basicConsumeResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline basicConsumerResponse& operator=(basicConsumerResponse&& from) noexcept {
+  inline basicConsumeResponse& operator=(basicConsumeResponse&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -2605,20 +2605,20 @@ class basicConsumerResponse final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const basicConsumerResponse& default_instance() {
+  static const basicConsumeResponse& default_instance() {
     return *internal_default_instance();
   }
-  static inline const basicConsumerResponse* internal_default_instance() {
-    return reinterpret_cast<const basicConsumerResponse*>(
-               &_basicConsumerResponse_default_instance_);
+  static inline const basicConsumeResponse* internal_default_instance() {
+    return reinterpret_cast<const basicConsumeResponse*>(
+               &_basicConsumeResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     14;
 
-  friend void swap(basicConsumerResponse& a, basicConsumerResponse& b) {
+  friend void swap(basicConsumeResponse& a, basicConsumeResponse& b) {
     a.Swap(&b);
   }
-  inline void Swap(basicConsumerResponse* other) {
+  inline void Swap(basicConsumeResponse* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -2631,7 +2631,7 @@ class basicConsumerResponse final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(basicConsumerResponse* other) {
+  void UnsafeArenaSwap(basicConsumeResponse* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -2639,13 +2639,13 @@ class basicConsumerResponse final :
 
   // implements Message ----------------------------------------------
 
-  basicConsumerResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<basicConsumerResponse>(arena);
+  basicConsumeResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<basicConsumeResponse>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const basicConsumerResponse& from);
+  void CopyFrom(const basicConsumeResponse& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const basicConsumerResponse& from);
+  void MergeFrom(const basicConsumeResponse& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -2662,15 +2662,15 @@ class basicConsumerResponse final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(basicConsumerResponse* other);
+  void InternalSwap(basicConsumeResponse* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "haoping.basicConsumerResponse";
+    return "haoping.basicConsumeResponse";
   }
   protected:
-  explicit basicConsumerResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit basicConsumeResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -2749,7 +2749,7 @@ class basicConsumerResponse final :
       ::haoping::BasicProperties* properties);
   ::haoping::BasicProperties* unsafe_arena_release_properties();
 
-  // @@protoc_insertion_point(class_scope:haoping.basicConsumerResponse)
+  // @@protoc_insertion_point(class_scope:haoping.basicConsumeResponse)
  private:
   class _Internal;
 
@@ -2947,44 +2947,44 @@ class basicCommonResponse final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// openChannelRequst
+// openChannelRequest
 
 // string rid = 1;
-inline void openChannelRequst::clear_rid() {
+inline void openChannelRequest::clear_rid() {
   rid_.ClearToEmpty();
 }
-inline const std::string& openChannelRequst::rid() const {
-  // @@protoc_insertion_point(field_get:haoping.openChannelRequst.rid)
+inline const std::string& openChannelRequest::rid() const {
+  // @@protoc_insertion_point(field_get:haoping.openChannelRequest.rid)
   return _internal_rid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void openChannelRequst::set_rid(ArgT0&& arg0, ArgT... args) {
+void openChannelRequest::set_rid(ArgT0&& arg0, ArgT... args) {
  
  rid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.openChannelRequst.rid)
+  // @@protoc_insertion_point(field_set:haoping.openChannelRequest.rid)
 }
-inline std::string* openChannelRequst::mutable_rid() {
+inline std::string* openChannelRequest::mutable_rid() {
   std::string* _s = _internal_mutable_rid();
-  // @@protoc_insertion_point(field_mutable:haoping.openChannelRequst.rid)
+  // @@protoc_insertion_point(field_mutable:haoping.openChannelRequest.rid)
   return _s;
 }
-inline const std::string& openChannelRequst::_internal_rid() const {
+inline const std::string& openChannelRequest::_internal_rid() const {
   return rid_.Get();
 }
-inline void openChannelRequst::_internal_set_rid(const std::string& value) {
+inline void openChannelRequest::_internal_set_rid(const std::string& value) {
   
   rid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* openChannelRequst::_internal_mutable_rid() {
+inline std::string* openChannelRequest::_internal_mutable_rid() {
   
   return rid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* openChannelRequst::release_rid() {
-  // @@protoc_insertion_point(field_release:haoping.openChannelRequst.rid)
+inline std::string* openChannelRequest::release_rid() {
+  // @@protoc_insertion_point(field_release:haoping.openChannelRequest.rid)
   return rid_.Release();
 }
-inline void openChannelRequst::set_allocated_rid(std::string* rid) {
+inline void openChannelRequest::set_allocated_rid(std::string* rid) {
   if (rid != nullptr) {
     
   } else {
@@ -2996,45 +2996,45 @@ inline void openChannelRequst::set_allocated_rid(std::string* rid) {
     rid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.openChannelRequst.rid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.openChannelRequest.rid)
 }
 
 // string cid = 2;
-inline void openChannelRequst::clear_cid() {
+inline void openChannelRequest::clear_cid() {
   cid_.ClearToEmpty();
 }
-inline const std::string& openChannelRequst::cid() const {
-  // @@protoc_insertion_point(field_get:haoping.openChannelRequst.cid)
+inline const std::string& openChannelRequest::cid() const {
+  // @@protoc_insertion_point(field_get:haoping.openChannelRequest.cid)
   return _internal_cid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void openChannelRequst::set_cid(ArgT0&& arg0, ArgT... args) {
+void openChannelRequest::set_cid(ArgT0&& arg0, ArgT... args) {
  
  cid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.openChannelRequst.cid)
+  // @@protoc_insertion_point(field_set:haoping.openChannelRequest.cid)
 }
-inline std::string* openChannelRequst::mutable_cid() {
+inline std::string* openChannelRequest::mutable_cid() {
   std::string* _s = _internal_mutable_cid();
-  // @@protoc_insertion_point(field_mutable:haoping.openChannelRequst.cid)
+  // @@protoc_insertion_point(field_mutable:haoping.openChannelRequest.cid)
   return _s;
 }
-inline const std::string& openChannelRequst::_internal_cid() const {
+inline const std::string& openChannelRequest::_internal_cid() const {
   return cid_.Get();
 }
-inline void openChannelRequst::_internal_set_cid(const std::string& value) {
+inline void openChannelRequest::_internal_set_cid(const std::string& value) {
   
   cid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* openChannelRequst::_internal_mutable_cid() {
+inline std::string* openChannelRequest::_internal_mutable_cid() {
   
   return cid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* openChannelRequst::release_cid() {
-  // @@protoc_insertion_point(field_release:haoping.openChannelRequst.cid)
+inline std::string* openChannelRequest::release_cid() {
+  // @@protoc_insertion_point(field_release:haoping.openChannelRequest.cid)
   return cid_.Release();
 }
-inline void openChannelRequst::set_allocated_cid(std::string* cid) {
+inline void openChannelRequest::set_allocated_cid(std::string* cid) {
   if (cid != nullptr) {
     
   } else {
@@ -3046,49 +3046,49 @@ inline void openChannelRequst::set_allocated_cid(std::string* cid) {
     cid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.openChannelRequst.cid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.openChannelRequest.cid)
 }
 
 // -------------------------------------------------------------------
 
-// closeChannelRequst
+// closeChannelRequest
 
 // string rid = 1;
-inline void closeChannelRequst::clear_rid() {
+inline void closeChannelRequest::clear_rid() {
   rid_.ClearToEmpty();
 }
-inline const std::string& closeChannelRequst::rid() const {
-  // @@protoc_insertion_point(field_get:haoping.closeChannelRequst.rid)
+inline const std::string& closeChannelRequest::rid() const {
+  // @@protoc_insertion_point(field_get:haoping.closeChannelRequest.rid)
   return _internal_rid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void closeChannelRequst::set_rid(ArgT0&& arg0, ArgT... args) {
+void closeChannelRequest::set_rid(ArgT0&& arg0, ArgT... args) {
  
  rid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.closeChannelRequst.rid)
+  // @@protoc_insertion_point(field_set:haoping.closeChannelRequest.rid)
 }
-inline std::string* closeChannelRequst::mutable_rid() {
+inline std::string* closeChannelRequest::mutable_rid() {
   std::string* _s = _internal_mutable_rid();
-  // @@protoc_insertion_point(field_mutable:haoping.closeChannelRequst.rid)
+  // @@protoc_insertion_point(field_mutable:haoping.closeChannelRequest.rid)
   return _s;
 }
-inline const std::string& closeChannelRequst::_internal_rid() const {
+inline const std::string& closeChannelRequest::_internal_rid() const {
   return rid_.Get();
 }
-inline void closeChannelRequst::_internal_set_rid(const std::string& value) {
+inline void closeChannelRequest::_internal_set_rid(const std::string& value) {
   
   rid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* closeChannelRequst::_internal_mutable_rid() {
+inline std::string* closeChannelRequest::_internal_mutable_rid() {
   
   return rid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* closeChannelRequst::release_rid() {
-  // @@protoc_insertion_point(field_release:haoping.closeChannelRequst.rid)
+inline std::string* closeChannelRequest::release_rid() {
+  // @@protoc_insertion_point(field_release:haoping.closeChannelRequest.rid)
   return rid_.Release();
 }
-inline void closeChannelRequst::set_allocated_rid(std::string* rid) {
+inline void closeChannelRequest::set_allocated_rid(std::string* rid) {
   if (rid != nullptr) {
     
   } else {
@@ -3100,45 +3100,45 @@ inline void closeChannelRequst::set_allocated_rid(std::string* rid) {
     rid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.closeChannelRequst.rid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.closeChannelRequest.rid)
 }
 
 // string cid = 2;
-inline void closeChannelRequst::clear_cid() {
+inline void closeChannelRequest::clear_cid() {
   cid_.ClearToEmpty();
 }
-inline const std::string& closeChannelRequst::cid() const {
-  // @@protoc_insertion_point(field_get:haoping.closeChannelRequst.cid)
+inline const std::string& closeChannelRequest::cid() const {
+  // @@protoc_insertion_point(field_get:haoping.closeChannelRequest.cid)
   return _internal_cid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void closeChannelRequst::set_cid(ArgT0&& arg0, ArgT... args) {
+void closeChannelRequest::set_cid(ArgT0&& arg0, ArgT... args) {
  
  cid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.closeChannelRequst.cid)
+  // @@protoc_insertion_point(field_set:haoping.closeChannelRequest.cid)
 }
-inline std::string* closeChannelRequst::mutable_cid() {
+inline std::string* closeChannelRequest::mutable_cid() {
   std::string* _s = _internal_mutable_cid();
-  // @@protoc_insertion_point(field_mutable:haoping.closeChannelRequst.cid)
+  // @@protoc_insertion_point(field_mutable:haoping.closeChannelRequest.cid)
   return _s;
 }
-inline const std::string& closeChannelRequst::_internal_cid() const {
+inline const std::string& closeChannelRequest::_internal_cid() const {
   return cid_.Get();
 }
-inline void closeChannelRequst::_internal_set_cid(const std::string& value) {
+inline void closeChannelRequest::_internal_set_cid(const std::string& value) {
   
   cid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* closeChannelRequst::_internal_mutable_cid() {
+inline std::string* closeChannelRequest::_internal_mutable_cid() {
   
   return cid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* closeChannelRequst::release_cid() {
-  // @@protoc_insertion_point(field_release:haoping.closeChannelRequst.cid)
+inline std::string* closeChannelRequest::release_cid() {
+  // @@protoc_insertion_point(field_release:haoping.closeChannelRequest.cid)
   return cid_.Release();
 }
-inline void closeChannelRequst::set_allocated_cid(std::string* cid) {
+inline void closeChannelRequest::set_allocated_cid(std::string* cid) {
   if (cid != nullptr) {
     
   } else {
@@ -3150,7 +3150,7 @@ inline void closeChannelRequst::set_allocated_cid(std::string* cid) {
     cid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.closeChannelRequst.cid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.closeChannelRequest.cid)
 }
 
 // -------------------------------------------------------------------
@@ -3259,74 +3259,74 @@ inline void declareExchangeRequest::set_allocated_cid(std::string* cid) {
   // @@protoc_insertion_point(field_set_allocated:haoping.declareExchangeRequest.cid)
 }
 
-// string exchang_name = 3;
-inline void declareExchangeRequest::clear_exchang_name() {
-  exchang_name_.ClearToEmpty();
+// string exchange_name = 3;
+inline void declareExchangeRequest::clear_exchange_name() {
+  exchange_name_.ClearToEmpty();
 }
-inline const std::string& declareExchangeRequest::exchang_name() const {
-  // @@protoc_insertion_point(field_get:haoping.declareExchangeRequest.exchang_name)
-  return _internal_exchang_name();
+inline const std::string& declareExchangeRequest::exchange_name() const {
+  // @@protoc_insertion_point(field_get:haoping.declareExchangeRequest.exchange_name)
+  return _internal_exchange_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void declareExchangeRequest::set_exchang_name(ArgT0&& arg0, ArgT... args) {
+void declareExchangeRequest::set_exchange_name(ArgT0&& arg0, ArgT... args) {
  
- exchang_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.declareExchangeRequest.exchang_name)
+ exchange_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:haoping.declareExchangeRequest.exchange_name)
 }
-inline std::string* declareExchangeRequest::mutable_exchang_name() {
-  std::string* _s = _internal_mutable_exchang_name();
-  // @@protoc_insertion_point(field_mutable:haoping.declareExchangeRequest.exchang_name)
+inline std::string* declareExchangeRequest::mutable_exchange_name() {
+  std::string* _s = _internal_mutable_exchange_name();
+  // @@protoc_insertion_point(field_mutable:haoping.declareExchangeRequest.exchange_name)
   return _s;
 }
-inline const std::string& declareExchangeRequest::_internal_exchang_name() const {
-  return exchang_name_.Get();
+inline const std::string& declareExchangeRequest::_internal_exchange_name() const {
+  return exchange_name_.Get();
 }
-inline void declareExchangeRequest::_internal_set_exchang_name(const std::string& value) {
+inline void declareExchangeRequest::_internal_set_exchange_name(const std::string& value) {
   
-  exchang_name_.Set(value, GetArenaForAllocation());
+  exchange_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* declareExchangeRequest::_internal_mutable_exchang_name() {
+inline std::string* declareExchangeRequest::_internal_mutable_exchange_name() {
   
-  return exchang_name_.Mutable(GetArenaForAllocation());
+  return exchange_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* declareExchangeRequest::release_exchang_name() {
-  // @@protoc_insertion_point(field_release:haoping.declareExchangeRequest.exchang_name)
-  return exchang_name_.Release();
+inline std::string* declareExchangeRequest::release_exchange_name() {
+  // @@protoc_insertion_point(field_release:haoping.declareExchangeRequest.exchange_name)
+  return exchange_name_.Release();
 }
-inline void declareExchangeRequest::set_allocated_exchang_name(std::string* exchang_name) {
-  if (exchang_name != nullptr) {
+inline void declareExchangeRequest::set_allocated_exchange_name(std::string* exchange_name) {
+  if (exchange_name != nullptr) {
     
   } else {
     
   }
-  exchang_name_.SetAllocated(exchang_name, GetArenaForAllocation());
+  exchange_name_.SetAllocated(exchange_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (exchang_name_.IsDefault()) {
-    exchang_name_.Set("", GetArenaForAllocation());
+  if (exchange_name_.IsDefault()) {
+    exchange_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.declareExchangeRequest.exchang_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.declareExchangeRequest.exchange_name)
 }
 
-// .haoping.ExchangeType exchang_type = 4;
-inline void declareExchangeRequest::clear_exchang_type() {
-  exchang_type_ = 0;
+// .haoping.ExchangeType exchange_type = 4;
+inline void declareExchangeRequest::clear_exchange_type() {
+  exchange_type_ = 0;
 }
-inline ::haoping::ExchangeType declareExchangeRequest::_internal_exchang_type() const {
-  return static_cast< ::haoping::ExchangeType >(exchang_type_);
+inline ::haoping::ExchangeType declareExchangeRequest::_internal_exchange_type() const {
+  return static_cast< ::haoping::ExchangeType >(exchange_type_);
 }
-inline ::haoping::ExchangeType declareExchangeRequest::exchang_type() const {
-  // @@protoc_insertion_point(field_get:haoping.declareExchangeRequest.exchang_type)
-  return _internal_exchang_type();
+inline ::haoping::ExchangeType declareExchangeRequest::exchange_type() const {
+  // @@protoc_insertion_point(field_get:haoping.declareExchangeRequest.exchange_type)
+  return _internal_exchange_type();
 }
-inline void declareExchangeRequest::_internal_set_exchang_type(::haoping::ExchangeType value) {
+inline void declareExchangeRequest::_internal_set_exchange_type(::haoping::ExchangeType value) {
   
-  exchang_type_ = value;
+  exchange_type_ = value;
 }
-inline void declareExchangeRequest::set_exchang_type(::haoping::ExchangeType value) {
-  _internal_set_exchang_type(value);
-  // @@protoc_insertion_point(field_set:haoping.declareExchangeRequest.exchang_type)
+inline void declareExchangeRequest::set_exchange_type(::haoping::ExchangeType value) {
+  _internal_set_exchange_type(value);
+  // @@protoc_insertion_point(field_set:haoping.declareExchangeRequest.exchange_type)
 }
 
 // bool durable = 5;
@@ -3502,54 +3502,54 @@ inline void deleteExchangeRequest::set_allocated_cid(std::string* cid) {
   // @@protoc_insertion_point(field_set_allocated:haoping.deleteExchangeRequest.cid)
 }
 
-// string exchang_name = 3;
-inline void deleteExchangeRequest::clear_exchang_name() {
-  exchang_name_.ClearToEmpty();
+// string exchange_name = 3;
+inline void deleteExchangeRequest::clear_exchange_name() {
+  exchange_name_.ClearToEmpty();
 }
-inline const std::string& deleteExchangeRequest::exchang_name() const {
-  // @@protoc_insertion_point(field_get:haoping.deleteExchangeRequest.exchang_name)
-  return _internal_exchang_name();
+inline const std::string& deleteExchangeRequest::exchange_name() const {
+  // @@protoc_insertion_point(field_get:haoping.deleteExchangeRequest.exchange_name)
+  return _internal_exchange_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void deleteExchangeRequest::set_exchang_name(ArgT0&& arg0, ArgT... args) {
+void deleteExchangeRequest::set_exchange_name(ArgT0&& arg0, ArgT... args) {
  
- exchang_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.deleteExchangeRequest.exchang_name)
+ exchange_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:haoping.deleteExchangeRequest.exchange_name)
 }
-inline std::string* deleteExchangeRequest::mutable_exchang_name() {
-  std::string* _s = _internal_mutable_exchang_name();
-  // @@protoc_insertion_point(field_mutable:haoping.deleteExchangeRequest.exchang_name)
+inline std::string* deleteExchangeRequest::mutable_exchange_name() {
+  std::string* _s = _internal_mutable_exchange_name();
+  // @@protoc_insertion_point(field_mutable:haoping.deleteExchangeRequest.exchange_name)
   return _s;
 }
-inline const std::string& deleteExchangeRequest::_internal_exchang_name() const {
-  return exchang_name_.Get();
+inline const std::string& deleteExchangeRequest::_internal_exchange_name() const {
+  return exchange_name_.Get();
 }
-inline void deleteExchangeRequest::_internal_set_exchang_name(const std::string& value) {
+inline void deleteExchangeRequest::_internal_set_exchange_name(const std::string& value) {
   
-  exchang_name_.Set(value, GetArenaForAllocation());
+  exchange_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* deleteExchangeRequest::_internal_mutable_exchang_name() {
+inline std::string* deleteExchangeRequest::_internal_mutable_exchange_name() {
   
-  return exchang_name_.Mutable(GetArenaForAllocation());
+  return exchange_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* deleteExchangeRequest::release_exchang_name() {
-  // @@protoc_insertion_point(field_release:haoping.deleteExchangeRequest.exchang_name)
-  return exchang_name_.Release();
+inline std::string* deleteExchangeRequest::release_exchange_name() {
+  // @@protoc_insertion_point(field_release:haoping.deleteExchangeRequest.exchange_name)
+  return exchange_name_.Release();
 }
-inline void deleteExchangeRequest::set_allocated_exchang_name(std::string* exchang_name) {
-  if (exchang_name != nullptr) {
+inline void deleteExchangeRequest::set_allocated_exchange_name(std::string* exchange_name) {
+  if (exchange_name != nullptr) {
     
   } else {
     
   }
-  exchang_name_.SetAllocated(exchang_name, GetArenaForAllocation());
+  exchange_name_.SetAllocated(exchange_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (exchang_name_.IsDefault()) {
-    exchang_name_.Set("", GetArenaForAllocation());
+  if (exchange_name_.IsDefault()) {
+    exchange_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.deleteExchangeRequest.exchang_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.deleteExchangeRequest.exchange_name)
 }
 
 // -------------------------------------------------------------------
@@ -4055,54 +4055,54 @@ inline void queueBindRequest::set_allocated_cid(std::string* cid) {
   // @@protoc_insertion_point(field_set_allocated:haoping.queueBindRequest.cid)
 }
 
-// string exchang_name = 3;
-inline void queueBindRequest::clear_exchang_name() {
-  exchang_name_.ClearToEmpty();
+// string exchange_name = 3;
+inline void queueBindRequest::clear_exchange_name() {
+  exchange_name_.ClearToEmpty();
 }
-inline const std::string& queueBindRequest::exchang_name() const {
-  // @@protoc_insertion_point(field_get:haoping.queueBindRequest.exchang_name)
-  return _internal_exchang_name();
+inline const std::string& queueBindRequest::exchange_name() const {
+  // @@protoc_insertion_point(field_get:haoping.queueBindRequest.exchange_name)
+  return _internal_exchange_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void queueBindRequest::set_exchang_name(ArgT0&& arg0, ArgT... args) {
+void queueBindRequest::set_exchange_name(ArgT0&& arg0, ArgT... args) {
  
- exchang_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.queueBindRequest.exchang_name)
+ exchange_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:haoping.queueBindRequest.exchange_name)
 }
-inline std::string* queueBindRequest::mutable_exchang_name() {
-  std::string* _s = _internal_mutable_exchang_name();
-  // @@protoc_insertion_point(field_mutable:haoping.queueBindRequest.exchang_name)
+inline std::string* queueBindRequest::mutable_exchange_name() {
+  std::string* _s = _internal_mutable_exchange_name();
+  // @@protoc_insertion_point(field_mutable:haoping.queueBindRequest.exchange_name)
   return _s;
 }
-inline const std::string& queueBindRequest::_internal_exchang_name() const {
-  return exchang_name_.Get();
+inline const std::string& queueBindRequest::_internal_exchange_name() const {
+  return exchange_name_.Get();
 }
-inline void queueBindRequest::_internal_set_exchang_name(const std::string& value) {
+inline void queueBindRequest::_internal_set_exchange_name(const std::string& value) {
   
-  exchang_name_.Set(value, GetArenaForAllocation());
+  exchange_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* queueBindRequest::_internal_mutable_exchang_name() {
+inline std::string* queueBindRequest::_internal_mutable_exchange_name() {
   
-  return exchang_name_.Mutable(GetArenaForAllocation());
+  return exchange_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* queueBindRequest::release_exchang_name() {
-  // @@protoc_insertion_point(field_release:haoping.queueBindRequest.exchang_name)
-  return exchang_name_.Release();
+inline std::string* queueBindRequest::release_exchange_name() {
+  // @@protoc_insertion_point(field_release:haoping.queueBindRequest.exchange_name)
+  return exchange_name_.Release();
 }
-inline void queueBindRequest::set_allocated_exchang_name(std::string* exchang_name) {
-  if (exchang_name != nullptr) {
+inline void queueBindRequest::set_allocated_exchange_name(std::string* exchange_name) {
+  if (exchange_name != nullptr) {
     
   } else {
     
   }
-  exchang_name_.SetAllocated(exchang_name, GetArenaForAllocation());
+  exchange_name_.SetAllocated(exchange_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (exchang_name_.IsDefault()) {
-    exchang_name_.Set("", GetArenaForAllocation());
+  if (exchange_name_.IsDefault()) {
+    exchange_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.queueBindRequest.exchang_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.queueBindRequest.exchange_name)
 }
 
 // string queue_name = 4;
@@ -4309,54 +4309,54 @@ inline void queueUnBindRequest::set_allocated_cid(std::string* cid) {
   // @@protoc_insertion_point(field_set_allocated:haoping.queueUnBindRequest.cid)
 }
 
-// string exchang_name = 3;
-inline void queueUnBindRequest::clear_exchang_name() {
-  exchang_name_.ClearToEmpty();
+// string exchange_name = 3;
+inline void queueUnBindRequest::clear_exchange_name() {
+  exchange_name_.ClearToEmpty();
 }
-inline const std::string& queueUnBindRequest::exchang_name() const {
-  // @@protoc_insertion_point(field_get:haoping.queueUnBindRequest.exchang_name)
-  return _internal_exchang_name();
+inline const std::string& queueUnBindRequest::exchange_name() const {
+  // @@protoc_insertion_point(field_get:haoping.queueUnBindRequest.exchange_name)
+  return _internal_exchange_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void queueUnBindRequest::set_exchang_name(ArgT0&& arg0, ArgT... args) {
+void queueUnBindRequest::set_exchange_name(ArgT0&& arg0, ArgT... args) {
  
- exchang_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.queueUnBindRequest.exchang_name)
+ exchange_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:haoping.queueUnBindRequest.exchange_name)
 }
-inline std::string* queueUnBindRequest::mutable_exchang_name() {
-  std::string* _s = _internal_mutable_exchang_name();
-  // @@protoc_insertion_point(field_mutable:haoping.queueUnBindRequest.exchang_name)
+inline std::string* queueUnBindRequest::mutable_exchange_name() {
+  std::string* _s = _internal_mutable_exchange_name();
+  // @@protoc_insertion_point(field_mutable:haoping.queueUnBindRequest.exchange_name)
   return _s;
 }
-inline const std::string& queueUnBindRequest::_internal_exchang_name() const {
-  return exchang_name_.Get();
+inline const std::string& queueUnBindRequest::_internal_exchange_name() const {
+  return exchange_name_.Get();
 }
-inline void queueUnBindRequest::_internal_set_exchang_name(const std::string& value) {
+inline void queueUnBindRequest::_internal_set_exchange_name(const std::string& value) {
   
-  exchang_name_.Set(value, GetArenaForAllocation());
+  exchange_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* queueUnBindRequest::_internal_mutable_exchang_name() {
+inline std::string* queueUnBindRequest::_internal_mutable_exchange_name() {
   
-  return exchang_name_.Mutable(GetArenaForAllocation());
+  return exchange_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* queueUnBindRequest::release_exchang_name() {
-  // @@protoc_insertion_point(field_release:haoping.queueUnBindRequest.exchang_name)
-  return exchang_name_.Release();
+inline std::string* queueUnBindRequest::release_exchange_name() {
+  // @@protoc_insertion_point(field_release:haoping.queueUnBindRequest.exchange_name)
+  return exchange_name_.Release();
 }
-inline void queueUnBindRequest::set_allocated_exchang_name(std::string* exchang_name) {
-  if (exchang_name != nullptr) {
+inline void queueUnBindRequest::set_allocated_exchange_name(std::string* exchange_name) {
+  if (exchange_name != nullptr) {
     
   } else {
     
   }
-  exchang_name_.SetAllocated(exchang_name, GetArenaForAllocation());
+  exchange_name_.SetAllocated(exchange_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (exchang_name_.IsDefault()) {
-    exchang_name_.Set("", GetArenaForAllocation());
+  if (exchange_name_.IsDefault()) {
+    exchange_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.queueUnBindRequest.exchang_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.queueUnBindRequest.exchange_name)
 }
 
 // string queue_name = 4;
@@ -4513,54 +4513,54 @@ inline void basicPublishRequest::set_allocated_cid(std::string* cid) {
   // @@protoc_insertion_point(field_set_allocated:haoping.basicPublishRequest.cid)
 }
 
-// string exchang_name = 3;
-inline void basicPublishRequest::clear_exchang_name() {
-  exchang_name_.ClearToEmpty();
+// string exchange_name = 3;
+inline void basicPublishRequest::clear_exchange_name() {
+  exchange_name_.ClearToEmpty();
 }
-inline const std::string& basicPublishRequest::exchang_name() const {
-  // @@protoc_insertion_point(field_get:haoping.basicPublishRequest.exchang_name)
-  return _internal_exchang_name();
+inline const std::string& basicPublishRequest::exchange_name() const {
+  // @@protoc_insertion_point(field_get:haoping.basicPublishRequest.exchange_name)
+  return _internal_exchange_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicPublishRequest::set_exchang_name(ArgT0&& arg0, ArgT... args) {
+void basicPublishRequest::set_exchange_name(ArgT0&& arg0, ArgT... args) {
  
- exchang_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicPublishRequest.exchang_name)
+ exchange_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:haoping.basicPublishRequest.exchange_name)
 }
-inline std::string* basicPublishRequest::mutable_exchang_name() {
-  std::string* _s = _internal_mutable_exchang_name();
-  // @@protoc_insertion_point(field_mutable:haoping.basicPublishRequest.exchang_name)
+inline std::string* basicPublishRequest::mutable_exchange_name() {
+  std::string* _s = _internal_mutable_exchange_name();
+  // @@protoc_insertion_point(field_mutable:haoping.basicPublishRequest.exchange_name)
   return _s;
 }
-inline const std::string& basicPublishRequest::_internal_exchang_name() const {
-  return exchang_name_.Get();
+inline const std::string& basicPublishRequest::_internal_exchange_name() const {
+  return exchange_name_.Get();
 }
-inline void basicPublishRequest::_internal_set_exchang_name(const std::string& value) {
+inline void basicPublishRequest::_internal_set_exchange_name(const std::string& value) {
   
-  exchang_name_.Set(value, GetArenaForAllocation());
+  exchange_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicPublishRequest::_internal_mutable_exchang_name() {
+inline std::string* basicPublishRequest::_internal_mutable_exchange_name() {
   
-  return exchang_name_.Mutable(GetArenaForAllocation());
+  return exchange_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicPublishRequest::release_exchang_name() {
-  // @@protoc_insertion_point(field_release:haoping.basicPublishRequest.exchang_name)
-  return exchang_name_.Release();
+inline std::string* basicPublishRequest::release_exchange_name() {
+  // @@protoc_insertion_point(field_release:haoping.basicPublishRequest.exchange_name)
+  return exchange_name_.Release();
 }
-inline void basicPublishRequest::set_allocated_exchang_name(std::string* exchang_name) {
-  if (exchang_name != nullptr) {
+inline void basicPublishRequest::set_allocated_exchange_name(std::string* exchange_name) {
+  if (exchange_name != nullptr) {
     
   } else {
     
   }
-  exchang_name_.SetAllocated(exchang_name, GetArenaForAllocation());
+  exchange_name_.SetAllocated(exchange_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (exchang_name_.IsDefault()) {
-    exchang_name_.Set("", GetArenaForAllocation());
+  if (exchange_name_.IsDefault()) {
+    exchange_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicPublishRequest.exchang_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicPublishRequest.exchange_name)
 }
 
 // string body = 4;
@@ -4802,54 +4802,54 @@ inline void basicAckRequest::set_allocated_cid(std::string* cid) {
   // @@protoc_insertion_point(field_set_allocated:haoping.basicAckRequest.cid)
 }
 
-// string exchang_name = 3;
-inline void basicAckRequest::clear_exchang_name() {
-  exchang_name_.ClearToEmpty();
+// string queue_name = 3;
+inline void basicAckRequest::clear_queue_name() {
+  queue_name_.ClearToEmpty();
 }
-inline const std::string& basicAckRequest::exchang_name() const {
-  // @@protoc_insertion_point(field_get:haoping.basicAckRequest.exchang_name)
-  return _internal_exchang_name();
+inline const std::string& basicAckRequest::queue_name() const {
+  // @@protoc_insertion_point(field_get:haoping.basicAckRequest.queue_name)
+  return _internal_queue_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicAckRequest::set_exchang_name(ArgT0&& arg0, ArgT... args) {
+void basicAckRequest::set_queue_name(ArgT0&& arg0, ArgT... args) {
  
- exchang_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicAckRequest.exchang_name)
+ queue_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:haoping.basicAckRequest.queue_name)
 }
-inline std::string* basicAckRequest::mutable_exchang_name() {
-  std::string* _s = _internal_mutable_exchang_name();
-  // @@protoc_insertion_point(field_mutable:haoping.basicAckRequest.exchang_name)
+inline std::string* basicAckRequest::mutable_queue_name() {
+  std::string* _s = _internal_mutable_queue_name();
+  // @@protoc_insertion_point(field_mutable:haoping.basicAckRequest.queue_name)
   return _s;
 }
-inline const std::string& basicAckRequest::_internal_exchang_name() const {
-  return exchang_name_.Get();
+inline const std::string& basicAckRequest::_internal_queue_name() const {
+  return queue_name_.Get();
 }
-inline void basicAckRequest::_internal_set_exchang_name(const std::string& value) {
+inline void basicAckRequest::_internal_set_queue_name(const std::string& value) {
   
-  exchang_name_.Set(value, GetArenaForAllocation());
+  queue_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicAckRequest::_internal_mutable_exchang_name() {
+inline std::string* basicAckRequest::_internal_mutable_queue_name() {
   
-  return exchang_name_.Mutable(GetArenaForAllocation());
+  return queue_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicAckRequest::release_exchang_name() {
-  // @@protoc_insertion_point(field_release:haoping.basicAckRequest.exchang_name)
-  return exchang_name_.Release();
+inline std::string* basicAckRequest::release_queue_name() {
+  // @@protoc_insertion_point(field_release:haoping.basicAckRequest.queue_name)
+  return queue_name_.Release();
 }
-inline void basicAckRequest::set_allocated_exchang_name(std::string* exchang_name) {
-  if (exchang_name != nullptr) {
+inline void basicAckRequest::set_allocated_queue_name(std::string* queue_name) {
+  if (queue_name != nullptr) {
     
   } else {
     
   }
-  exchang_name_.SetAllocated(exchang_name, GetArenaForAllocation());
+  queue_name_.SetAllocated(queue_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (exchang_name_.IsDefault()) {
-    exchang_name_.Set("", GetArenaForAllocation());
+  if (queue_name_.IsDefault()) {
+    queue_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicAckRequest.exchang_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicAckRequest.queue_name)
 }
 
 // string message_id = 4;
@@ -4904,44 +4904,44 @@ inline void basicAckRequest::set_allocated_message_id(std::string* message_id) {
 
 // -------------------------------------------------------------------
 
-// basicConsumerRequest
+// basicConsumeRequest
 
 // string rid = 1;
-inline void basicConsumerRequest::clear_rid() {
+inline void basicConsumeRequest::clear_rid() {
   rid_.ClearToEmpty();
 }
-inline const std::string& basicConsumerRequest::rid() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerRequest.rid)
+inline const std::string& basicConsumeRequest::rid() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeRequest.rid)
   return _internal_rid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerRequest::set_rid(ArgT0&& arg0, ArgT... args) {
+void basicConsumeRequest::set_rid(ArgT0&& arg0, ArgT... args) {
  
  rid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerRequest.rid)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeRequest.rid)
 }
-inline std::string* basicConsumerRequest::mutable_rid() {
+inline std::string* basicConsumeRequest::mutable_rid() {
   std::string* _s = _internal_mutable_rid();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerRequest.rid)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeRequest.rid)
   return _s;
 }
-inline const std::string& basicConsumerRequest::_internal_rid() const {
+inline const std::string& basicConsumeRequest::_internal_rid() const {
   return rid_.Get();
 }
-inline void basicConsumerRequest::_internal_set_rid(const std::string& value) {
+inline void basicConsumeRequest::_internal_set_rid(const std::string& value) {
   
   rid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::_internal_mutable_rid() {
+inline std::string* basicConsumeRequest::_internal_mutable_rid() {
   
   return rid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::release_rid() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerRequest.rid)
+inline std::string* basicConsumeRequest::release_rid() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeRequest.rid)
   return rid_.Release();
 }
-inline void basicConsumerRequest::set_allocated_rid(std::string* rid) {
+inline void basicConsumeRequest::set_allocated_rid(std::string* rid) {
   if (rid != nullptr) {
     
   } else {
@@ -4953,45 +4953,45 @@ inline void basicConsumerRequest::set_allocated_rid(std::string* rid) {
     rid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerRequest.rid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeRequest.rid)
 }
 
 // string cid = 2;
-inline void basicConsumerRequest::clear_cid() {
+inline void basicConsumeRequest::clear_cid() {
   cid_.ClearToEmpty();
 }
-inline const std::string& basicConsumerRequest::cid() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerRequest.cid)
+inline const std::string& basicConsumeRequest::cid() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeRequest.cid)
   return _internal_cid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerRequest::set_cid(ArgT0&& arg0, ArgT... args) {
+void basicConsumeRequest::set_cid(ArgT0&& arg0, ArgT... args) {
  
  cid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerRequest.cid)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeRequest.cid)
 }
-inline std::string* basicConsumerRequest::mutable_cid() {
+inline std::string* basicConsumeRequest::mutable_cid() {
   std::string* _s = _internal_mutable_cid();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerRequest.cid)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeRequest.cid)
   return _s;
 }
-inline const std::string& basicConsumerRequest::_internal_cid() const {
+inline const std::string& basicConsumeRequest::_internal_cid() const {
   return cid_.Get();
 }
-inline void basicConsumerRequest::_internal_set_cid(const std::string& value) {
+inline void basicConsumeRequest::_internal_set_cid(const std::string& value) {
   
   cid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::_internal_mutable_cid() {
+inline std::string* basicConsumeRequest::_internal_mutable_cid() {
   
   return cid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::release_cid() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerRequest.cid)
+inline std::string* basicConsumeRequest::release_cid() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeRequest.cid)
   return cid_.Release();
 }
-inline void basicConsumerRequest::set_allocated_cid(std::string* cid) {
+inline void basicConsumeRequest::set_allocated_cid(std::string* cid) {
   if (cid != nullptr) {
     
   } else {
@@ -5003,45 +5003,45 @@ inline void basicConsumerRequest::set_allocated_cid(std::string* cid) {
     cid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerRequest.cid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeRequest.cid)
 }
 
 // string consumer_tag = 3;
-inline void basicConsumerRequest::clear_consumer_tag() {
+inline void basicConsumeRequest::clear_consumer_tag() {
   consumer_tag_.ClearToEmpty();
 }
-inline const std::string& basicConsumerRequest::consumer_tag() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerRequest.consumer_tag)
+inline const std::string& basicConsumeRequest::consumer_tag() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeRequest.consumer_tag)
   return _internal_consumer_tag();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerRequest::set_consumer_tag(ArgT0&& arg0, ArgT... args) {
+void basicConsumeRequest::set_consumer_tag(ArgT0&& arg0, ArgT... args) {
  
  consumer_tag_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerRequest.consumer_tag)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeRequest.consumer_tag)
 }
-inline std::string* basicConsumerRequest::mutable_consumer_tag() {
+inline std::string* basicConsumeRequest::mutable_consumer_tag() {
   std::string* _s = _internal_mutable_consumer_tag();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerRequest.consumer_tag)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeRequest.consumer_tag)
   return _s;
 }
-inline const std::string& basicConsumerRequest::_internal_consumer_tag() const {
+inline const std::string& basicConsumeRequest::_internal_consumer_tag() const {
   return consumer_tag_.Get();
 }
-inline void basicConsumerRequest::_internal_set_consumer_tag(const std::string& value) {
+inline void basicConsumeRequest::_internal_set_consumer_tag(const std::string& value) {
   
   consumer_tag_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::_internal_mutable_consumer_tag() {
+inline std::string* basicConsumeRequest::_internal_mutable_consumer_tag() {
   
   return consumer_tag_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::release_consumer_tag() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerRequest.consumer_tag)
+inline std::string* basicConsumeRequest::release_consumer_tag() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeRequest.consumer_tag)
   return consumer_tag_.Release();
 }
-inline void basicConsumerRequest::set_allocated_consumer_tag(std::string* consumer_tag) {
+inline void basicConsumeRequest::set_allocated_consumer_tag(std::string* consumer_tag) {
   if (consumer_tag != nullptr) {
     
   } else {
@@ -5053,45 +5053,45 @@ inline void basicConsumerRequest::set_allocated_consumer_tag(std::string* consum
     consumer_tag_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerRequest.consumer_tag)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeRequest.consumer_tag)
 }
 
 // string queue_name = 4;
-inline void basicConsumerRequest::clear_queue_name() {
+inline void basicConsumeRequest::clear_queue_name() {
   queue_name_.ClearToEmpty();
 }
-inline const std::string& basicConsumerRequest::queue_name() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerRequest.queue_name)
+inline const std::string& basicConsumeRequest::queue_name() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeRequest.queue_name)
   return _internal_queue_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerRequest::set_queue_name(ArgT0&& arg0, ArgT... args) {
+void basicConsumeRequest::set_queue_name(ArgT0&& arg0, ArgT... args) {
  
  queue_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerRequest.queue_name)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeRequest.queue_name)
 }
-inline std::string* basicConsumerRequest::mutable_queue_name() {
+inline std::string* basicConsumeRequest::mutable_queue_name() {
   std::string* _s = _internal_mutable_queue_name();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerRequest.queue_name)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeRequest.queue_name)
   return _s;
 }
-inline const std::string& basicConsumerRequest::_internal_queue_name() const {
+inline const std::string& basicConsumeRequest::_internal_queue_name() const {
   return queue_name_.Get();
 }
-inline void basicConsumerRequest::_internal_set_queue_name(const std::string& value) {
+inline void basicConsumeRequest::_internal_set_queue_name(const std::string& value) {
   
   queue_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::_internal_mutable_queue_name() {
+inline std::string* basicConsumeRequest::_internal_mutable_queue_name() {
   
   return queue_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerRequest::release_queue_name() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerRequest.queue_name)
+inline std::string* basicConsumeRequest::release_queue_name() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeRequest.queue_name)
   return queue_name_.Release();
 }
-inline void basicConsumerRequest::set_allocated_queue_name(std::string* queue_name) {
+inline void basicConsumeRequest::set_allocated_queue_name(std::string* queue_name) {
   if (queue_name != nullptr) {
     
   } else {
@@ -5103,27 +5103,27 @@ inline void basicConsumerRequest::set_allocated_queue_name(std::string* queue_na
     queue_name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerRequest.queue_name)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeRequest.queue_name)
 }
 
 // bool auto_ack = 5;
-inline void basicConsumerRequest::clear_auto_ack() {
+inline void basicConsumeRequest::clear_auto_ack() {
   auto_ack_ = false;
 }
-inline bool basicConsumerRequest::_internal_auto_ack() const {
+inline bool basicConsumeRequest::_internal_auto_ack() const {
   return auto_ack_;
 }
-inline bool basicConsumerRequest::auto_ack() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerRequest.auto_ack)
+inline bool basicConsumeRequest::auto_ack() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeRequest.auto_ack)
   return _internal_auto_ack();
 }
-inline void basicConsumerRequest::_internal_set_auto_ack(bool value) {
+inline void basicConsumeRequest::_internal_set_auto_ack(bool value) {
   
   auto_ack_ = value;
 }
-inline void basicConsumerRequest::set_auto_ack(bool value) {
+inline void basicConsumeRequest::set_auto_ack(bool value) {
   _internal_set_auto_ack(value);
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerRequest.auto_ack)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeRequest.auto_ack)
 }
 
 // -------------------------------------------------------------------
@@ -5332,44 +5332,44 @@ inline void basicCancelRequest::set_allocated_queue_name(std::string* queue_name
 
 // -------------------------------------------------------------------
 
-// basicConsumerResponse
+// basicConsumeResponse
 
 // string cid = 1;
-inline void basicConsumerResponse::clear_cid() {
+inline void basicConsumeResponse::clear_cid() {
   cid_.ClearToEmpty();
 }
-inline const std::string& basicConsumerResponse::cid() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerResponse.cid)
+inline const std::string& basicConsumeResponse::cid() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeResponse.cid)
   return _internal_cid();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerResponse::set_cid(ArgT0&& arg0, ArgT... args) {
+void basicConsumeResponse::set_cid(ArgT0&& arg0, ArgT... args) {
  
  cid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerResponse.cid)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeResponse.cid)
 }
-inline std::string* basicConsumerResponse::mutable_cid() {
+inline std::string* basicConsumeResponse::mutable_cid() {
   std::string* _s = _internal_mutable_cid();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerResponse.cid)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeResponse.cid)
   return _s;
 }
-inline const std::string& basicConsumerResponse::_internal_cid() const {
+inline const std::string& basicConsumeResponse::_internal_cid() const {
   return cid_.Get();
 }
-inline void basicConsumerResponse::_internal_set_cid(const std::string& value) {
+inline void basicConsumeResponse::_internal_set_cid(const std::string& value) {
   
   cid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerResponse::_internal_mutable_cid() {
+inline std::string* basicConsumeResponse::_internal_mutable_cid() {
   
   return cid_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerResponse::release_cid() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerResponse.cid)
+inline std::string* basicConsumeResponse::release_cid() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeResponse.cid)
   return cid_.Release();
 }
-inline void basicConsumerResponse::set_allocated_cid(std::string* cid) {
+inline void basicConsumeResponse::set_allocated_cid(std::string* cid) {
   if (cid != nullptr) {
     
   } else {
@@ -5381,45 +5381,45 @@ inline void basicConsumerResponse::set_allocated_cid(std::string* cid) {
     cid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerResponse.cid)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeResponse.cid)
 }
 
 // string consumer_tag = 2;
-inline void basicConsumerResponse::clear_consumer_tag() {
+inline void basicConsumeResponse::clear_consumer_tag() {
   consumer_tag_.ClearToEmpty();
 }
-inline const std::string& basicConsumerResponse::consumer_tag() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerResponse.consumer_tag)
+inline const std::string& basicConsumeResponse::consumer_tag() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeResponse.consumer_tag)
   return _internal_consumer_tag();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerResponse::set_consumer_tag(ArgT0&& arg0, ArgT... args) {
+void basicConsumeResponse::set_consumer_tag(ArgT0&& arg0, ArgT... args) {
  
  consumer_tag_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerResponse.consumer_tag)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeResponse.consumer_tag)
 }
-inline std::string* basicConsumerResponse::mutable_consumer_tag() {
+inline std::string* basicConsumeResponse::mutable_consumer_tag() {
   std::string* _s = _internal_mutable_consumer_tag();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerResponse.consumer_tag)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeResponse.consumer_tag)
   return _s;
 }
-inline const std::string& basicConsumerResponse::_internal_consumer_tag() const {
+inline const std::string& basicConsumeResponse::_internal_consumer_tag() const {
   return consumer_tag_.Get();
 }
-inline void basicConsumerResponse::_internal_set_consumer_tag(const std::string& value) {
+inline void basicConsumeResponse::_internal_set_consumer_tag(const std::string& value) {
   
   consumer_tag_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerResponse::_internal_mutable_consumer_tag() {
+inline std::string* basicConsumeResponse::_internal_mutable_consumer_tag() {
   
   return consumer_tag_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerResponse::release_consumer_tag() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerResponse.consumer_tag)
+inline std::string* basicConsumeResponse::release_consumer_tag() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeResponse.consumer_tag)
   return consumer_tag_.Release();
 }
-inline void basicConsumerResponse::set_allocated_consumer_tag(std::string* consumer_tag) {
+inline void basicConsumeResponse::set_allocated_consumer_tag(std::string* consumer_tag) {
   if (consumer_tag != nullptr) {
     
   } else {
@@ -5431,45 +5431,45 @@ inline void basicConsumerResponse::set_allocated_consumer_tag(std::string* consu
     consumer_tag_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerResponse.consumer_tag)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeResponse.consumer_tag)
 }
 
 // string body = 3;
-inline void basicConsumerResponse::clear_body() {
+inline void basicConsumeResponse::clear_body() {
   body_.ClearToEmpty();
 }
-inline const std::string& basicConsumerResponse::body() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerResponse.body)
+inline const std::string& basicConsumeResponse::body() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeResponse.body)
   return _internal_body();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void basicConsumerResponse::set_body(ArgT0&& arg0, ArgT... args) {
+void basicConsumeResponse::set_body(ArgT0&& arg0, ArgT... args) {
  
  body_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:haoping.basicConsumerResponse.body)
+  // @@protoc_insertion_point(field_set:haoping.basicConsumeResponse.body)
 }
-inline std::string* basicConsumerResponse::mutable_body() {
+inline std::string* basicConsumeResponse::mutable_body() {
   std::string* _s = _internal_mutable_body();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerResponse.body)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeResponse.body)
   return _s;
 }
-inline const std::string& basicConsumerResponse::_internal_body() const {
+inline const std::string& basicConsumeResponse::_internal_body() const {
   return body_.Get();
 }
-inline void basicConsumerResponse::_internal_set_body(const std::string& value) {
+inline void basicConsumeResponse::_internal_set_body(const std::string& value) {
   
   body_.Set(value, GetArenaForAllocation());
 }
-inline std::string* basicConsumerResponse::_internal_mutable_body() {
+inline std::string* basicConsumeResponse::_internal_mutable_body() {
   
   return body_.Mutable(GetArenaForAllocation());
 }
-inline std::string* basicConsumerResponse::release_body() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerResponse.body)
+inline std::string* basicConsumeResponse::release_body() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeResponse.body)
   return body_.Release();
 }
-inline void basicConsumerResponse::set_allocated_body(std::string* body) {
+inline void basicConsumeResponse::set_allocated_body(std::string* body) {
   if (body != nullptr) {
     
   } else {
@@ -5481,26 +5481,26 @@ inline void basicConsumerResponse::set_allocated_body(std::string* body) {
     body_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerResponse.body)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeResponse.body)
 }
 
 // .haoping.BasicProperties properties = 4;
-inline bool basicConsumerResponse::_internal_has_properties() const {
+inline bool basicConsumeResponse::_internal_has_properties() const {
   return this != internal_default_instance() && properties_ != nullptr;
 }
-inline bool basicConsumerResponse::has_properties() const {
+inline bool basicConsumeResponse::has_properties() const {
   return _internal_has_properties();
 }
-inline const ::haoping::BasicProperties& basicConsumerResponse::_internal_properties() const {
+inline const ::haoping::BasicProperties& basicConsumeResponse::_internal_properties() const {
   const ::haoping::BasicProperties* p = properties_;
   return p != nullptr ? *p : reinterpret_cast<const ::haoping::BasicProperties&>(
       ::haoping::_BasicProperties_default_instance_);
 }
-inline const ::haoping::BasicProperties& basicConsumerResponse::properties() const {
-  // @@protoc_insertion_point(field_get:haoping.basicConsumerResponse.properties)
+inline const ::haoping::BasicProperties& basicConsumeResponse::properties() const {
+  // @@protoc_insertion_point(field_get:haoping.basicConsumeResponse.properties)
   return _internal_properties();
 }
-inline void basicConsumerResponse::unsafe_arena_set_allocated_properties(
+inline void basicConsumeResponse::unsafe_arena_set_allocated_properties(
     ::haoping::BasicProperties* properties) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(properties_);
@@ -5511,9 +5511,9 @@ inline void basicConsumerResponse::unsafe_arena_set_allocated_properties(
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:haoping.basicConsumerResponse.properties)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:haoping.basicConsumeResponse.properties)
 }
-inline ::haoping::BasicProperties* basicConsumerResponse::release_properties() {
+inline ::haoping::BasicProperties* basicConsumeResponse::release_properties() {
   
   ::haoping::BasicProperties* temp = properties_;
   properties_ = nullptr;
@@ -5528,14 +5528,14 @@ inline ::haoping::BasicProperties* basicConsumerResponse::release_properties() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::haoping::BasicProperties* basicConsumerResponse::unsafe_arena_release_properties() {
-  // @@protoc_insertion_point(field_release:haoping.basicConsumerResponse.properties)
+inline ::haoping::BasicProperties* basicConsumeResponse::unsafe_arena_release_properties() {
+  // @@protoc_insertion_point(field_release:haoping.basicConsumeResponse.properties)
   
   ::haoping::BasicProperties* temp = properties_;
   properties_ = nullptr;
   return temp;
 }
-inline ::haoping::BasicProperties* basicConsumerResponse::_internal_mutable_properties() {
+inline ::haoping::BasicProperties* basicConsumeResponse::_internal_mutable_properties() {
   
   if (properties_ == nullptr) {
     auto* p = CreateMaybeMessage<::haoping::BasicProperties>(GetArenaForAllocation());
@@ -5543,12 +5543,12 @@ inline ::haoping::BasicProperties* basicConsumerResponse::_internal_mutable_prop
   }
   return properties_;
 }
-inline ::haoping::BasicProperties* basicConsumerResponse::mutable_properties() {
+inline ::haoping::BasicProperties* basicConsumeResponse::mutable_properties() {
   ::haoping::BasicProperties* _msg = _internal_mutable_properties();
-  // @@protoc_insertion_point(field_mutable:haoping.basicConsumerResponse.properties)
+  // @@protoc_insertion_point(field_mutable:haoping.basicConsumeResponse.properties)
   return _msg;
 }
-inline void basicConsumerResponse::set_allocated_properties(::haoping::BasicProperties* properties) {
+inline void basicConsumeResponse::set_allocated_properties(::haoping::BasicProperties* properties) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(properties_);
@@ -5566,7 +5566,7 @@ inline void basicConsumerResponse::set_allocated_properties(::haoping::BasicProp
     
   }
   properties_ = properties;
-  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumerResponse.properties)
+  // @@protoc_insertion_point(field_set_allocated:haoping.basicConsumeResponse.properties)
 }
 
 // -------------------------------------------------------------------
