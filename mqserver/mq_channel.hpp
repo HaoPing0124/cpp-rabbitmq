@@ -154,7 +154,11 @@ namespace haoping
             return basicResponse(true, req->rid(), req->cid());
         }
         // 消息的确认
-        void basicAck(const basicAckRequestPtr &req);
+        void basicAck(const basicAckRequestPtr &req)
+        {
+            _host->basicAck(req->queue_name(), req->message_id());
+            return basicResponse(true, req->rid(), req->cid());
+        }
 
         // 订阅队列消息
         void basicConsume();
