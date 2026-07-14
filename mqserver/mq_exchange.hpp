@@ -32,7 +32,7 @@ namespace haoping
         Exchange() {}
 
         Exchange(const std::string &ename, ExchangeType etype,
-                 bool edurable, bool eauto_delete, google::protobuf::Map<std::string, std::string> &eargs)
+                 bool edurable, bool eauto_delete, const google::protobuf::Map<std::string, std::string> &eargs)
             : name(ename), type(etype), durable(edurable),
               auto_delete(eauto_delete), args(eargs)
         {
@@ -184,7 +184,7 @@ namespace haoping
         // 声明交换机
         bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
-                             google::protobuf::Map<std::string, std::string> &args)
+                             const google::protobuf::Map<std::string, std::string> &args)
         {
             // 1.非线程安全 需加锁
             std::unique_lock<std::mutex> lock(_mutex);
