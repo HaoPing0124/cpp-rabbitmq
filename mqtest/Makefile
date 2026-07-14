@@ -1,4 +1,6 @@
-.PHONY:mq_channeltest
+.PHONY:mq_connectiontest
+mq_connectiontest:mq_connectiontest.cpp ../mqcommon/mq_msg.pb.cc ../mqcommon/mq_proto.pb.cc
+	g++ -o $@ $^ -std=c++17 -lgtest -lprotobuf -lsqlite3 -I../mqthird/include
 mq_channeltest:mq_channeltest.cpp ../mqcommon/mq_msg.pb.cc ../mqcommon/mq_proto.pb.cc
 	g++ -o $@ $^ -std=c++17 -lgtest -lprotobuf -lsqlite3 -I../mqthird/include
 mq_consumertest:mq_consumertest.cpp ../mqcommon/mq_msg.pb.cc
