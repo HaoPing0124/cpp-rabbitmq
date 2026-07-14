@@ -78,6 +78,66 @@ namespace haoping
         ThreadPool::ptr _pool;              // 异步任务线程池
         ChannelManager::ptr _channels;      // 当前客户端连接对应的信道管理器
     };
+
+    // 连接管理器
+    // 负责创建、保存、查找和删除服务器中的Connection对象
+    class ConnectionManager
+    {
+    public:
+        using ptr = std::shared_ptr<ConnectionManager>;
+        ConnectionManager() {}
+
+        // 创建并保存一个新的客户端连接管理对象
+        // host 表示虚拟主机，用于管理交换机、队列、绑定关系和消息
+        // cmp 表示消费者管理器，用于管理队列对应的消费者
+        // codec 表示 Protobuf 编解码器，用于向客户端发送响应
+        // conn 表示客户端与服务端之间的 TCP 连接
+        // pool 表示线程池，用于异步执行消息消费任务
+        void newConnection(const VirtualHost::ptr &host,
+                           const ConsumerManager::ptr &cmp,
+                           const ProtobufCodecPtr &codec,
+                           const muduo::net::TcpConnectionPtr &conn,
+                           const ThreadPool::ptr &pool)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _conns.find(conn);
+            if (it != _conns.end())
+            {
+                return;
+            }
+
+            // 为当前 TCP 连接创建一个 Connection 对象
+            // Connection 对象负责管理该客户端连接内部的所有 Channel
+            Connection::ptr self_conn = std::make_shared<Connection>(host, cmp, codec, conn, pool);
+            _conns.insert(std::make_pair(conn, self_conn));
+        }
+
+        // 删除指定客户端 TCP 连接对应的 Connection 对象
+        void delConnection(const muduo::net::TcpConnectionPtr &conn)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _conns.erase(conn);
+        }
+
+        // 根据客户端 TCP 连接获取对应的 Connection 对象
+        Connection::ptr getConnection(const muduo::net::TcpConnectionPtr &conn)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _conns.find(conn);
+            if (it == _conns.end())
+            {
+                return Connection::ptr();
+            }
+            return it->second;
+        }
+
+    private:
+        std::mutex _mutex;
+        // 保存 TCP 连接与 Connection 对象之间的对应关系
+        // key 表示 muduo 中的客户端 TCP 连接
+        // value 表示项目中对该客户端连接进行业务管理的 Connection 对象
+        std::unordered_map<muduo::net::TcpConnectionPtr, Connection::ptr> _conns;
+    };
 }
 
 #endif
