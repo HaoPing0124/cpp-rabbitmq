@@ -296,6 +296,70 @@ namespace haoping
         VirtualHost::ptr _host;             // 虚拟主机 管理:交换机、队列、绑定关系、消息
         ThreadPool::ptr _pool;              // 异步任务线程池。
     };
+
+    // 信道管理器
+    // 负责统一创建、保存、查找和关闭当前连接中的所有Channel对象
+    class ChannelManager
+    {
+    public:
+        using ptr = std::shared_ptr<ChannelManager>;
+        ChannelManager() {}
+
+        // 打开信道
+        // id 表示需要创建的信道ID
+        // host 用于管理交换机、队列、绑定关系和消息
+        // cmp 用于管理消费者
+        // codec 用于发送Protobuf响应
+        // conn 表示当前客户端的TCP连接
+        // pool 用于异步执行消息消费任务
+        bool openChannel(const std::string &id,
+                         const VirtualHost::ptr &host,
+                         const ConsumerManager::ptr &cmp,
+                         const ProtobufCodecPtr &codec,
+                         const muduo::net::TcpConnectionPtr &conn,
+                         const ThreadPool::ptr &pool)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // 根据信道ID查找信道是否已经存在
+            auto it = _channels.find(id);
+            if (it != _channels.end())
+            {
+                DLOG("信道：%s 已存在!", id.c_str());
+                return false;
+            }
+
+            Channel::ptr channel = std::make_shared<Channel>(id, host, cmp, codec, conn, pool);
+            _channels.insert(std::make_pair(id, channel));
+            return true;
+        }
+
+        // 关闭信道
+        void closeChannel(const std::string &id)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _channels.erase(id);
+        }
+
+        // 根据信道ID获取对应的Channel对象
+        Channel::ptr getChannel(const std::string &id)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = _channels.find(id);
+            if (it == _channels.end())
+            {
+                return Channel::ptr();
+            }
+
+            // 返回找到的Channel智能指针
+            // 即使函数结束后锁被释放，返回的智能指针仍然能够保证Channel对象存活
+            return it->second;
+        }
+
+    private:
+        std::mutex _mutex;
+        std::unordered_map<std::string, Channel::ptr> _channels;
+    };
 }
 
 #endif
