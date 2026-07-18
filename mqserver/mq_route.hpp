@@ -133,8 +133,6 @@ namespace haoping
             }
             return dp[n_bkey][n_rkey];
         }
-
-    private:
     };
 }
 
