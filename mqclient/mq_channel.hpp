@@ -65,6 +65,41 @@ namespace haoping
         void basicCancel();
 
     private:
+        // 连接收到基础响应后，向 hash_map 中添加响应
+        // 处理服务端返回的普通请求响应
+        // resp 中包含请求 ID、信道 ID 和请求处理结果
+        // 该函数使用响应中的 rid 作为 key
+        // 将响应对象保存到 _basic_resp 响应缓存表中
+        // 保存完成后通过 _cv 唤醒正在等待该响应的线程
+        void putBasicResponse(const basicCommonResponsePtr &resp)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _basic_resp.insert(std::make_pair(resp->rid(), resp));
+            _cv.notify_all();
+        }
+
+        // 连接收到消息推送后，需要通过信道找到对应的消费者对象，通过回调函数进行消息处理
+        // 处理服务端主动推送给消费者的消息
+        // resp 中包含消费者标签、消息属性和消息正文
+        // 该函数会检查当前 Channel 是否存在对应的 Consumer 对象
+        // 找到消费者后，调用 Consumer 中保存的回调函数处理消息
+        // 消息推送不属于普通请求响应，因此不会存入 _basic_resp
+        void consume(const basicConsumeResponsePtr &resp)
+        {
+            if (_consumer.get() == nullptr)
+            {
+                DLOG("消息处理时，未找到订阅者信息！");
+                return;
+            }
+            if (_consumer->tag != resp->consumer_tag())
+            {
+                DLOG("收到的推送消息中的消费者标识，与当前信道消费者标识不一致！");
+                return;
+            }
+            _consumer->callback(resp->consumer_tag(), resp->mutable_properties(), resp->body());
+        }
+
+    private:
         std::string _cid;                   // 信道channel ID
         Consumer::ptr _consumer;            // 当前信道消费者
         muduo::net::TcpConnectionPtr _conn; // 当前客户端对应的 TCP 连接
