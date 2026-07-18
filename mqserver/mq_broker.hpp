@@ -297,9 +297,23 @@ namespace haoping
         }
 
         // 遇到未知消息
-        void onUnknownMessage(const muduo::net::TcpConnectionPtr &conn, const MessagePtr &message, muduo::Timestamp);
+        void onUnknownMessage(const muduo::net::TcpConnectionPtr &conn, const MessagePtr &message, muduo::Timestamp)
+        {
+            LOG_INFO << "onUnknownMessage: " << message->GetTypeName();
+            conn->shutdown();
+        }
 
-        void onConnection(const muduo::net::TcpConnectionPtr &conn);
+        void onConnection(const muduo::net::TcpConnectionPtr &conn)
+        {
+            if (conn->connected())
+            {
+                _connection_manager->newConnection(_virtual_host, _consumer_manager, _codec, conn, _threadpool);
+            }
+            else
+            {
+                _connection_manager->delConnection(conn);
+            }
+        }
 
     private:
         muduo::net::EventLoop _baseloop;
