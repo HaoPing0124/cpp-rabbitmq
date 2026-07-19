@@ -29,6 +29,37 @@ namespace haoping
 
         ~Channel() { basicCancel(); }
 
+        // 获取信道ID
+        std::string cid() { return _cid; }
+
+        // 打开信道
+        bool openChannel()
+        {
+            openChannelRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+
+            _codec->send(_conn, req);
+            basicCommonResponsePtr resp = waitResponse(rid);
+            return resp->ok();
+        }
+
+        // 关闭信道
+        void closeChannel()
+        {
+            closeChannelRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+
+            _codec->send(_conn, req);
+            waitResponse(rid);
+            return;
+        }
+
         // 向服务端发送声明交换机请求
         bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
