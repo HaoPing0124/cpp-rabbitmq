@@ -344,6 +344,82 @@ namespace haoping
         // 响应使用完成后需要从 _basic_resp 中删除，防止旧响应一直占用内存
         std::unordered_map<std::string, basicCommonResponsePtr> _basic_resp; // 响应缓存表
     };
+
+    // 客户端信道管理器
+    // 负责创建、保存、查找和删除客户端中的 Channel 对象
+    class ChannelManager
+    {
+    public:
+        using ptr = std::shared_ptr<ChannelManager>;
+        ChannelManager() = default;
+
+        // 创建一个新的客户端 Channel 对象
+        Channel::ptr create(const muduo::net::TcpConnectionPtr &conn,
+                            const ProtobufCodecPtr &codec)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // TCP 连接对象为空，无法创建 Channel
+            if (conn.get() == nullptr)
+            {
+                DLOG("创建 Channel 失败，TCP 连接对象为空！");
+                return Channel::ptr();
+            }
+
+            // Protobuf 编解码器为空，无法创建 Channel
+            if (codec.get() == nullptr)
+            {
+                DLOG("创建 Channel 失败，Protobuf 编解码器为空！");
+                return Channel::ptr();
+            }
+
+            // 创建新的客户端 Channel 对象
+            // Channel 构造函数内部会生成唯一的信道 ID
+            Channel::ptr channel = std::make_shared<Channel>(conn, codec);
+
+            // Channel 创建失败
+            if (channel.get() == nullptr)
+            {
+                DLOG("创建 Channel 失败！");
+                return Channel::ptr();
+            }
+
+            _channels.insert(std::make_pair(channel->cid(), channel));
+            return channel;
+        }
+
+        // 根据信道 ID 删除对应的 Channel 对象
+        void remove(const std::string &cid)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _channels.erase(cid);
+        }
+
+        // 根据信道 ID 获取对应的 Channel 对象
+        Channel::ptr get(const std::string &cid)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            // 在信道映射表中查找指定信道 ID
+            auto it = _channels.find(cid);
+
+            // 没有找到对应的 Channel
+            if (it == _channels.end())
+            {
+                return Channel::ptr();
+            }
+
+            // 返回对应的 Channel 智能指针
+            // shared_ptr 被复制后引用计数会增加
+            // 即使其他线程随后从映射表中删除该 Channel
+            // 当前调用者持有的 Channel 对象仍然有效
+            return it->second;
+        }
+
+    private:
+        std::mutex _mutex;                                       // 保护 _channels 信道映射表的互斥锁
+        std::unordered_map<std::string, Channel::ptr> _channels; // 保存信道 ID 与 Channel 对象之间的对应关系
+    };
 }
 
 #endif
