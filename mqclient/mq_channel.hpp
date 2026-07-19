@@ -150,40 +150,127 @@ namespace haoping
         }
 
         // 向服务端发送消息发布请求
-        void basicPublish(const std::string &ename, BasicProperties *bp, const std::string &body);
+        void basicPublish(const std::string &ename, BasicProperties *bp, const std::string &body)
+        {
+            basicPublishRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_body(body);
+            req.set_exchange_name(ename);
+
+            if (bp != nullptr)
+            {
+                req.mutable_properties()->set_id(bp->id());
+                req.mutable_properties()->set_delivery_mode(bp->delivery_mode());
+                req.mutable_properties()->set_routing_key(bp->routing_key());
+            }
+
+            _codec->send(_conn, req);
+            waitResponse(rid);
+            return;
+        }
 
         // 向服务端发送消息确认请求
-        void basicAck(const std::string &msgid);
+        void basicAck(const std::string &msgid)
+        {
+            if (_consumer.get() == nullptr)
+            {
+                DLOG("消息确认时，找不到消费者信息！");
+                return;
+            }
+
+            basicAckRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_queue_name(_consumer->qname);
+            req.set_message_id(msgid);
+
+            _codec->send(_conn, req);
+            waitResponse(rid);
+            return;
+        }
 
         // 向服务端发送订阅队列请求
-        void basicConsume(const std::string &consumer_tag, const std::string &queue_name,
-                          bool auto_ack, const ConsumerCallback &cb);
+        bool basicConsume(const std::string &consumer_tag, const std::string &queue_name,
+                          bool auto_ack, const ConsumerCallback &cb)
+        {
+            if (_consumer.get() != nullptr)
+            {
+                DLOG("当前信道已订阅其他队列消息！");
+                return false;
+            }
+
+            basicConsumeRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_queue_name(queue_name);
+            req.set_consumer_tag(consumer_tag);
+            req.set_auto_ack(auto_ack);
+
+            _codec->send(_conn, req);
+            basicCommonResponsePtr resp = waitResponse(rid);
+            if (resp->ok() == false)
+            {
+                DLOG("添加订阅失败！");
+                return false;
+            }
+
+            _consumer = std::make_shared<Consumer>(consumer_tag, queue_name, auto_ack, cb);
+            return true;
+        }
 
         // 取消当前 Channel 中消费者的队列订阅
-        void basicCancel();
+        void basicCancel()
+        {
+            if (_consumer.get() == nullptr)
+            {
+                return;
+            }
 
-    private:
+            basicCancelRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_queue_name(_consumer->qname);
+            req.set_consumer_tag(_consumer->tag);
+
+            _codec->send(_conn, req);
+            waitResponse(rid);
+
+            _consumer.reset();
+            return;
+        }
+
+    public:
         // 连接收到基础响应后，向 hash_map 中添加响应
         // 处理服务端返回的普通请求响应
         // resp 中包含请求 ID、信道 ID 和请求处理结果
         // 该函数使用响应中的 rid 作为 key
-        // 将响应对象保存到 _basic_resp 响应缓存表中
-        // 保存完成后通过 _cv 唤醒正在等待该响应的线程
         void putBasicResponse(const basicCommonResponsePtr &resp)
         {
             std::unique_lock<std::mutex> lock(_mutex);
+
+            // 将响应对象保存到 _basic_resp 响应缓存表中
             _basic_resp.insert(std::make_pair(resp->rid(), resp));
+
+            // 保存完成后通过 _cv 唤醒正在等待该响应的线程
             _cv.notify_all();
         }
 
         // 连接收到消息推送后，需要通过信道找到对应的消费者对象，通过回调函数进行消息处理
         // 处理服务端主动推送给消费者的消息
         // resp 中包含消费者标签、消息属性和消息正文
-        // 该函数会检查当前 Channel 是否存在对应的 Consumer 对象
-        // 找到消费者后，调用 Consumer 中保存的回调函数处理消息
-        // 消息推送不属于普通请求响应，因此不会存入 _basic_resp
         void consume(const basicConsumeResponsePtr &resp)
         {
+            // 检查当前 Channel 是否存在对应的 Consumer 对象
             if (_consumer.get() == nullptr)
             {
                 DLOG("消息处理时，未找到订阅者信息！");
@@ -194,6 +281,9 @@ namespace haoping
                 DLOG("收到的推送消息中的消费者标识，与当前信道消费者标识不一致！");
                 return;
             }
+
+            // 找到消费者后，调用 Consumer 中保存的回调函数处理消息
+            // 消息推送不属于普通请求响应，因此不会存入 _basic_resp
             _consumer->callback(resp->consumer_tag(), resp->mutable_properties(), resp->body());
         }
 
