@@ -27,8 +27,8 @@ namespace haoping
               _client(worker->loopthread.startLoop(), muduo::net::InetAddress(sip, sport), "Client"), // 启动 worker 中的 EventLoopThread, 将返回的 EventLoop 交给 TcpClient 使用
               _dispatcher(std::bind(&Connection::onUnknownMessage, this, std::placeholders::_1,
                                     std::placeholders::_2, std::placeholders::_3)), // 当收到没有注册处理函数的 Protobuf 消息时 调用 Connection::onUnknownMessage() 进行处理
-              _codec(std::bind(&ProtobufDispatcher::onProtobufMessage, &_dispatcher,
-                               std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)), // codec 完成消息解码后，将消息交给 dispatcher 继续分发
+              _codec(std::make_shared<ProtobufCodec>(std::bind(&ProtobufDispatcher::onProtobufMessage, &_dispatcher,
+                                                               std::placeholders::_1, std::placeholders::_2, std::placeholders::_3))), // codec 完成消息解码后，将消息交给 dispatcher 继续分发
               _worker(worker),
               _channel_manager(std::make_shared<ChannelManager>())
         {
@@ -48,7 +48,7 @@ namespace haoping
 
             // 设置 TCP 消息回调函数
             // 当 TcpClient 收到网络数据时 先调用 ProtobufCodec::onMessage() 完成拆包和解码
-            _client.setMessageCallback(std::bind(&ProtobufCodec::onMessage, &_codec,
+            _client.setMessageCallback(std::bind(&ProtobufCodec::onMessage, _codec,
                                                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
             // 向服务端发起异步 TCP 连接
@@ -61,9 +61,35 @@ namespace haoping
         }
 
     public:
-        Channel::ptr openChannel();
+        Channel::ptr openChannel()
+        {
+            Channel::ptr channel = _channel_manager->create(_conn, _codec);
+            if (channel.get() == nullptr)
+            {
+                DLOG("创建信道对象失败！");
+                return Channel::ptr();
+            }
 
-        void closeChannel();
+            bool ret = channel->openChannel();
+            if (ret == false)
+            {
+                DLOG("打开信道失败！");
+                return Channel::ptr();
+            }
+            return channel;
+        }
+
+        void closeChannel(const Channel::ptr &channel)
+        {
+            if (channel.get() == nullptr)
+            {
+                DLOG("关闭信道失败，信道对象为空！");
+                return;
+            }
+            
+            channel->closeChannel();
+            _channel_manager->remove(channel->cid());
+        }
 
     private:
         // 处理服务端返回的普通请求响应
@@ -106,7 +132,7 @@ namespace haoping
         muduo::net::TcpConnectionPtr _conn;   // 当前客户端与服务端之间的 TCP 连接
         muduo::net::TcpClient _client;        // muduo 客户端对象
         ProtobufDispatcher _dispatcher;       // Protobuf 消息分发器
-        ProtobufCodec _codec;                 // Protobuf 协议编解码器
+        ProtobufCodecPtr _codec;              // Protobuf 协议编解码器
         AsyncWorker::ptr _worker;             // 客户端异步工作模块
         ChannelManager::ptr _channel_manager; // 客户端信道管理器
     };
