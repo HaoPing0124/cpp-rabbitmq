@@ -30,28 +30,124 @@ namespace haoping
         ~Channel() { basicCancel(); }
 
         // 向服务端发送声明交换机请求
-        void declareExchange(const std::string &name,
+        bool declareExchange(const std::string &name,
                              ExchangeType type, bool durable, bool auto_delete,
-                             const google::protobuf::Map<std::string, std::string> &args);
+                             google::protobuf::Map<std::string, std::string> &args)
+        {
+            // 构造一个声明交换机的请求对象
+            declareExchangeRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_exchange_name(name);
+            req.set_exchange_type(type);
+            req.set_durable(durable);
+            req.set_auto_delete(auto_delete);
+            req.mutable_args()->swap(args);
+
+            // 向服务器发送请求
+            _codec->send(_conn, req);
+
+            // 等待服务器的响应
+            basicCommonResponsePtr resp = waitResponse(rid);
+            return resp->ok();
+        }
 
         // 向服务端发送删除交换机请求
-        void deleteExchange(const std::string &name);
+        void deleteExchange(const std::string &name)
+        {
+            // 构造一个删除交换机的请求对象
+            deleteExchangeRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_exchange_name(name);
+
+            // 向服务器发送请求
+            _codec->send(_conn, req);
+
+            // 等待服务器的响应
+            waitResponse(rid);
+            return;
+        }
 
         // 向服务端发送声明队列请求
-        void declareQueue(const std::string &qname,
+        bool declareQueue(const std::string &qname,
                           bool qdurable,
                           bool qexclusive,
                           bool qauto_delete,
-                          const google::protobuf::Map<std::string, std::string> &qargs);
+                          google::protobuf::Map<std::string, std::string> &qargs)
+        {
+            // 构造一个声明队列的请求对象
+            declareQueueRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_queue_name(qname);
+            req.set_durable(qdurable);
+            req.set_auto_delete(qauto_delete);
+            req.set_exclusive(qexclusive);
+            req.mutable_args()->swap(qargs);
+
+            // 向服务器发送请求
+            _codec->send(_conn, req);
+
+            // 等待服务器的响应
+            basicCommonResponsePtr resp = waitResponse(rid);
+            return resp->ok();
+        }
 
         // 向服务端发送删除队列请求
-        void deleteQueue(const std::string &qname);
+        void deleteQueue(const std::string &qname)
+        {
+            deleteQueueRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_queue_name(qname);
+
+            _codec->send(_conn, req);
+            waitResponse(rid);
+            return;
+        }
 
         // 向服务端发送队列绑定请求
-        void queueBind(const std::string &ename, const std::string &qname, const std::string &key);
+        bool queueBind(const std::string &ename, const std::string &qname, const std::string &key)
+        {
+            queueBindRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_exchange_name(ename);
+            req.set_queue_name(qname);
+            req.set_binding_key(key);
+
+            _codec->send(_conn, req);
+            basicCommonResponsePtr resp = waitResponse(rid);
+            return resp->ok();
+        }
 
         // 向服务端发送解除队列绑定请求
-        void queueUnBind(const std::string &ename, const std::string &qname);
+        void queueUnBind(const std::string &ename, const std::string &qname)
+        {
+            queueUnBindRequest req;
+
+            std::string rid = UUIDHelper::uuid();
+            req.set_rid(rid);
+            req.set_cid(_cid);
+            req.set_exchange_name(ename);
+            req.set_queue_name(qname);
+
+            _codec->send(_conn, req);
+            waitResponse(rid);
+            return;
+        }
 
         // 向服务端发送消息发布请求
         void basicPublish(const std::string &ename, BasicProperties *bp, const std::string &body);
