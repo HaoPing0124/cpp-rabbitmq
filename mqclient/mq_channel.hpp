@@ -24,8 +24,10 @@ namespace haoping
     {
     public:
         using ptr = std::shared_ptr<Channel>;
-        Channel();
-        ~Channel();
+        Channel(const muduo::net::TcpConnectionPtr conn, const ProtobufCodecPtr codec)
+            : _cid(UUIDHelper::uuid()), _conn(conn), _codec(codec) {}
+
+        ~Channel() { basicCancel(); }
 
         // 向服务端发送声明交换机请求
         void declareExchange(const std::string &name,
@@ -100,7 +102,19 @@ namespace haoping
         }
 
     private:
-        std::string _cid;                   // 信道channel ID
+        basicCommonResponsePtr waitResponse(const std::string &rid)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _cv.wait(lock, [&rid, this]()
+                     { return _basic_resp.find(rid) != _basic_resp.end(); });
+
+            basicCommonResponsePtr basic_resp = _basic_resp[rid];
+            _basic_resp.erase(rid);
+            return basic_resp;
+        }
+
+    private:
+        std::string _cid;                   // 信道 channel ID
         Consumer::ptr _consumer;            // 当前信道消费者
         muduo::net::TcpConnectionPtr _conn; // 当前客户端对应的 TCP 连接
         ProtobufCodecPtr _codec;            // Protobuf 编解码器 用于发送响应和推送消息
