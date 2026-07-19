@@ -15,8 +15,8 @@ namespace haoping
 {
     class Connection
     {
-
     public:
+        using ptr = std::shared_ptr<Connection>;
         // 构造客户端连接对象
         // sip 表示服务端 IP 地址
         // sport 表示服务端监听端口
@@ -86,7 +86,7 @@ namespace haoping
                 DLOG("关闭信道失败，信道对象为空！");
                 return;
             }
-            
+
             channel->closeChannel();
             _channel_manager->remove(channel->cid());
         }
@@ -122,7 +122,7 @@ namespace haoping
 
             // 2. 封装异步任务（消息处理任务），抛入线程池
             _worker->pool.push([channel, message](){
-                channel->consume(message); 
+                channel->consume(message);
             });
         }
 
