@@ -94,11 +94,37 @@ namespace haoping
     private:
         // 处理服务端返回的普通请求响应
         void basicResponse(const muduo::net::TcpConnectionPtr &conn,
-                           const basicCommonResponsePtr &message, muduo::Timestamp);
+                           const basicCommonResponsePtr &message, muduo::Timestamp)
+        {
+            // 1. 找到信道
+            Channel::ptr channel = _channel_manager->get(message->cid());
+            if (channel.get() == nullptr)
+            {
+                DLOG("未找到信道信息！");
+                return;
+            }
+
+            // 2. 将得到的响应对象，添加到信道的基础响应hash_map中
+            channel->putBasicResponse(message);
+        }
 
         // 处理服务端主动推送的消费消息
         void consumerResponse(const muduo::net::TcpConnectionPtr &conn,
-                              const basicConsumeResponsePtr &message, muduo::Timestamp);
+                              const basicConsumeResponsePtr &message, muduo::Timestamp)
+        {
+            // 1. 找到信道
+            Channel::ptr channel = _channel_manager->get(message->cid());
+            if (channel.get() == nullptr)
+            {
+                DLOG("未找到信道信息！");
+                return;
+            }
+
+            // 2. 封装异步任务（消息处理任务），抛入线程池
+            _worker->pool.push([channel, message](){
+                channel->consume(message); 
+            });
+        }
 
         // 处理没有注册对应处理函数的 Protobuf 消息
         void onUnknownMessage(const muduo::net::TcpConnectionPtr &conn,
