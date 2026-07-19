@@ -16,6 +16,7 @@
 
 namespace haoping
 {
+    typedef std::shared_ptr<google::protobuf::Message> MessagePtr;
     using ProtobufCodecPtr = std::shared_ptr<ProtobufCodec>;               // 表示 Protobuf 编解码器的智能指针
     using basicConsumeResponsePtr = std::shared_ptr<basicConsumeResponse>; // 表示服务端推送消息响应的智能指针
     using basicCommonResponsePtr = std::shared_ptr<basicCommonResponse>;   // 表示普通请求处理结果响应的智能指针
