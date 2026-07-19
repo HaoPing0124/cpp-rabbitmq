@@ -12,9 +12,9 @@ int main()
     haoping::Channel::ptr channel = conn->openChannel();
 
     // 4. 通过信道提供的服务完成所需
-    //   1. 声明一个交换机exchange1, 交换机类型为广播模式
+    //   1. 声明一个交换机exchange1
     google::protobuf::Map<std::string, std::string> tmp_map;
-    channel->declareExchange("exchange1", haoping::ExchangeType::FANOUT, true, false, tmp_map);
+    channel->declareExchange("exchange1", haoping::ExchangeType::TOPIC, true, false, tmp_map);
 
     //  2. 声明一个队列queue1
     channel->declareQueue("queue1", true, false, false, tmp_map);
@@ -28,11 +28,25 @@ int main()
     //  5. 绑定queue2-exchange1，且binding_key设置为news.music.#
     channel->queueBind("exchange1", "queue2", "news.music.#");
 
-    //5. 循环向交换机发布消息
+    // 5. 循环向交换机发布消息
     for (int i = 0; i < 10; i++)
     {
-        channel->basicPublish("exchange1", nullptr, "Hello World-" + std::to_string(i));
+        haoping::BasicProperties bp;
+        bp.set_id(haoping::UUIDHelper::uuid());
+        bp.set_delivery_mode(haoping::DeliveryMode::DURABLE);
+        bp.set_routing_key("news.music.pop");
+
+        channel->basicPublish("exchange1", &bp, "Hello World-TOPIC" + std::to_string(i));
     }
+
+    haoping::BasicProperties bp;
+    bp.set_id(haoping::UUIDHelper::uuid());
+    bp.set_delivery_mode(haoping::DeliveryMode::DURABLE);
+    bp.set_routing_key("news.music.sport");
+    channel->basicPublish("exchange1", &bp, "Hello TOPIC-TEST-1");
+
+    bp.set_routing_key("news.sport.sport");
+    channel->basicPublish("exchange1", &bp, "Hello TOPIC-TEST-2");
 
     // 6. 关闭信道
     conn->closeChannel(channel);

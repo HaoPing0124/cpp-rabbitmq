@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     // 4. 通过信道提供的服务完成所需
     //   1. 声明一个交换机exchange1, 交换机类型为广播模式
     google::protobuf::Map<std::string, std::string> tmp_map;
-    channel->declareExchange("exchange1", haoping::ExchangeType::FANOUT, true, false, tmp_map);
+    channel->declareExchange("exchange1", haoping::ExchangeType::TOPIC, true, false, tmp_map);
 
     //  2. 声明一个队列queue1
     channel->declareQueue("queue1", true, false, false, tmp_map);
