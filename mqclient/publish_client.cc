@@ -1,54 +1,103 @@
 #include "mq_connection.hpp"
 
-int main()
+#include <chrono>
+#include <memory>
+#include <string>
+#include <thread>
+
+namespace
 {
-    // 1. 实例化异步工作线程对象
-    haoping::AsyncWorker::ptr awp = std::make_shared<haoping::AsyncWorker>();
+struct DemoConfig
+{
+    std::string exchange_name;
+    haoping::ExchangeType exchange_type;
+    std::string queue1_binding;
+    std::string queue2_binding;
+};
 
-    // 2. 实例化连接对象
-    haoping::Connection::ptr conn = std::make_shared<haoping::Connection>("127.0.0.1", 8085, awp);
-
-    // 3. 通过连接创建信道
-    haoping::Channel::ptr channel = conn->openChannel();
-
-    // 4. 通过信道提供的服务完成所需
-    //   1. 声明一个交换机exchange1
-    google::protobuf::Map<std::string, std::string> tmp_map;
-    channel->declareExchange("exchange1", haoping::ExchangeType::TOPIC, true, false, tmp_map);
-
-    //  2. 声明一个队列queue1
-    channel->declareQueue("queue1", true, false, false, tmp_map);
-
-    //  3. 声明一个队列queue2
-    channel->declareQueue("queue2", true, false, false, tmp_map);
-
-    //  4. 绑定queue1-exchange1，且binding_key设置为queue1
-    channel->queueBind("exchange1", "queue1", "queue1");
-
-    //  5. 绑定queue2-exchange1，且binding_key设置为news.music.#
-    channel->queueBind("exchange1", "queue2", "news.music.#");
-
-    // 5. 循环向交换机发布消息
-    for (int i = 0; i < 10; i++)
+bool loadConfig(const std::string &mode, DemoConfig *config)
+{
+    if (mode == "direct")
     {
-        haoping::BasicProperties bp;
-        bp.set_id(haoping::UUIDHelper::uuid());
-        bp.set_delivery_mode(haoping::DeliveryMode::DURABLE);
-        bp.set_routing_key("news.music.pop");
+        *config = {"exchange1", haoping::ExchangeType::DIRECT, "orange", "black"};
+        return true;
+    }
+    if (mode == "fanout")
+    {
+        *config = {"exchange1", haoping::ExchangeType::FANOUT, "queue1", "queue2"};
+        return true;
+    }
+    if (mode == "topic")
+    {
+        *config = {"exchange1", haoping::ExchangeType::TOPIC, "queue1", "news.music.#"};
+        return true;
+    }
+    return false;
+}
 
-        channel->basicPublish("exchange1", &bp, "Hello World-TOPIC" + std::to_string(i));
+void declareTopology(const haoping::Channel::ptr &channel, const DemoConfig &config)
+{
+    google::protobuf::Map<std::string, std::string> arguments;
+    channel->declareExchange(config.exchange_name, config.exchange_type, true, false, arguments);
+    channel->declareQueue("queue1", true, false, false, arguments);
+    channel->declareQueue("queue2", true, false, false, arguments);
+    channel->queueBind(config.exchange_name, "queue1", config.queue1_binding);
+    channel->queueBind(config.exchange_name, "queue2", config.queue2_binding);
+}
+
+void publishMessage(const haoping::Channel::ptr &channel, const std::string &exchange,
+                    const std::string &routing_key, const std::string &body)
+{
+    haoping::BasicProperties properties;
+    properties.set_id(haoping::UUIDHelper::uuid());
+    properties.set_delivery_mode(haoping::DeliveryMode::DURABLE);
+    properties.set_routing_key(routing_key);
+    channel->basicPublish(exchange, &properties, body);
+}
+} // namespace
+
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        return 1;
     }
 
-    haoping::BasicProperties bp;
-    bp.set_id(haoping::UUIDHelper::uuid());
-    bp.set_delivery_mode(haoping::DeliveryMode::DURABLE);
-    bp.set_routing_key("news.music.sport");
-    channel->basicPublish("exchange1", &bp, "Hello TOPIC-TEST-1");
+    const std::string mode = argv[1];
+    DemoConfig config;
+    if (!loadConfig(mode, &config))
+    {
+        return 1;
+    }
 
-    bp.set_routing_key("news.sport.sport");
-    channel->basicPublish("exchange1", &bp, "Hello TOPIC-TEST-2");
+    haoping::AsyncWorker::ptr worker = std::make_shared<haoping::AsyncWorker>();
+    haoping::Connection::ptr connection = std::make_shared<haoping::Connection>("127.0.0.1", 8085, worker);
+    haoping::Channel::ptr channel = connection->openChannel();
+    declareTopology(channel, config);
 
-    // 6. 关闭信道
-    conn->closeChannel(channel);
+    if (mode == "direct")
+    {
+        publishMessage(channel, config.exchange_name, "orange", "DIRECT orange message");
+        publishMessage(channel, config.exchange_name, "black", "DIRECT black message");
+        publishMessage(channel, config.exchange_name, "green", "DIRECT green message");
+    }
+    else if (mode == "fanout")
+    {
+        publishMessage(channel, config.exchange_name, "ignored.one", "FANOUT broadcast message 1");
+        publishMessage(channel, config.exchange_name, "ignored.two", "FANOUT broadcast message 2");
+    }
+    else
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            publishMessage(channel, config.exchange_name, "news.music.pop",
+                           "Hello World-TOPIC" + std::to_string(i));
+        }
+        publishMessage(channel, config.exchange_name, "news.music.sport", "Hello TOPIC-TEST-1");
+        publishMessage(channel, config.exchange_name, "news.sport.sport", "Hello TOPIC-TEST-2");
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    connection->closeChannel(channel);
     return 0;
 }

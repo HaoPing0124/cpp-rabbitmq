@@ -1,50 +1,91 @@
 #include "mq_connection.hpp"
 
-void cb(const haoping::Channel::ptr &channel, const std::string consumer_tag,
-        const haoping::BasicProperties *bp, const std::string &body)
+#include <chrono>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <thread>
+
+namespace
+{
+struct DemoConfig
+{
+    std::string exchange_name;
+    haoping::ExchangeType exchange_type;
+    std::string queue1_binding;
+    std::string queue2_binding;
+};
+
+bool loadConfig(const std::string &mode, DemoConfig *config)
+{
+    if (mode == "direct")
+    {
+        *config = {"exchange1", haoping::ExchangeType::DIRECT, "orange", "black"};
+        return true;
+    }
+    if (mode == "fanout")
+    {
+        *config = {"exchange1", haoping::ExchangeType::FANOUT, "queue1", "queue2"};
+        return true;
+    }
+    if (mode == "topic")
+    {
+        *config = {"exchange1", haoping::ExchangeType::TOPIC, "queue1", "news.music.#"};
+        return true;
+    }
+    return false;
+}
+
+void declareTopology(const haoping::Channel::ptr &channel, const DemoConfig &config)
+{
+    google::protobuf::Map<std::string, std::string> arguments;
+    channel->declareExchange(config.exchange_name, config.exchange_type, true, false, arguments);
+    channel->declareQueue("queue1", true, false, false, arguments);
+    channel->declareQueue("queue2", true, false, false, arguments);
+    channel->queueBind(config.exchange_name, "queue1", config.queue1_binding);
+    channel->queueBind(config.exchange_name, "queue2", config.queue2_binding);
+}
+
+void consumeCallback(const haoping::Channel::ptr &channel, const std::string consumer_tag,
+                     const haoping::BasicProperties *properties, const std::string &body)
 {
     std::cout << consumer_tag << "消费了消息：" << body << std::endl;
-    channel->basicAck(bp->id());
+    channel->basicAck(properties->id());
 }
+} // namespace
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
+    if (argc != 3)
     {
-        std::cout << "usage: ./consume_client [queue_name]";
-        return -1;
+        return 1;
     }
 
-    // 1. 实例化异步工作线程对象
-    haoping::AsyncWorker::ptr awp = std::make_shared<haoping::AsyncWorker>();
+    const std::string mode = argv[1];
+    const std::string queue_name = argv[2];
+    if (queue_name != "queue1" && queue_name != "queue2")
+    {
+        return 1;
+    }
 
-    // 2. 实例化连接对象
-    haoping::Connection::ptr conn = std::make_shared<haoping::Connection>("127.0.0.1", 8085, awp);
+    DemoConfig config;
+    if (!loadConfig(mode, &config))
+    {
+        return 1;
+    }
 
-    // 3. 通过连接创建信道
-    haoping::Channel::ptr channel = conn->openChannel();
+    haoping::AsyncWorker::ptr worker = std::make_shared<haoping::AsyncWorker>();
+    haoping::Connection::ptr connection = std::make_shared<haoping::Connection>("127.0.0.1", 8085, worker);
+    haoping::Channel::ptr channel = connection->openChannel();
+    declareTopology(channel, config);
 
-    // 4. 通过信道提供的服务完成所需
-    //   1. 声明一个交换机exchange1, 交换机类型为广播模式
-    google::protobuf::Map<std::string, std::string> tmp_map;
-    channel->declareExchange("exchange1", haoping::ExchangeType::TOPIC, true, false, tmp_map);
+    auto callback = std::bind(consumeCallback, channel, std::placeholders::_1,
+                              std::placeholders::_2, std::placeholders::_3);
+    channel->basicConsume("consumer1", queue_name, false, callback);
 
-    //  2. 声明一个队列queue1
-    channel->declareQueue("queue1", true, false, false, tmp_map);
-
-    //  3. 声明一个队列queue2
-    channel->declareQueue("queue2", true, false, false, tmp_map);
-
-    //  4. 绑定queue1-exchange1，且binding_key设置为queue1
-    channel->queueBind("exchange1", "queue1", "queue1");
-
-    //  5. 绑定queue2-exchange1，且binding_key设置为news.music.#
-    channel->queueBind("exchange1", "queue2", "news.music.#");
-
-    auto functor = std::bind(cb, channel, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    channel->basicConsume("consumer1", argv[1], false, functor);
-
-    while (1) std::this_thread::sleep_for(std::chrono::seconds(3));
-    conn->closeChannel(channel);
-    return 0;
+    while (true)
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+    }
 }
