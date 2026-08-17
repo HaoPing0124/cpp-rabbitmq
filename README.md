@@ -20,6 +20,58 @@
 - 测试框架：GTest
 - 构建工具：Makefile
 
+## 项目演示
+
+### 消息发布、路由、消费与手动 ACK
+
+下面展示 Broker、Producer 和 Consumer 三端联调效果。
+
+Producer 通过 TCP 长连接向 Broker 发布消息，Broker 根据交换机类型和路由键将消息写入匹配队列，再主动推送给已经订阅队列的 Consumer。Consumer 处理消息后调用 `basicAck()` 完成手动确认。
+
+<p align="center">
+  <img src="docs/images/message-flow.png" alt="消息发布与消费完整链路" width="1000">
+</p>
+
+### 三种交换机路由效果
+
+#### Direct：精确匹配
+
+`queue1` 和 `queue2` 分别使用 `orange`、`black` 作为绑定键。Producer 发布 `orange`、`black` 和 `green` 三条消息：前两条分别进入对应队列，`green` 因没有匹配的绑定而不会被投递。
+
+<p align="center">
+  <img src="docs/images/direct-exchange.png" alt="Direct 精确路由效果" width="1000">
+</p>
+
+#### Fanout：广播
+
+`FANOUT` 交换机忽略路由键，将每条消息投递到所有已绑定队列。示例中的两条广播消息都会同时进入 `queue1` 和 `queue2`。
+
+<p align="center">
+  <img src="docs/images/fanout-exchange.png" alt="Fanout 广播路由效果" width="1000">
+</p>
+
+#### Topic：通配符匹配
+
+`queue1` 的绑定键为 `queue1`，`queue2` 的绑定键为 `news.music.#`。本次发布的消息中，`news.music.pop` 和 `news.music.sport` 会进入 `queue2`，`news.sport.sport` 不匹配；`queue1` 不会收到这组消息。
+
+| Routing Key | `queue2` 是否匹配 |
+| --- | --- |
+| `news.music.pop` | 是 |
+| `news.music.sport` | 是 |
+| `news.sport.sport` | 否 |
+
+<p align="center">
+  <img src="docs/images/topic-routing.png" alt="Topic 通配符路由效果" width="1000">
+</p>
+
+### GTest 测试结果
+
+截图展示路由匹配与消费者管理两组 GTest 的真实运行结果。
+
+<p align="center">
+  <img src="docs/images/gtest-results.png" alt="GTest 测试结果" width="1000">
+</p>
+
 ## 项目亮点
 
 - 基于 muduo、epoll 和 TCP 长连接实现事件驱动网络通信
@@ -399,6 +451,8 @@ cpp-rabbitmq/
 │   └── Makefile
 ├── mqtest/                    # GTest 测试代码
 ├── mqthird/                   # 第三方依赖
+├── docs/
+│   └── images/                # 项目运行与测试演示截图
 ├── LICENSE
 └── README.md
 ```
